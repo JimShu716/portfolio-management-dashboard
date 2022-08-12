@@ -11,14 +11,6 @@ import javax.persistence.Id;
 
 public interface PortfolioManagementRepository extends JpaRepository<User, String> {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="stockID")
-    private Integer stockID;
-
-
-    @Column(name="stockName")
-    private String stockName;
 
 
 }
