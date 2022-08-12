@@ -14,7 +14,7 @@ const User = (props) =>{
 
     return (
         <div>
-            <Header title="User" />
+            <Header title="User Profile" />
         </div>
     )
 }

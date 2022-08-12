@@ -1,63 +1,33 @@
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import { useState } from "react";
-import Sidebar from "../Sidebar";
 import Drawer from "@mui/material/Drawer";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import ListItemText from "@mui/material/ListItemText";
+import PersonIcon from '@mui/icons-material/Person';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
 import { Link } from 'react-router-dom';
-
-const drawerWidth = 240;
-//
-// const DrawerHeader = styled('div')(({ theme }) => ({
-//     display: 'flex',
-//     alignItems: 'center',
-//     padding: theme.spacing(0, 1),
-//     // necessary for content to be below app bar
-//     ...theme.mixins.toolbar,
-//     justifyContent: 'flex-end',
-// }));
+import './styles.css';
+import {Box} from "@mui/material";
+import Button from "@mui/material/Button";
 
 const Header = (props) =>{
-    const [auth, setAuth] = useState(true);
-    const [anchorEl, setAnchorEl] = useState();
     const [open, setOpen] = useState(true);
     const title = props.title;
 
-    const handleClose = () =>{
-        setAnchorEl(null);
-    }
-
-    const handleMenu = () =>{
-        console.log();
-    }
-
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-
-    const handleDrawerClose = () => {
-        setOpen(false);
+    const handleDrawer = () => {
+        setOpen(!open);
     };
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+        <Box sx={{ display: 'flex' }}>
+            <AppBar position="fixed" className="appbar" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
                 <Toolbar>
                     <IconButton
                         size="large"
@@ -65,91 +35,68 @@ const Header = (props) =>{
                         color="inherit"
                         aria-label="menu"
                         sx={{ mr: 2 }}
-                        onClick={handleDrawerOpen}
+                        onClick={handleDrawer}
                     >
-                        <MenuIcon />
+                        {open?<MenuOpenIcon /> : <MenuIcon />}
                     </IconButton>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         {title}
                     </Typography>
-                    {auth && (
-                        <div>
-                            <IconButton
-                                size="large"
-                                aria-label="account of current user"
-                                aria-controls="menu-appbar"
-                                aria-haspopup="true"
-                                onClick={handleMenu}
-                                color="inherit"
-                            >
-                                <AccountCircle />
-                            </IconButton>
-                            <Menu
-                                id="menu-appbar"
-                                anchorEl={anchorEl}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(anchorEl)}
-                                onClose={handleClose}
-                            >
-                                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                <MenuItem onClick={handleClose}>My account</MenuItem>
-                            </Menu>
-                        </div>
-                    )}
+                    <Link className="navBarLink" to={'/'} ><Button>Logout</Button></Link>
                 </Toolbar>
             </AppBar>
+            <Drawer variant="persistent"
+                    sx={{
+                        width: 60,
+                        flexShrink: 0,
+                        [`& .MuiDrawer-paper`]: { width: 60, boxSizing: 'border-box' },
+                    }}
+                    className="iconSidebar" open={!open}>
+                <List className="sidebarList">
+                    <ListItem key={'Trade'} disablePadding>
+                        <Link className="navBarLink" to={'/Trade'} >
+                            <ListItemButton>
+                                <ShowChartIcon />
+                            </ListItemButton>
+                        </Link>
+                    </ListItem>
+                    <ListItem key={'User Profile'} disablePadding>
+                        <Link className="navBarLink" to={'/User'} >
+                            <ListItemButton>
+                                <PersonIcon />
+                            </ListItemButton>
+                        </Link>
+                    </ListItem>
+                </List>
+            </Drawer>
             <Drawer
-                sx={{
-                    width: drawerWidth,
-                    flexShrink: 0,
-                    '& .MuiDrawer-paper': {
-                        width: drawerWidth,
-                        boxSizing: 'border-box',
-                    },
-                }}
                 variant="persistent"
+                sx={{
+                    width: 125,
+                    flexShrink: 0,
+                    [`& .MuiDrawer-paper`]: { width: 125, boxSizing: 'border-box' },
+                }}
                 anchor="left"
                 open={open}
+                className="itemSidebar"
             >
-                <div>
-                    <IconButton onClick={handleDrawerClose}>
-                        {/*{theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}*/}
-                        <ChevronLeftIcon />
-                    </IconButton>
-                </div>
-                <Divider />
-                <List>
-                    {/*{['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (*/}
-                        <ListItem key={'Buy Stocks'} disablePadding>
+                <List className="sidebarList">
+                    <ListItem key={'Trade'} disablePadding>
+                        <Link className="navBarLink" to={'/Trade'} >
                             <ListItemButton>
-                                <ListItemIcon>
-                                    <InboxIcon />
-                                </ListItemIcon>
-                                <Link className="navBarLink" to={'/Trade'} >Trade</Link>
+                                <ShowChartIcon />
+                                <span className="navBarLinkText">Trade</span>
                             </ListItemButton>
-                        </ListItem>
-                    {/*))}*/}
-                </List>
-                <Divider />
-                <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem key={text} disablePadding>
+                        </Link>
+                    </ListItem>
+                    <ListItem key={'User Profile'} disablePadding>
+                        <Link className="navBarLink" to={'/User'} >
                             <ListItemButton>
-                                <ListItemIcon>
-                                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                </ListItemIcon>
-                                <ListItemText primary={text} />
+                                <PersonIcon />
+                                <span className="navBarLinkText">Profile</span>
                             </ListItemButton>
-                        </ListItem>
-                    ))}
+                        </Link>
+                    </ListItem>
                 </List>
             </Drawer>
         </Box>
