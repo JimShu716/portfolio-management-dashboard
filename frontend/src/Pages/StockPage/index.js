@@ -6,7 +6,7 @@ import Header from "../../Components/Header";
 const Stock = (props) =>{
     return (
         <div>
-            <Header title="Stock" />
+            <Header title="Trade" />
         </div>
     )
 }
