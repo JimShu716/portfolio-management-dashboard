@@ -22,10 +22,8 @@ public class TradeHistory {
     @Column(name="purchasedQuantities")
     private int purchasedQuantities;
 
-
     @Column(name="email")
     private String email;
-
 
     @Column(name="stockID")
     private int stockID;

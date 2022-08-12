@@ -18,4 +18,10 @@ public class PortfolioManagementServiceImpl implements PortfolioManagementServic
         return user;
     }
 
+    public void addUser(User user){
+        portfolioManagementRepository.save(user);
+    }
+
+
+
 }

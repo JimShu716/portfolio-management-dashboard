@@ -42,7 +42,6 @@ public class Stocks implements Serializable {
     @Column(name="stockName")
     private String stockName;
 
-
     @OneToMany( cascade={CascadeType.MERGE, CascadeType.PERSIST})
     private List<TradeHistory> TradeHistories = new ArrayList<TradeHistory>();
 

@@ -52,6 +52,9 @@ public class User {
     }
 
 
+   // @OneToMany(mappedBy = "User", targetEntity = TradeHistory.class, fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+   // @OneToMany( cascade={CascadeType.MERGE, CascadeType.PERSIST})
+   // @OneToMany(mappedBy = "user", targetEntity = TradeHistory.class, fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @OneToMany( cascade={CascadeType.MERGE, CascadeType.PERSIST})
     private List<TradeHistory> TradeHistories = new ArrayList<TradeHistory>();
 }
