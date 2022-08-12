@@ -1,13 +1,15 @@
 package com.portfolio.management.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="userAccount")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="stockID")
+    @Column(name="email")
     private String email;
 
     @Column(name="userName")
@@ -22,6 +24,8 @@ public class User {
         this.userName = userName;
         this.userPassword = userPassword;
     }
+
+    public User() {}
 
     public String getEmail() {
         return email;
@@ -46,4 +50,8 @@ public class User {
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
     }
+
+
+    @OneToMany( cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    private List<TradeHistory> TradeHistories = new ArrayList<TradeHistory>();
 }
