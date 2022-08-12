@@ -15,6 +15,22 @@ public class Stocks implements Serializable {
         this.stockName = stockName;
     }
 
+    public Integer getStockID() {
+        return stockID;
+    }
+
+    public void setStockID(Integer stockID) {
+        this.stockID = stockID;
+    }
+
+    public String getStockName() {
+        return stockName;
+    }
+
+    public void setStockName(String stockName) {
+        this.stockName = stockName;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="stockID")
