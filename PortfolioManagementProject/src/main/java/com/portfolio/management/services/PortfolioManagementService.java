@@ -1,4 +1,4 @@
 package com.portfolio.management.services;
 
-public class AppConfig {
+public interface PortfolioManagementService {
 }

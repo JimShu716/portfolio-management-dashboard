@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.conygre.spring.boot.data</groupId>
-    <artifactId>CompactDiscRestDataBoot</artifactId>
+    <groupId>com.portfolio.management</groupId>
+    <artifactId>PortfolioManagementProject</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <properties>
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <start-class>com.conygre.spring.boot.AppConfig</start-class>
+        <start-class>com.portfolio.management.AppConfig</start-class>
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
