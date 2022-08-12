@@ -2,6 +2,8 @@ package com.portfolio.management.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="stock")
@@ -40,6 +42,9 @@ public class Stocks implements Serializable {
     @Column(name="stockName")
     private String stockName;
 
+
+    @OneToMany( cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    private List<TradeHistory> TradeHistories = new ArrayList<TradeHistory>();
 
 
 }

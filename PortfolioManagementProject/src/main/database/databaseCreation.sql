@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS protfolio;
-use protfolio;
+CREATE DATABASE IF NOT EXISTS portfolio;
+use portfolio;
 create table userAccount (
 email varchar (50) primary key not null,
 userName varchar (50),

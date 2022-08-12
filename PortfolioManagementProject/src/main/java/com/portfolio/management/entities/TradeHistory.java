@@ -30,6 +30,8 @@ public class TradeHistory {
     @Column(name="stockID")
     private int stockID;
 
+    public TradeHistory(){}
+
     public TradeHistory(String tradeHistoryID, double purchasedPrice, String purchasedTime, int purchasedQuantities, String email, int stockID) {
         TradeHistoryID = tradeHistoryID;
         this.purchasedPrice = purchasedPrice;

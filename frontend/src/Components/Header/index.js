@@ -15,6 +15,7 @@ import ShowChartIcon from '@mui/icons-material/ShowChart';
 import { Link } from 'react-router-dom';
 import './styles.css';
 import {Box} from "@mui/material";
+import Button from "@mui/material/Button";
 
 const Header = (props) =>{
     const [open, setOpen] = useState(true);
@@ -41,6 +42,7 @@ const Header = (props) =>{
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         {title}
                     </Typography>
+                    <Link className="navBarLink" to={'/'} ><Button>Logout</Button></Link>
                 </Toolbar>
             </AppBar>
             <Drawer variant="persistent"
