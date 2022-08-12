@@ -1,6 +1,7 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
 import './styles.css';
+import Header from "../../Components/Header";
 
 const User = (props) =>{
     const [response, setResponse] = useState("");
@@ -13,7 +14,7 @@ const User = (props) =>{
 
     return (
         <div>
-            <div className="title">hello</div>
+            <Header title="User" />
         </div>
     )
 }
