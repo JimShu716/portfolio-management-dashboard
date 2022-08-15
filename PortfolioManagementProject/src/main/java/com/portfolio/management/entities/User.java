@@ -10,6 +10,8 @@ import java.util.List;
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int userID;
+
     @Column(name="email")
     private String email;
 
@@ -20,15 +22,24 @@ public class User implements Serializable {
     private String userPassword;
 
 
-    public User(String email, String userName, String userPassword) {
+    public User(int userID, String email, String userName, String userPassword) {
+        this.userID = userID;
         this.email = email;
         this.userName = userName;
         this.userPassword = userPassword;
     }
 
-    public User(String email, String userPassword) {
-        this.email = email;
+    public User(int userID, String userPassword) {
+        this.userID = userID;
         this.userPassword = userPassword;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     public User() {}
@@ -59,6 +70,6 @@ public class User implements Serializable {
 
     //@OneToMany( cascade={CascadeType.MERGE, CascadeType.PERSIST})
 
-    @OneToMany(mappedBy = "email", targetEntity = TradeHistory.class, cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "userID", targetEntity = TradeHistory.class, cascade={CascadeType.MERGE, CascadeType.PERSIST})
     private List<TradeHistory> TradeHistories = new ArrayList<TradeHistory>();
 }

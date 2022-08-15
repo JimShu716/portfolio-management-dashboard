@@ -1,5 +1,6 @@
 package com.portfolio.management.services;
 
+import com.portfolio.management.entities.TradeHistory;
 import com.portfolio.management.entities.User;
 import com.portfolio.management.repos.PortfolioManagementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +15,27 @@ public class PortfolioManagementServiceImpl implements PortfolioManagementServic
     private PortfolioManagementRepository portfolioManagementRepository;
 
     // Optional -> when not able to find this id, return null
-    public Optional<User> fetchUserById(String id){
-        Optional<User> user = portfolioManagementRepository.findById(id);
+    public Optional<User> fetchUserById(int userID){
+        Optional<User> user = portfolioManagementRepository.findById(userID);
         return user;
     }
+
 
     public void addUser(User user){
         portfolioManagementRepository.save(user);
     }
 
-    public void updateUserPassWord(String email, String passWord) {
-        portfolioManagementRepository.save(new User(email, passWord));
+//
+//    public void addTradeHistory(TradeHistory tradeHistory) {
+//        portfolioManagementRepository.save(tradeHistory);
+//    }
+
+
+    public void updateUserPassWord(int userID, String passWord) {
+        portfolioManagementRepository.save(new User(userID, passWord));
     }
+
+
 
 
 }

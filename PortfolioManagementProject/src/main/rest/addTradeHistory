@@ -1,0 +1,11 @@
+POST http://localhost:8080/api/compactdiscs
+Content-type: application/json
+
+{
+    "TradeHistoryID" : 1,
+    "purchasedPrice" : 2.3,
+    "purchasedTime" : "13:99",
+    "purchasedQuantities" : 10,
+    "email" : "H@gmail.com",
+    "stockID" : 1111111
+}
