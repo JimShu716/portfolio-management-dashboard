@@ -51,10 +51,8 @@ public class User {
         this.userPassword = userPassword;
     }
 
+    //@OneToMany( cascade={CascadeType.MERGE, CascadeType.PERSIST})
 
-   // @OneToMany(mappedBy = "User", targetEntity = TradeHistory.class, fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-   // @OneToMany( cascade={CascadeType.MERGE, CascadeType.PERSIST})
-   // @OneToMany(mappedBy = "user", targetEntity = TradeHistory.class, fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @OneToMany( cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "user", targetEntity = TradeHistory.class, fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private List<TradeHistory> TradeHistories = new ArrayList<TradeHistory>();
 }

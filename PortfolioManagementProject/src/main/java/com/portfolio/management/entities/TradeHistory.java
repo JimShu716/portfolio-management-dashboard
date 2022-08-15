@@ -21,7 +21,8 @@ public class TradeHistory {
 
     @Column(name="purchasedQuantities")
     private int purchasedQuantities;
-
+    @ManyToOne
+    @JoinColumn(name = "email")
     @Column(name="email")
     private String email;
 
