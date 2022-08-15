@@ -19,6 +19,7 @@ public class PortfolioManagementServiceImpl implements PortfolioManagementServic
     }
 
     public void addUser(User user){
+        user.setEmail("default");
         portfolioManagementRepository.save(user);
     }
 

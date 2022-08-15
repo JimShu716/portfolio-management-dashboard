@@ -20,15 +20,16 @@ public class PortfolioManagementController {
     private PortfolioManagementService portfolioManagementService;
 
     //http://localhost:8080/H1@gmail.com
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Optional<User>> fetchUserInformation(@PathVariable String id){
-        Optional<User> user = portfolioManagementService.fetchUserById(id);
+    @GetMapping(value = "/{email}")
+    public ResponseEntity<Optional<User>> fetchUserInformation(@PathVariable String email){
+        Optional<User> user = portfolioManagementService.fetchUserById(email);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     //http://localhost:8080/K1@gmail.com/Kate/1111
-    //http://localhost:8080?email =K1@gmail.com&name=Kate&userId =1111
-    @GetMapping(value = "?email ={email}&name={userName}&passWord ={passWord}")
+    //http://localhost:8080/?email=K1@gmail.com&name=Kate&passWord=1111
+   // @GetMapping(value = "?email={email}&name={userName}&passWord={passWord}")
+    @GetMapping(value = "/{email}/{userName}/{passWord}")
     public ResponseEntity setUserInformation(@PathVariable String email, @PathVariable String userName, @PathVariable String passWord){
         User user = new User(email, userName, passWord);
         portfolioManagementService.addUser(user);

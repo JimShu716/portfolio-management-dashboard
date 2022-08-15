@@ -22,9 +22,9 @@ public class TradeHistory implements Serializable {
 
     @Column(name="purchasedQuantities")
     private int purchasedQuantities;
-    @ManyToOne
+    @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "email")
-    private String email;
+    private String email = "defualt";
 
     @Column(name="stockID")
     private int stockID;

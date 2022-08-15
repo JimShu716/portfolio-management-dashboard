@@ -11,7 +11,7 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="email")
-    private String email;
+    private String email = "defualt";
 
     @Column(name="userName")
     private String userName;
@@ -54,6 +54,6 @@ public class User implements Serializable {
 
     //@OneToMany( cascade={CascadeType.MERGE, CascadeType.PERSIST})
 
-    @OneToMany(mappedBy = "email", cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "email", targetEntity = TradeHistory.class, cascade={CascadeType.MERGE, CascadeType.PERSIST})
     private List<TradeHistory> TradeHistories = new ArrayList<TradeHistory>();
 }
