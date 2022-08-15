@@ -6,11 +6,6 @@ userName varchar (50),
 userPassword varchar(50));
 
 
-create table stock (
-stockID int primary key not null,
-stockName varchar (50)
-);
-
 
 
 create table TradeHistoryID (
@@ -20,6 +15,5 @@ purchasedTime DATETIME,
 purchasedQuantities int,
 email varchar (50),
 stockID int,
-FOREIGN KEY (email) REFERENCES userAccount(email),
-FOREIGN KEY (stockID) REFERENCES stock(stockID)
+FOREIGN KEY (email) REFERENCES userAccount(email)
 );

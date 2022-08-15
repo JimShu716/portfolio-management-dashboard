@@ -4,6 +4,7 @@ import com.portfolio.management.entities.User;
 import com.portfolio.management.repos.PortfolioManagementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Optional;
 @Service
@@ -19,10 +20,12 @@ public class PortfolioManagementServiceImpl implements PortfolioManagementServic
     }
 
     public void addUser(User user){
-        user.setEmail("default");
         portfolioManagementRepository.save(user);
     }
 
+    public void updateUserPassWord(String email, String passWord) {
+        portfolioManagementRepository.save(new User(email, passWord));
+    }
 
 
 }

@@ -10,4 +10,6 @@ public interface PortfolioManagementService {
 
 
     public void addUser(User user);
+
+    public void updateUserPassWord(String email, String passWord);
 }

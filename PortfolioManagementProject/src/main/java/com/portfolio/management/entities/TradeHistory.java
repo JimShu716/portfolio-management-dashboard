@@ -24,7 +24,7 @@ public class TradeHistory implements Serializable {
     private int purchasedQuantities;
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "email")
-    private String email = "defualt";
+    private String email;
 
     @Column(name="stockID")
     private int stockID;

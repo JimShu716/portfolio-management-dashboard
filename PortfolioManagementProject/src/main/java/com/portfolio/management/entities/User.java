@@ -11,7 +11,7 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="email")
-    private String email = "defualt";
+    private String email;
 
     @Column(name="userName")
     private String userName;
@@ -23,6 +23,11 @@ public class User implements Serializable {
     public User(String email, String userName, String userPassword) {
         this.email = email;
         this.userName = userName;
+        this.userPassword = userPassword;
+    }
+
+    public User(String email, String userPassword) {
+        this.email = email;
         this.userPassword = userPassword;
     }
 
