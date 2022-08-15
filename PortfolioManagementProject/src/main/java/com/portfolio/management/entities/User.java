@@ -1,12 +1,13 @@
 package com.portfolio.management.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name="userAccount")
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="email")
@@ -53,6 +54,6 @@ public class User {
 
     //@OneToMany( cascade={CascadeType.MERGE, CascadeType.PERSIST})
 
-    @OneToMany(mappedBy = "user", targetEntity = TradeHistory.class, fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "email", cascade={CascadeType.MERGE, CascadeType.PERSIST})
     private List<TradeHistory> TradeHistories = new ArrayList<TradeHistory>();
 }

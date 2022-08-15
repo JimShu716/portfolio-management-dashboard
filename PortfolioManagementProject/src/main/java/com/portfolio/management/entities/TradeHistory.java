@@ -1,10 +1,11 @@
 package com.portfolio.management.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name="TradeHistoryID")
-public class TradeHistory {
+public class TradeHistory implements Serializable {
     //Instance variables
 
     @Id
@@ -23,7 +24,6 @@ public class TradeHistory {
     private int purchasedQuantities;
     @ManyToOne
     @JoinColumn(name = "email")
-    @Column(name="email")
     private String email;
 
     @Column(name="stockID")
