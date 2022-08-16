@@ -1,33 +1,61 @@
-.appbar{
-    height: 60px;
-    background-color: #212529 !important;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif !important;
-}
-
 .sidebarList{
-    margin-top: 60px !important;
-    color: #636466;
+    color: rgba(58, 53, 65, 0.87);
 }
 
 .navBarLink{
-    color: #636466;
-    width: 125px;
-    margin: 10px 0 0;
+    color: rgba(58, 53, 65, 0.87);
     padding: 0;
+    font-size: 15px;
+    height: 44px;
+    width: 100%;
     text-decoration: none !important;
+    display: flex;
+    align-items: center;
 }
 
-.navBarLink:hover{
-    color: #212529;
+.navBarLink:hover {
+    border-radius: 0px 100px 100px 0px;
+    background-color: rgba(145, 158, 171, 0.08);
 }
 
-.navBarLink:visited{
-    color: #212529;
+.navBarLinkActive{
+    color: white;
+    border-radius: 0px 100px 100px 0px;
+    height: 44px;
+    font-size: 15px;
+    padding: 0;
+    width: 100%;
+    background: rgb(9,198,249);
+    background: linear-gradient(126deg, rgba(9,198,249,1) 37%, rgba(4,93,233,0.6895351890756303) 100%);
+    box-shadow: rgb(58 53 65 / 42%) 0px 4px 8px -4px;
+    /*background-color: rgba(32, 101, 209, 0.08);*/
     text-decoration: none !important;
+    display: flex;
+    align-items: center;
 }
 
 .navBarLinkText{
     margin-left: 15px;
+}
+
+.NavActionButton{
+    color: rgba(58, 53, 65, 0.87);
+    margin-top: 20px;
+    margin-left: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+}
+
+.listItemButton{
+    display: flex;
+    align-items: center;
+    padding-left: 25px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.navbar-subtitle{
+    font-size: 12px;
 }

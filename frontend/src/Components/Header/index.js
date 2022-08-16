@@ -1,105 +1,68 @@
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import { useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import PersonIcon from '@mui/icons-material/Person';
-import ShowChartIcon from '@mui/icons-material/ShowChart';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './styles.css';
-import {Box} from "@mui/material";
-import Button from "@mui/material/Button";
+import { FiTrendingUp, FiUser } from 'react-icons/fi';
+import { AiOutlineMenuUnfold } from 'react-icons/ai'
+import {AppBar, IconButton, Toolbar} from "@mui/material";
 
 const Header = (props) =>{
     const [open, setOpen] = useState(true);
-    const title = props.title;
 
     const handleDrawer = () => {
         setOpen(!open);
     };
 
     return (
-        <Box sx={{ display: 'flex' }}>
-            <AppBar position="fixed" className="appbar" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-                <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{ mr: 2 }}
-                        onClick={handleDrawer}
-                    >
-                        {open?<MenuOpenIcon /> : <MenuIcon />}
-                    </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        {title}
-                    </Typography>
-                    <Link className="navBarLink" to={'/'} ><Button>Logout</Button></Link>
-                </Toolbar>
-            </AppBar>
-            <Drawer variant="persistent"
-                    sx={{
-                        width: 60,
-                        flexShrink: 0,
-                        [`& .MuiDrawer-paper`]: { width: 60, boxSizing: 'border-box' },
-                    }}
-                    className="iconSidebar" open={!open}>
-                <List className="sidebarList">
-                    <ListItem key={'Trade'} disablePadding>
-                        <Link className="navBarLink" to={'/Trade'} >
-                            <ListItemButton>
-                                <ShowChartIcon />
-                            </ListItemButton>
-                        </Link>
-                    </ListItem>
-                    <ListItem key={'User Profile'} disablePadding>
-                        <Link className="navBarLink" to={'/User'} >
-                            <ListItemButton>
-                                <PersonIcon />
-                            </ListItemButton>
-                        </Link>
-                    </ListItem>
-                </List>
-            </Drawer>
+        <div>
             <Drawer
                 variant="persistent"
                 sx={{
-                    width: 125,
+                    width: 215,
                     flexShrink: 0,
-                    [`& .MuiDrawer-paper`]: { width: 125, boxSizing: 'border-box' },
+                    [`& .MuiDrawer-paper`]: { backgroundColor: "rgb(249, 250, 251)", width: 215, boxSizing: 'border-box', borderRight: '0px',},
                 }}
                 anchor="left"
                 open={open}
                 className="itemSidebar"
             >
-                <List className="sidebarList">
-                    <ListItem key={'Trade'} disablePadding>
-                        <Link className="navBarLink" to={'/Trade'} >
-                            <ListItemButton>
-                                <ShowChartIcon />
+                <div className="NavActionButton">
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                        aria-label="menu"
+                        sx={{fontSize: "20px"}}
+                        onClick={handleDrawer}
+                    >
+                        {open?<AiOutlineMenuUnfold /> : null}
+                    </IconButton>
+                </div>
+                <List className="sidebarList"
+                      sx={{
+                          marginTop: "10px",
+                      }}>
+                    <ListItem sx={{paddingLeft: '23px', paddingTop: 0, paddingRight: 0, paddingBottom: "13px"}} className="navbar-subtitle">Dashboard</ListItem>
+                    <ListItem key={'Trade'} sx={{paddingLeft: 0, paddingTop: 0, paddingRight: 0, paddingBottom: "2px"}}>
+                        <NavLink className={(navData) => (navData.isActive ? 'navBarLinkActive' : 'navBarLink')} to={'/trade'} end>
+                            <div className="listItemButton">
+                                <FiTrendingUp />
                                 <span className="navBarLinkText">Trade</span>
-                            </ListItemButton>
-                        </Link>
+                            </div>
+                        </NavLink>
                     </ListItem>
-                    <ListItem key={'User Profile'} disablePadding>
-                        <Link className="navBarLink" to={'/User'} >
-                            <ListItemButton>
-                                <PersonIcon />
-                                <span className="navBarLinkText">Profile</span>
-                            </ListItemButton>
-                        </Link>
+                    <ListItem key={'User Profile'} sx={{paddingLeft: 0, paddingRight: 0}}>
+                        <NavLink className={(navData) => (navData.isActive ? 'navBarLinkActive' : 'navBarLink')} to={'/user'} end>
+                            <div className="listItemButton">
+                                <FiUser />
+                                <span className="navBarLinkText">User profile</span>
+                            </div>
+                        </NavLink>
                     </ListItem>
                 </List>
             </Drawer>
-        </Box>
+        </div>
     );
 }
 

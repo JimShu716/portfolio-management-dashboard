@@ -13,7 +13,7 @@ const User = (props) =>{
     }, [])
 
     return (
-        <div>
+        <div style={{display: "flex"}}>
             <Header title="User Profile" />
         </div>
     )

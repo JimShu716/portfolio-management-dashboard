@@ -10,8 +10,7 @@ import Login from "./Pages/LoginPage";
 const theme = createMuiTheme({
     typography: {
         fontFamily: [
-            '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen',
-            'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+            'Roboto', 'Helvetica', 'Arial', 'sans-serif'
         ].join(','),
     }
 });
@@ -21,9 +20,9 @@ function App() {
       <ThemeProvider theme={theme}>
           <BrowserRouter>
             <Routes>
-              <Route path={'/User'} element={<User />} />
-              <Route path={'/Trade'} element={<Stock />} />
-              <Route path={'/'} element={<Login />} />
+              <Route exact strict path={'/user'} element={<User />} />
+              <Route exact strict path={'/trade'} element={<Stock />} />
+              <Route exact strict path={'/'} element={<Login />} />
             </Routes>
           </BrowserRouter>
       </ThemeProvider>

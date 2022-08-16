@@ -5,7 +5,7 @@ import Header from "../../Components/Header";
 
 const Stock = (props) =>{
     return (
-        <div>
+        <div style={{display: "flex"}}>
             <Header title="Trade" />
         </div>
     )
