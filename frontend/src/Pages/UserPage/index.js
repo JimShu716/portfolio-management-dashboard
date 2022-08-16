@@ -1,6 +1,7 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
 import './styles.css';
+import Sidebar from "../../Components/Sidebar";
 import Header from "../../Components/Header";
 
 const User = (props) =>{
@@ -14,7 +15,10 @@ const User = (props) =>{
 
     return (
         <div style={{display: "flex"}}>
-            <Header title="User Profile" />
+            <Sidebar title="User Profile" />
+            <div>
+                <Header />
+            </div>
         </div>
     )
 }

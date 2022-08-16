@@ -3,7 +3,7 @@ body {
   font-family: Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #212529;
+  color: rgba(58, 53, 65, 0.87);
   background-color: rgb(249, 250, 251);
 }
 

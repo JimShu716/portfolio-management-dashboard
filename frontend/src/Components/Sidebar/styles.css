@@ -2,6 +2,13 @@
     color: rgba(58, 53, 65, 0.87);
 }
 
+
+.sidebar{
+    width: 215px;
+    height: 100vh;
+    position: sticky;
+}
+
 .navBarLink{
     color: rgba(58, 53, 65, 0.87);
     padding: 0;
@@ -45,7 +52,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 18px;
 }
 
 .listItemButton{
@@ -58,4 +64,9 @@
 
 .navbar-subtitle{
     font-size: 12px;
+}
+
+.drawerOpenButton{
+    margin-top: 20px;
+    margin-left: 23px;
 }
