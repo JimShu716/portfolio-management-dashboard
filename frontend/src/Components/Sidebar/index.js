@@ -34,7 +34,9 @@ const Sidebar = (props) =>{
                       sx={{
                           marginTop: "10px",
                       }}>
-                    <ListItem sx={{paddingLeft: '23px', paddingTop: 0, paddingRight: 0, paddingBottom: "13px"}} className="navbar-subtitle">Dashboard</ListItem>
+                    <ListItem sx={{paddingLeft: '23px', paddingTop: 0, paddingRight: 0, paddingBottom: "13px"}} className="navbar-subtitle">
+                        Dashboard
+                    </ListItem>
                     <ListItem key={'Trade'} sx={{paddingLeft: 0, paddingTop: 0, paddingRight: 0, paddingBottom: "2px"}}>
                         <NavLink className={(navData) => (navData.isActive ? 'navBarLinkActive' : 'navBarLink')} to={'/trade'} end>
                             <div className="listItemButton">
