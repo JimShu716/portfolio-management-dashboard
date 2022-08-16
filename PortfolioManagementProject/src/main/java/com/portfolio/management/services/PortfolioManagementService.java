@@ -14,5 +14,4 @@ public interface PortfolioManagementService {
 
     public void updateUserPassWord(int userID, String passWord);
 
-//    public void addTradeHistory(TradeHistory tradeHistory);
 }

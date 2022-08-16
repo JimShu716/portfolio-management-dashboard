@@ -34,6 +34,12 @@ public class User implements Serializable {
         this.userPassword = userPassword;
     }
 
+    public User() {}
+
+
+    @OneToMany(mappedBy = "userID", targetEntity = TradeHistory.class, cascade={CascadeType.ALL})
+    private List<TradeHistory> TradeHistories = new ArrayList<TradeHistory>();
+
     public int getUserID() {
         return userID;
     }
@@ -41,8 +47,6 @@ public class User implements Serializable {
     public void setUserID(int userID) {
         this.userID = userID;
     }
-
-    public User() {}
 
     public String getEmail() {
         return email;
@@ -68,8 +72,11 @@ public class User implements Serializable {
         this.userPassword = userPassword;
     }
 
-    //@OneToMany( cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    public List<TradeHistory> getTradeHistories() {
+        return TradeHistories;
+    }
 
-    @OneToMany(mappedBy = "userID", targetEntity = TradeHistory.class, cascade={CascadeType.MERGE, CascadeType.PERSIST})
-    private List<TradeHistory> TradeHistories = new ArrayList<TradeHistory>();
+    public void setTradeHistories(List<TradeHistory> tradeHistories) {
+        TradeHistories = tradeHistories;
+    }
 }

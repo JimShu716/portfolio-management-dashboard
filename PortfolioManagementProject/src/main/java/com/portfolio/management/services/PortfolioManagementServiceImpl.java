@@ -3,6 +3,7 @@ package com.portfolio.management.services;
 import com.portfolio.management.entities.TradeHistory;
 import com.portfolio.management.entities.User;
 import com.portfolio.management.repos.PortfolioManagementRepository;
+import com.portfolio.management.repos.TradeHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ public class PortfolioManagementServiceImpl implements PortfolioManagementServic
 
     @Autowired
     private PortfolioManagementRepository portfolioManagementRepository;
+
 
     // Optional -> when not able to find this id, return null
     public Optional<User> fetchUserById(int userID){
@@ -25,17 +27,10 @@ public class PortfolioManagementServiceImpl implements PortfolioManagementServic
         portfolioManagementRepository.save(user);
     }
 
-//
-//    public void addTradeHistory(TradeHistory tradeHistory) {
-//        portfolioManagementRepository.save(tradeHistory);
-//    }
-
 
     public void updateUserPassWord(int userID, String passWord) {
         portfolioManagementRepository.save(new User(userID, passWord));
     }
-
-
 
 
 }

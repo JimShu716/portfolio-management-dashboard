@@ -20,11 +20,16 @@ public class PortfolioManagementController {
     @Autowired
     private PortfolioManagementService portfolioManagementService;
 
-    //http://localhost:8080/H1@gmail.com
+//    http://localhost:8080/H1@gmail.com
     @GetMapping(value = "/{userID}")
-    public ResponseEntity<Optional<User>> fetchUserInformation(@PathVariable int userID){
-        Optional<User> user = portfolioManagementService.fetchUserById(userID);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    public ResponseEntity<User> getTradeHistoryWithID(@PathVariable int userID) {
+        Optional<User> user  = portfolioManagementService.fetchUserById(userID);
+        if (user.isPresent()) {
+            return new ResponseEntity<User>(user.get(), HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     //http://localhost:8080/adduser/K1@gmail.com/Kate/1111
@@ -45,9 +50,5 @@ public class PortfolioManagementController {
 
 
 
-//    @PostMapping(value = "/addTradeHistory")
-//    public ResponseEntity addTradeHistory(@RequestBody TradeHistory tradeHistory){
-//        portfolioManagementService.addTradeHistory(tradeHistory);
-//        return new ResponseEntity<>(tradeHistory, HttpStatus.OK);
-//    }
+
 }
