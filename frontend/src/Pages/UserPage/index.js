@@ -16,8 +16,8 @@ const User = (props) =>{
     return (
         <div style={{display: "flex"}}>
             <Sidebar title="User Profile" />
-            <div>
-                <Header />
+            <div style={{flexGrow: 1}}>
+                <Header path="User Profile"/>
             </div>
         </div>
     )
