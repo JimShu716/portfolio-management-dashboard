@@ -10,7 +10,7 @@ import SideBarOpenContext from "./SideBarContext";
 import sun from './../../Assets/cloudy.png';
 import moon from './../../Assets/moon.png'
 
-const Sidebar = (props) =>{
+const Sidebar = () =>{
     const [open, setOpen] = useContext(SideBarOpenContext);
     const [time, setTime] = useState("");
     const [isMarketsOpen, setIsMarketsOpen] = useState(true);

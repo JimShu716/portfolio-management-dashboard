@@ -11,11 +11,11 @@ const Stock = (props) =>{
             <div style={{flexGrow: 1}}>
                 <Header path="Trade"/>
                 <div className="containers-container">
-                    <div className="dashboard-container" style={{height: "200px", width: "250px"}}>
+                    <div className="dashboard-container" style={{height: "200px", width: "700px"}}>
                         <div className="dashboard-container-title">Title</div>
                     </div>
-                    <div className="dashboard-container" style={{height: "200px", width: "250px"}}>
-                        <div className="dashboard-container-title">Title 2</div>
+                    <div className="dashboard-fancy-container" style={{height: "400px", width: "250px"}}>
+                        <div className="dashboard-container-title">Trending Stocks</div>
                     </div>
                 </div>
             </div>
