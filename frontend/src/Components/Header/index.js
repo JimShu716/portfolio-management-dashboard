@@ -8,7 +8,6 @@ import Input from "@mui/material/Input";
 
 const Header = (props) =>{
     const [open, setOpen] = useContext(SideBarOpenContext);
-    const path = props.path;
 
     const handleDrawer = () => {
         setOpen(!open);
