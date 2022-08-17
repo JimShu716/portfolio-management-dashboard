@@ -23,21 +23,29 @@ public class TradeHistory implements Serializable {
     @Column(name="purchasedQuantities")
     private int purchasedQuantities;
 
-//    @ManyToOne
-//    @JoinColumn(name = "userID")
-//    private User user;
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
+    //    @ManyToOne
+    @JoinColumn(name = "userID")
+    private int userID;
 
     @Column(name="stockID")
     private int stockID;
 
     public TradeHistory(){}
 
-    public TradeHistory(int tradeHistoryID, double purchasedPrice, String purchasedTime, int purchasedQuantities, /*User user,*/ int stockID) {
+    public TradeHistory(int tradeHistoryID, double purchasedPrice, String purchasedTime, int purchasedQuantities, int userID, int stockID) {
         TradeHistoryID = tradeHistoryID;
         this.purchasedPrice = purchasedPrice;
         this.purchasedTime = purchasedTime;
         this.purchasedQuantities = purchasedQuantities;
-//        this.user = user;
+        this.userID = userID;
         this.stockID = stockID;
     }
 
@@ -73,13 +81,6 @@ public class TradeHistory implements Serializable {
         this.purchasedQuantities = purchasedQuantities;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
 
     public int getStockID() {
         return stockID;
