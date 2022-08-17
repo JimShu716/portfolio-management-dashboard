@@ -14,13 +14,6 @@ const Sidebar = (props) =>{
     const [open, setOpen] = useContext(SideBarOpenContext);
     const [time, setTime] = useState("");
     const [isMarketsOpen, setIsMarketsOpen] = useState(true);
-    const data = [{name: 'Page A', uv: 100}, {name: 'Page A', uv: 200},
-        {name: 'Page A', uv: 140}, {name: 'Page A', uv: 230},
-        {name: 'Page A', uv: 90}, {name: 'Page A', uv: 120},
-        {name: 'Page A', uv: 50}, {name: 'Page A', uv: 300},
-        {name: 'Page A', uv: 100}, {name: 'Page A', uv: 120},
-        {name: 'Page A', uv: 140}, {name: 'Page A', uv: 150},
-        {name: 'Page A', uv: 70}, {name: 'Page A', uv: 120}];
 
     const handleDrawer = () => {
         setOpen(!open);
@@ -37,6 +30,18 @@ const Sidebar = (props) =>{
         }
         setTime(currentTime)
     },[])
+
+    useEffect(() => {
+        function handleResize() {
+            if(window.innerWidth < 850){
+                setOpen(false);
+            } else {
+                setOpen(true);
+            }
+        }
+
+        window.addEventListener('resize', handleResize)
+    })
 
     return (
         <div>
