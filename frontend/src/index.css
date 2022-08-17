@@ -3,8 +3,8 @@ body {
   font-family: 'DM Sans', Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: rgb(33, 43, 54);
-  background-color: white;
+  color: #1f1c2e;
+  background-color: rgb(243, 246, 248);
 }
 
 code {
@@ -15,17 +15,21 @@ code {
 .dashboard-container {
   margin-left: 20px;
   margin-bottom: 20px;
-  padding: 20px;
-  background-color: white;
-  border-radius: 8px;
-  /*border: 1px solid rgba(58, 53, 65, 0.12);*/
-  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  box-shadow: rgb(145 158 171 / 20%) 0px 3px 1px -2px, rgb(145 158 171 / 14%) 0px 2px 2px 0px, rgb(145 158 171 / 12%) 0px 1px 5px 0px;
-}
+  padding: 25px 25px 0 25px;
+  background-color: rgb(252, 253, 254);
+  border-radius: 28px;
+  border: 1px solid white;
+ }
 
 .containers-container{
   display: flex;
   flex-wrap: wrap;
+}
+
+.dashboard-container-title{
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 700;
 }
 
 /* fonts */
@@ -83,3 +87,5 @@ code {
   src: url(https://fonts.gstatic.com/s/dmsans/v11/rP2Cp2ywxg089UriASitCBimC3YU-Ck.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+
+

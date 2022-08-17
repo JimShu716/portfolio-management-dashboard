@@ -9,13 +9,13 @@ const Stock = (props) =>{
         <div style={{display: "flex"}}>
             <Sidebar title="Trade" />
             <div style={{flexGrow: 1}}>
-                <Header path="Trade" />
+                <Header path="Trade"/>
                 <div className="containers-container">
-                    <div className="dashboard-container" style={{height: "100px", width: "200px"}}>
-                        <div className="dashboard-container-title">Total</div>
+                    <div className="dashboard-container" style={{height: "200px", width: "250px"}}>
+                        <div className="dashboard-container-title">Title</div>
                     </div>
-                    <div className="dashboard-container" style={{height: "100px", width: "200px"}}>
-                        <div className="dashboard-container-title">Overview</div>
+                    <div className="dashboard-container" style={{height: "200px", width: "250px"}}>
+                        <div className="dashboard-container-title">Title 2</div>
                     </div>
                 </div>
             </div>
