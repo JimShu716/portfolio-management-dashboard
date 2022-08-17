@@ -15,4 +15,6 @@ public interface PortfolioManagementService {
     public void updateUserPassWord(int userID, String passWord);
 
     public void addUserTradeHistory(User user);
+
+    public void updateUserBlance(int userID, double balance);
 }

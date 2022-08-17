@@ -15,6 +15,11 @@ public class User implements Serializable {
     @Column(name="email")
     private String email;
 
+
+    @Column(name="balance")
+    private double balance;
+
+
     @Column(name="userName")
     private String userName;
 
@@ -34,6 +39,12 @@ public class User implements Serializable {
         this.userPassword = userPassword;
     }
 
+    public User(int userID, double balance) {
+        this.userID = userID;
+        this.balance = balance;
+    }
+
+
     public User() {
         TradeHistories = new ArrayList<TradeHistory>();
     }
@@ -50,6 +61,15 @@ public class User implements Serializable {
     public void setUserID(int userID) {
         this.userID = userID;
     }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
 
     public String getEmail() {
         return email;

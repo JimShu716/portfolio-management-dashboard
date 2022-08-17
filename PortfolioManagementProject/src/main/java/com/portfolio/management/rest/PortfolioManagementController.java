@@ -48,6 +48,13 @@ public class PortfolioManagementController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    //http://localhost:8080/H1@gmail.com/250/changePassWord
+    @PutMapping(value = "/{userID}/{balance}/updateBalance")
+    public ResponseEntity changeBalance(@PathVariable int userID, @PathVariable double balance){
+        portfolioManagementService.updateUserBlance(userID, balance);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     @PutMapping(value = "/user/addTradeHistory")
     public ResponseEntity addUserTradeHistory(@RequestBody User user){
         portfolioManagementService.addUserTradeHistory(user);

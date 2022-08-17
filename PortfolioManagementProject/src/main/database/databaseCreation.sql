@@ -3,12 +3,13 @@ use portfolio;
 
 create table userAccount (
 userID int primary key not null auto_increment,
-email varchar (50),
+balance double,
+email varchar (50) unique,
 userName varchar (50),
 userPassword varchar(50));
 
 
-create table TradeHistoryID (
+create table TradeHistory (
 TradeHistoryID int primary key not null auto_increment,
 purchasedPrice double,
 purchasedTime varchar (50),
