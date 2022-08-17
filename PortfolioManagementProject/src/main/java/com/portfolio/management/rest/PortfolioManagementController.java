@@ -34,34 +34,24 @@ public class PortfolioManagementController {
 
     //http://localhost:8080/adduser/K1@gmail.com/Kate/1111
     //http://localhost:8080/?email=K1@gmail.com&name=Kate&passWord=1111
-    @PostMapping(value = "/adduser/{userID}/{email}/{userName}/{passWord}")
-    public ResponseEntity setUserInformation(@PathVariable int userID, @PathVariable String email, @PathVariable String userName, @PathVariable String passWord){
-        User user = new User(userID, email, userName, passWord);
+    @PostMapping(value = "/addUser/{email}/{userName}/{passWord}")
+    public ResponseEntity setUserInformation(@PathVariable String email, @PathVariable String userName, @PathVariable String passWord){
+        User user = new User(email, userName, passWord);
         portfolioManagementService.addUser(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    //http://localhost:8080/H1@gmail.com/250/changePassWord
-    @PutMapping(value = "/{userID}/{passWord}/changePassWord")
+    @PutMapping(value = "/changePassWord/{userID}/{passWord}")
     public ResponseEntity changePassWord(@PathVariable int userID, @PathVariable String passWord){
-        portfolioManagementService.updateUserPassWord(userID, passWord);
-        return new ResponseEntity(HttpStatus.OK);
+        User user = portfolioManagementService.updateUserPassWord(userID, passWord);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    //http://localhost:8080/H1@gmail.com/250/changePassWord
-    @PutMapping(value = "/{userID}/{balance}/updateBalance")
+    @PutMapping(value = "/updateBalance/{userID}/{balance}")
     public ResponseEntity changeBalance(@PathVariable int userID, @PathVariable double balance){
-        portfolioManagementService.updateUserBlance(userID, balance);
-        return new ResponseEntity(HttpStatus.OK);
+        User user = portfolioManagementService.updateUserBalance(userID, balance);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
-
-    @PutMapping(value = "/user/addTradeHistory")
-    public ResponseEntity addUserTradeHistory(@RequestBody User user){
-        portfolioManagementService.addUserTradeHistory(user);
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
-
 
 
 }

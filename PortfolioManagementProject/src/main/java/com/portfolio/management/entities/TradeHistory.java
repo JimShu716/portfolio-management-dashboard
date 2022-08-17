@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name="TradeHistoryID")
+@Table(name="TradeHistory")
 public class TradeHistory implements Serializable {
     //Instance variables
 
@@ -40,8 +40,7 @@ public class TradeHistory implements Serializable {
 
     public TradeHistory(){}
 
-    public TradeHistory(int tradeHistoryID, double purchasedPrice, String purchasedTime, int purchasedQuantities, int userID, int stockID) {
-        TradeHistoryID = tradeHistoryID;
+    public TradeHistory(double purchasedPrice, String purchasedTime, int purchasedQuantities, int userID, int stockID) {
         this.purchasedPrice = purchasedPrice;
         this.purchasedTime = purchasedTime;
         this.purchasedQuantities = purchasedQuantities;

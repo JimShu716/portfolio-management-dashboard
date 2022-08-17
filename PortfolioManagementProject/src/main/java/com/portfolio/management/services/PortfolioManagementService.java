@@ -12,9 +12,9 @@ public interface PortfolioManagementService {
 
     public void addUser(User user);
 
-    public void updateUserPassWord(int userID, String passWord);
+    public User updateUserPassWord(int userID, String passWord);
 
     public void addUserTradeHistory(User user);
 
-    public void updateUserBlance(int userID, double balance);
+    public User updateUserBalance(int userID, double balance);
 }

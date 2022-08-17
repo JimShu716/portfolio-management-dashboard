@@ -28,12 +28,26 @@ public class PortfolioManagementServiceImpl implements PortfolioManagementServic
     }
 
 
-    public void updateUserPassWord(int userID, String passWord) {
-        portfolioManagementRepository.save(new User(userID, passWord));
+    public User updateUserPassWord(int userID, String passWord) {
+        Optional<User> user = portfolioManagementRepository.findById(userID);
+        User curUser = null;
+        if(user.isPresent()) {
+            curUser = user.get();
+            curUser.setUserPassword(passWord);
+            portfolioManagementRepository.save(curUser);
+        }
+        return curUser;
     }
 
-    public void updateUserBlance(int userID, double balance) {
-        portfolioManagementRepository.save(new User(userID, balance));
+    public User updateUserBalance(int userID, double balance) {
+        Optional<User> user = portfolioManagementRepository.findById(userID);
+        User curUser = null;
+        if(user.isPresent()) {
+            curUser = user.get();
+            curUser.setBalance(balance);
+            portfolioManagementRepository.save(curUser);
+        }
+        return curUser;
     }
 
     public void addUserTradeHistory(User user) {
