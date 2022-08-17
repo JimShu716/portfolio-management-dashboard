@@ -13,8 +13,14 @@ public class TradeHistory implements Serializable {
     @Column(name="TradeHistoryID")
     private int TradeHistoryID;
 
+
+    @Column(name="property")
+    private String property;
+
+
     @Column(name="purchasedPrice")
     private double purchasedPrice;
+
 
     @Column(name="purchasedTime")
     private String purchasedTime;
@@ -22,6 +28,13 @@ public class TradeHistory implements Serializable {
 
     @Column(name="purchasedQuantities")
     private int purchasedQuantities;
+
+    //    @ManyToOne
+    @JoinColumn(name = "userID")
+    private int userID;
+
+    @Column(name="stockID")
+    private int stockID;
 
     public int getUserID() {
         return userID;
@@ -31,16 +44,18 @@ public class TradeHistory implements Serializable {
         this.userID = userID;
     }
 
-    //    @ManyToOne
-    @JoinColumn(name = "userID")
-    private int userID;
+    public String getProperty() {
+        return property;
+    }
 
-    @Column(name="stockID")
-    private int stockID;
+    public void setProperty(String property) {
+        this.property = property;
+    }
 
     public TradeHistory(){}
 
-    public TradeHistory(double purchasedPrice, String purchasedTime, int purchasedQuantities, int userID, int stockID) {
+    public TradeHistory(String property, double purchasedPrice, String purchasedTime, int purchasedQuantities, int userID, int stockID) {
+        this.property = property;
         this.purchasedPrice = purchasedPrice;
         this.purchasedTime = purchasedTime;
         this.purchasedQuantities = purchasedQuantities;

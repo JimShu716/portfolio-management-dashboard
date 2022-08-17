@@ -18,10 +18,46 @@ public class TradeHistoryController {
     @Autowired
     private TradeHistoryService tradeHistoryService;
 
+    @Autowired
+    private PortfolioManagementService portfolioManagementService;
+
     @PostMapping(value = "/addTradeHistory")
     public ResponseEntity addTradeHistory(@RequestBody TradeHistory tradeHistory){
-        tradeHistoryService.addTradeHistory(tradeHistory);
-        return new ResponseEntity<>(tradeHistory, HttpStatus.OK);
+        String propperty = tradeHistory.getProperty();
+        int userID = tradeHistory.getUserID();
+        int stockID = tradeHistory.getStockID();
+        int purchasedQuantities = tradeHistory.getPurchasedQuantities();
+        Double curBalance = portfolioManagementService.getBalance(userID);
+        Double transactionMoney = tradeHistory.getPurchasedQuantities()* tradeHistory.getPurchasedPrice();
+        if (propperty.equals("buy")) {
+            if (curBalance > transactionMoney ) {
+                // add this record to TradeHistory table
+                tradeHistoryService.addTradeHistory(tradeHistory);
+
+                // update the curBalance in the User table
+                curBalance = curBalance - transactionMoney;
+                User user = portfolioManagementService.updateUserBalance(userID, curBalance);
+                return new ResponseEntity<>(user, HttpStatus.OK);
+            } else {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body("Insufficient Balance, transaction is forbidden");
+            }
+        } if (propperty.equals("sale")) {
+            int holdingStockQuantities = tradeHistoryService.getHoldingStockQuantities(userID, stockID);
+            if (purchasedQuantities <= holdingStockQuantities) {
+                // add this record to TradeHistory table
+                tradeHistoryService.addTradeHistory(tradeHistory);
+
+                // update the curBalance in the User table
+                curBalance = curBalance + transactionMoney;
+                User user = portfolioManagementService.updateUserBalance(userID, curBalance);
+                return new ResponseEntity<>(user, HttpStatus.OK);
+            } else {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body("Insufficient Stock holding, transaction is forbidden. Your current holding is" + holdingStockQuantities);
+            }
+        }
+        return null;
     }
 
     @GetMapping(value = "/tradeHistory/{tradeHistoryID}")

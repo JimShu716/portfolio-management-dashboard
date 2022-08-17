@@ -17,4 +17,6 @@ public interface PortfolioManagementService {
     public void addUserTradeHistory(User user);
 
     public User updateUserBalance(int userID, double balance);
+
+    public double getBalance(int userID);
 }

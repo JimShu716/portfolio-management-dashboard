@@ -54,5 +54,19 @@ public class PortfolioManagementServiceImpl implements PortfolioManagementServic
         portfolioManagementRepository.save(user);
     }
 
+    /**
+     * get current balance of the user using the provided userID
+     * @param userID
+     */
+    public double getBalance(int userID) {
+        Optional<User> user = portfolioManagementRepository.findById(userID);
+        User curUser = null;
+        if(user.isPresent()) {
+            curUser = user.get();
+            double balance = curUser.getBalance();
+            return balance;
+        }
+        return -0.1;
+    }
 
 }

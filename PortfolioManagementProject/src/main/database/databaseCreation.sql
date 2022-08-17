@@ -11,6 +11,7 @@ userPassword varchar(50));
 
 create table TradeHistory (
 TradeHistoryID int primary key not null auto_increment,
+property varchar (50), ----buy or sell-
 purchasedPrice double,
 purchasedTime varchar (50),
 purchasedQuantities int,

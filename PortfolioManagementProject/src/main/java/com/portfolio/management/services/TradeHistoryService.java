@@ -9,4 +9,6 @@ public interface TradeHistoryService {
     public void addTradeHistory(com.portfolio.management.entities.TradeHistory tradeHistory);
 
     public Optional<TradeHistory> fetchTradeHistoryById(int tradeHistoryID);
+
+    public int getHoldingStockQuantities(int userID, int stockID);
 }

@@ -1,1 +1,1 @@
-PUT http://localhost:8080/updateBalance/1/10000000
+PUT http://localhost:8080/updateBalance/1/100

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import java.util.*;
 @Service
 public class TradeHistoryServiceImpl implements TradeHistoryService {
     @Autowired
@@ -22,6 +23,19 @@ public class TradeHistoryServiceImpl implements TradeHistoryService {
     public Optional<TradeHistory> fetchTradeHistoryById(int tradeHistoryID){
         Optional<TradeHistory> tradeHistory = tradeHistoryRepository.findById(tradeHistoryID);
         return tradeHistory;
+    }
+
+    public int getHoldingStockQuantities(int userID, int stockID) {
+        ArrayList<TradeHistory> tradeHistories = tradeHistoryRepository.findByUserIDAndStockID(userID,stockID);
+        int totalQuantity = 0;
+        for (TradeHistory tradeHistory : tradeHistories) {
+            if (tradeHistory.getProperty().equals("buy")) {
+                totalQuantity += tradeHistory.getPurchasedQuantities();
+            } else if (tradeHistory.getProperty().equals("sale")) {
+                totalQuantity -= tradeHistory.getPurchasedQuantities();
+            }
+        }
+        return totalQuantity;
     }
 
 }
