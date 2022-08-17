@@ -48,6 +48,12 @@ public class PortfolioManagementController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @PutMapping(value = "/user/addTradeHistory")
+    public ResponseEntity addUserTradeHistory(@RequestBody User user){
+        portfolioManagementService.addUserTradeHistory(user);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
 
 
 

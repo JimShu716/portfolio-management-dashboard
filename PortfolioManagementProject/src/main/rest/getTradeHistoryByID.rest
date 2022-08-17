@@ -1,1 +1,1 @@
-GET http://localhost:8080/tradeHistory/1
+GET http://localhost:8080/tradeHistory/5

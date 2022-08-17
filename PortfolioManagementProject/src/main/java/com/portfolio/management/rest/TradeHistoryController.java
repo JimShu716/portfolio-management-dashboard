@@ -18,7 +18,7 @@ public class TradeHistoryController {
     @Autowired
     private TradeHistoryService tradeHistoryService;
 
-    @PostMapping(value = "/addTradeHistory")
+    @PostMapping(value = "/addTradeHistory.rest")
     public ResponseEntity addTradeHistory(@RequestBody TradeHistory tradeHistory){
         tradeHistoryService.addTradeHistory(tradeHistory);
         return new ResponseEntity<>(tradeHistory, HttpStatus.OK);

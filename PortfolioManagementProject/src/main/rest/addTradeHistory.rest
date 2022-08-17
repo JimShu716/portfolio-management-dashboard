@@ -2,10 +2,10 @@ POST http://localhost:8080/addTradeHistory
 Content-type: application/json
 
 {
-    "TradeHistoryID" : 1,
+    "TradeHistoryID" :6,
     "purchasedPrice" : 2.3,
     "purchasedTime" : "13:99",
     "purchasedQuantities" : 10,
-    "userID" : 1,
-    "stockID" : 1111111
+    "userID" : 2,
+    "stockID" : 6
 }

@@ -9,7 +9,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableSwagger2
 @Import(com.portfolio.management.SwaggerConfig.class)
-@ComponentScan // required in order for tests to pick up @Components
 public class AppConfig {
     public static void main(String[] args) {
         SpringApplication.run(AppConfig.class);
@@ -17,7 +16,4 @@ public class AppConfig {
 
 
 }
-
-
-
 

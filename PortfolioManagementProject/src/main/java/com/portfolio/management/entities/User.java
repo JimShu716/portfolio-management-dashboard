@@ -34,11 +34,14 @@ public class User implements Serializable {
         this.userPassword = userPassword;
     }
 
-    public User() {}
+    public User() {
+        TradeHistories = new ArrayList<TradeHistory>();
+    }
 
 
-    @OneToMany(mappedBy = "userID", targetEntity = TradeHistory.class, cascade={CascadeType.ALL})
-    private List<TradeHistory> TradeHistories = new ArrayList<TradeHistory>();
+    @JoinColumn(name="userId", referencedColumnName="userId")
+    @OneToMany(/*mappedBy = "user",*/ cascade={CascadeType.ALL})
+    private List<TradeHistory> TradeHistories;
 
     public int getUserID() {
         return userID;
