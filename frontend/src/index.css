@@ -18,19 +18,38 @@ code {
   padding: 25px 25px 0 25px;
   background-color: white;
   border-radius: 20px;
+  flex-grow: 9;
  }
+
 
 .dashboard-fancy-container {
   margin-left: 20px;
   margin-bottom: 20px;
+  min-width: 220px;
   padding: 25px 25px 0 25px;
-  background-color: rgb(35, 98, 241);;
+  background-color: rgb(35, 98, 241);
   color: white;
   border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.dashboard-fancy-container-button{
+  padding: 12px 12px 12px 12px;
+  border-radius: 10px;
+  background-color: white;
+  display: flex;
+  color: #1f1c2e;
+  font-weight: 700;
+  margin-bottom: 15px;
+  justify-content: center;
+  align-items: center;
 }
 
 .containers-container{
   display: flex;
+  padding-right: 25px;
   flex-wrap: wrap;
 }
 
