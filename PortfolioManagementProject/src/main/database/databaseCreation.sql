@@ -1,25 +1,20 @@
 CREATE DATABASE IF NOT EXISTS portfolio;
 use portfolio;
+
 create table userAccount (
-email varchar (50) primary key not null,
+userID int primary key not null auto_increment,
+balance double,
+email varchar (50) unique,
 userName varchar (50),
 userPassword varchar(50));
 
 
-create table stock (
-stockID int primary key not null,
-stockName varchar (50)
-);
-
-
-
-create table TradeHistoryID (
-TradeHistoryID int primary key not null,
+create table TradeHistory (
+TradeHistoryID int primary key not null auto_increment,
 purchasedPrice double,
-purchasedTime DATETIME,
+purchasedTime varchar (50),
 purchasedQuantities int,
-email varchar (50),
+userID int,
 stockID int,
-FOREIGN KEY (email) REFERENCES userAccount(email),
-FOREIGN KEY (stockID) REFERENCES stock(stockID)
+FOREIGN KEY (userID) REFERENCES userAccount(userID)
 );

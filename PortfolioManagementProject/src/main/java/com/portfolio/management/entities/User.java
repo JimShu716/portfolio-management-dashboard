@@ -10,8 +10,15 @@ import java.util.List;
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int userID;
+
     @Column(name="email")
     private String email;
+
+
+    @Column(name="balance")
+    private double balance;
+
 
     @Column(name="userName")
     private String userName;
@@ -26,7 +33,42 @@ public class User implements Serializable {
         this.userPassword = userPassword;
     }
 
-    public User() {}
+    public User(int userID, String userPassword) {
+        this.userID = userID;
+        this.userPassword = userPassword;
+    }
+
+    public User(int userID, double balance) {
+        this.userID = userID;
+        this.balance = balance;
+    }
+
+
+    public User() {
+        TradeHistories = new ArrayList<TradeHistory>();
+    }
+
+
+    @JoinColumn(name="userId", referencedColumnName="userId")
+    @OneToMany(/*mappedBy = "user",*/ cascade={CascadeType.ALL})
+    private List<TradeHistory> TradeHistories;
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
 
     public String getEmail() {
         return email;
@@ -52,8 +94,11 @@ public class User implements Serializable {
         this.userPassword = userPassword;
     }
 
-    //@OneToMany( cascade={CascadeType.MERGE, CascadeType.PERSIST})
+    public List<TradeHistory> getTradeHistories() {
+        return TradeHistories;
+    }
 
-    @OneToMany(mappedBy = "email", cascade={CascadeType.MERGE, CascadeType.PERSIST})
-    private List<TradeHistory> TradeHistories = new ArrayList<TradeHistory>();
+    public void setTradeHistories(List<TradeHistory> tradeHistories) {
+        TradeHistories = tradeHistories;
+    }
 }
