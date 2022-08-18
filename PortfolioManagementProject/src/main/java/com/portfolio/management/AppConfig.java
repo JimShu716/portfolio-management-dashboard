@@ -1,4 +1,4 @@
-package com.portfolio.management;
+package com.portfolio.management.AppConfig;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
