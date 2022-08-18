@@ -23,7 +23,7 @@ const Sidebar = () =>{
         const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
         const today = new Date();
         const currentTime = weekday[today.getDay()] + " " + today.getHours() + ":" + today.getMinutes()
-        if(today.getDay()%6 === 0 && today.getHours() < 9 && today.getHours() > 17){
+        if(today.getDay()%6 === 0 || today.getHours() < 9 || today.getHours() > 17){
             setIsMarketsOpen(false);
         }else{
             setIsMarketsOpen(true);

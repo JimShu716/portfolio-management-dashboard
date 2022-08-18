@@ -9,6 +9,7 @@ const User = (props) =>{
     const [response, setResponse] = useState("");
 
     useEffect(()=>{
+        // get data from backend
         axios.get(process.env.REACT_APP_HOST + '/1', ).then(r => {
             console.log(r)
         });
