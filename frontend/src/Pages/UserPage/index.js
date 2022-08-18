@@ -18,7 +18,7 @@ const User = (props) =>{
     return (
         <div style={{display: "flex"}}>
             <Sidebar title="User Profile" />
-            <div style={{flexGrow: 1, marginBottom: "5px"}}>
+            <div style={{flexGrow: 1}}>
                 <Header />
                 <div style={{height:"calc(100vh - 56px)"}}>
                     <div className="containers-container" style={{height: "50%"}}>

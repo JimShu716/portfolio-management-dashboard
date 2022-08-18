@@ -10,7 +10,7 @@ const Stock = (props) =>{
             <Sidebar title="Trade" />
             <div style={{flexGrow: 1}}>
                 <Header />
-                <div className="containers-container" style={{height: "calc(100vh - 100px)", marginBottom: "5px"}}>
+                <div className="containers-container" style={{height: "calc(100vh - 100px)"}}>
                     <div className="dashboard-container" style={{height: "100%"}}>
                         <div className="dashboard-container-title">Stock Chart</div>
                     </div>

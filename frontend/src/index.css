@@ -44,7 +44,15 @@ code {
   font-weight: 700;
   margin-bottom: 15px;
   justify-content: center;
+  cursor: pointer;
   align-items: center;
+  box-shadow: 0 2px 6px 0 rgba(136,148,171,.2),0 24px 20px -24px rgba(71,82,107,.1);
+}
+
+.dashboard-fancy-container-button:hover{
+  background-color: rgb(35, 98, 241);
+  border: 1px solid white;
+  color: white;
 }
 
 .containers-container{
