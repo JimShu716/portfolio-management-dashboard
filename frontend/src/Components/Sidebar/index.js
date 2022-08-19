@@ -9,6 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import SideBarOpenContext from "./SideBarContext";
 import sun from './../../Assets/cloudy.png';
 import moon from './../../Assets/moon.png'
+import axios from "axios";
 
 const Sidebar = () =>{
     const [open, setOpen] = useContext(SideBarOpenContext);

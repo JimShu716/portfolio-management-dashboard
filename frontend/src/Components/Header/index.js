@@ -1,17 +1,28 @@
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import {Link} from 'react-router-dom';
 import './styles.css';
 import SideBarOpenContext from "../Sidebar/SideBarContext";
 import IconButton from "@mui/material/IconButton";
 import { MdMenu, MdOutlineLogout, MdOutlineSearch } from 'react-icons/md';
 import Input from "@mui/material/Input";
+import StockContext from "./StockContext";
 
 const Header = (props) =>{
     const [open, setOpen] = useContext(SideBarOpenContext);
+    const [searchBarInput, setSearchBarInput] = useState("");
+    const [stockSymbol, setStockSymbol] = useContext(StockContext);
 
     const handleDrawer = () => {
         setOpen(!open);
     };
+
+    const updateSearchBar = (event) => {
+        setSearchBarInput(event.target.value);
+    }
+
+    function updateStockContext() {
+        setStockSymbol(searchBarInput);
+    }
 
     return(
         <div className="headerToolBar">
@@ -40,7 +51,13 @@ const Header = (props) =>{
                     color: "rgba(58, 53, 65, 0.87)",
                     "& .MuiInput-input": {padding: 0,
                         color: "rgba(58, 53, 65, 0.87)"},
-                    }} inputProps={"description"} disableUnderline={true} />
+                    }} inputProps={"description"} disableUnderline={true}
+                       onChange={event => updateSearchBar(event)}
+                       onKeyPress={event => {
+                            if (event.key === 'Enter') {
+                                updateStockContext();
+                        }
+                        }}/>
             </div>
             <div>
                 <Link style={{ textDecoration: 'none', color: 'rgb(33, 43, 54)' }} to={'/'}>
