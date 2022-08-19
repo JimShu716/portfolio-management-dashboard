@@ -1,33 +1,9 @@
-.appbar{
-    height: 60px;
-    background-color: #212529 !important;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif !important;
+.headerToolBar{
+    padding: 16px 20px 8px 23px;
+    display: flex;
+    justify-content: space-between;
 }
 
-.sidebarList{
-    margin-top: 60px !important;
-    color: #636466;
-}
-
-.navBarLink{
-    color: #636466;
-    width: 125px;
-    margin: 10px 0 0;
-    padding: 0;
-    text-decoration: none !important;
-}
-
-.navBarLink:hover{
-    color: #212529;
-}
-
-.navBarLink:visited{
-    color: #212529;
-    text-decoration: none !important;
-}
-
-.navBarLinkText{
-    margin-left: 15px;
+.headerButton{
+    margin-left: 20px;
 }
