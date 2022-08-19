@@ -9,5 +9,7 @@ import java.util.*;
 
 @Repository
 public interface TradeHistoryRepository extends JpaRepository<TradeHistory, Integer> {
-    ArrayList<TradeHistory> findByUserIDAndStockID(int userID, int stockID);
+    ArrayList<TradeHistory> findByUserIDAndStockSymbol(int userID, String stockSymbol);
+
+    ArrayList<TradeHistory> findByUserID(int userID);
 }

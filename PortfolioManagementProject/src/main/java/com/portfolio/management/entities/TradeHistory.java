@@ -33,8 +33,8 @@ public class TradeHistory implements Serializable {
     @JoinColumn(name = "userID")
     private int userID;
 
-    @Column(name="stockID")
-    private int stockID;
+    @Column(name="stockSymbol")
+    private String stockSymbol;
 
     public int getUserID() {
         return userID;
@@ -54,13 +54,13 @@ public class TradeHistory implements Serializable {
 
     public TradeHistory(){}
 
-    public TradeHistory(String property, double purchasedPrice, String purchasedTime, int purchasedQuantities, int userID, int stockID) {
+    public TradeHistory(String property, double purchasedPrice, String purchasedTime, int purchasedQuantities, int userID, String stockSymbol) {
         this.property = property;
         this.purchasedPrice = purchasedPrice;
         this.purchasedTime = purchasedTime;
         this.purchasedQuantities = purchasedQuantities;
         this.userID = userID;
-        this.stockID = stockID;
+        this.stockSymbol = stockSymbol;
     }
 
     public int getTradeHistoryID() {
@@ -95,12 +95,11 @@ public class TradeHistory implements Serializable {
         this.purchasedQuantities = purchasedQuantities;
     }
 
-
-    public int getStockID() {
-        return stockID;
+    public String getStockSymbol() {
+        return stockSymbol;
     }
 
-    public void setStockID(int stockID) {
-        this.stockID = stockID;
+    public void setStockSymbol(String stockSymbol) {
+        this.stockSymbol = stockSymbol;
     }
 }

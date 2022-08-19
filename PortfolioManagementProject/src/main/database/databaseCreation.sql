@@ -16,6 +16,6 @@ purchasedPrice double,
 purchasedTime varchar (50),
 purchasedQuantities int,
 userID int,
-stockID int,
+stockSymbol varchar (50),
 FOREIGN KEY (userID) REFERENCES userAccount(userID)
 );

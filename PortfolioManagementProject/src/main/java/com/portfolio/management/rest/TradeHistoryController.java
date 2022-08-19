@@ -1,5 +1,6 @@
 package com.portfolio.management.rest;
 
+import com.mashape.unirest.http.exceptions.UnirestException;
 import com.portfolio.management.entities.TradeHistory;
 import com.portfolio.management.entities.User;
 import com.portfolio.management.services.PortfolioManagementService;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @RestController
@@ -25,7 +27,7 @@ public class TradeHistoryController {
     public ResponseEntity addTradeHistory(@RequestBody TradeHistory tradeHistory){
         String propperty = tradeHistory.getProperty();
         int userID = tradeHistory.getUserID();
-        int stockID = tradeHistory.getStockID();
+        String stockSymbol = tradeHistory.getStockSymbol();
         int purchasedQuantities = tradeHistory.getPurchasedQuantities();
         Double curBalance = portfolioManagementService.getBalance(userID);
         Double transactionMoney = tradeHistory.getPurchasedQuantities()* tradeHistory.getPurchasedPrice();
@@ -43,7 +45,7 @@ public class TradeHistoryController {
                         .body("Insufficient Balance, transaction is forbidden");
             }
         } if (propperty.equals("sale")) {
-            int holdingStockQuantities = tradeHistoryService.getHoldingStockQuantities(userID, stockID);
+            int holdingStockQuantities = tradeHistoryService.getHoldingStockQuantities(userID, stockSymbol);
             if (purchasedQuantities <= holdingStockQuantities) {
                 // add this record to TradeHistory table
                 tradeHistoryService.addTradeHistory(tradeHistory);
@@ -73,13 +75,8 @@ public class TradeHistoryController {
 
 
     @GetMapping(value = "/currentTotalWealth/{userID}")
-    public ResponseEntity<User> getInvestmentWealthByUserID(@PathVariable int userID) {
-        Optional<User> user  = portfolioManagementService.fetchUserById(userID);
-        if (user.isPresent()) {
-            return new ResponseEntity<User>(user.get(), HttpStatus.OK);
-        }
-        else{
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<User> getInvestmentWealthByUserID(@PathVariable int userID) throws UnirestException {
+        BigDecimal wealth = tradeHistoryService.getCurrentWealth(userID);
+        return new ResponseEntity(wealth, HttpStatus.OK);
     }
 }

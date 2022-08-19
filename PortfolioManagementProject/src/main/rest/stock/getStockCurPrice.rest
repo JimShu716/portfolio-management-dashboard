@@ -1,1 +1,1 @@
-GET http://localhost:8080/getStockInfo/AAPL
+GET http://localhost:8080/getStockCurrentPrice/AAPL
