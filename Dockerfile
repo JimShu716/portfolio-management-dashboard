@@ -1,3 +1,5 @@
+package com.portfolio.management;
+
 FROM maven:3.6.3-openjdk-11 AS compile
 COPY . /usr/src/mymaven
 WORKDIR /usr/src/mymaven

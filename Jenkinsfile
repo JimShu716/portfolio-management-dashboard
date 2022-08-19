@@ -1,3 +1,5 @@
+package com.portfolio.management;
+
 def projectName = 'portfoliomanagement'
 def version = "0.0.${currentBuild.number}"
 def dockerImageTag = "${projectName}:${version}"
