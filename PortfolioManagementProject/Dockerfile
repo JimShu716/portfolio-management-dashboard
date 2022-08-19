@@ -10,7 +10,7 @@ RUN wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java_8.
 RUN dpkg -i /tmp/mysql-connector.deb
 COPY --from=compile /usr/src/mymaven/target/PortfolioManagementProject-0.0.1-SNAPSHOT.jar app.jar
 RUN pwd
-COPY ./src/main/resources/application-docker.properties application.properties
+COPY PortfolioManagementProject/src/main/resources/application-docker.properties application.properties
 EXPOSE 8080
 ENV JAVA_OPTS=""
 ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/urandom -jar /app.jar" ]
