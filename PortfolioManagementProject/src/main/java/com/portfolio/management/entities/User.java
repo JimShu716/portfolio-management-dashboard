@@ -2,6 +2,7 @@ package com.portfolio.management.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class User implements Serializable {
 
 
     @Column(name="balance")
-    private double balance;
+    private BigDecimal balance;
 
 
     @Column(name="userName")
@@ -38,7 +39,7 @@ public class User implements Serializable {
         this.userPassword = userPassword;
     }
 
-    public User(int userID, double balance) {
+    public User(int userID, BigDecimal balance) {
         this.userID = userID;
         this.balance = balance;
     }
@@ -61,14 +62,13 @@ public class User implements Serializable {
         this.userID = userID;
     }
 
-    public double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
-
 
     public String getEmail() {
         return email;

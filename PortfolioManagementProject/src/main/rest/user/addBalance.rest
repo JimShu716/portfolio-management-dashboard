@@ -1,0 +1,1 @@
+PUT http://localhost:8080/addBalance/1/100

@@ -2,6 +2,7 @@ package com.portfolio.management.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name="TradeHistory")
@@ -19,7 +20,7 @@ public class TradeHistory implements Serializable {
 
 
     @Column(name="purchasedPrice")
-    private double purchasedPrice;
+    private BigDecimal purchasedPrice;
 
 
     @Column(name="purchasedTime")
@@ -54,7 +55,7 @@ public class TradeHistory implements Serializable {
 
     public TradeHistory(){}
 
-    public TradeHistory(String property, double purchasedPrice, String purchasedTime, int purchasedQuantities, int userID, String stockSymbol) {
+    public TradeHistory(String property, BigDecimal purchasedPrice, String purchasedTime, int purchasedQuantities, int userID, String stockSymbol) {
         this.property = property;
         this.purchasedPrice = purchasedPrice;
         this.purchasedTime = purchasedTime;
@@ -71,11 +72,11 @@ public class TradeHistory implements Serializable {
         TradeHistoryID = tradeHistoryID;
     }
 
-    public double getPurchasedPrice() {
+    public BigDecimal getPurchasedPrice() {
         return purchasedPrice;
     }
 
-    public void setPurchasedPrice(double purchasedPrice) {
+    public void setPurchasedPrice(BigDecimal purchasedPrice) {
         this.purchasedPrice = purchasedPrice;
     }
 
