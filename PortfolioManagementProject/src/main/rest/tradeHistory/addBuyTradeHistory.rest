@@ -1,0 +1,11 @@
+POST http://localhost:8080/addTradeHistory
+Content-type: application/json
+
+{
+    "property" : "buy",
+    "purchasedPrice" : 2.3,
+    "purchasedTime" : "13:99",
+    "purchasedQuantities" : 10,
+    "userID" : 1,
+    "stockSymbol" : "AAPL"
+}

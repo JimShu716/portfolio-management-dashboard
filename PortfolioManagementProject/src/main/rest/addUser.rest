@@ -1,2 +1,0 @@
-POST http://localhost:8080/adduser/A1@gmail.com/Abi/1111
-Content-type: application/json
