@@ -1,2 +1,2 @@
-POST http://localhost:8080/addUser/A1@gmail.com/Abi/1111
+POST http://localhost:8080/addUser/A2@gmail.com/Abi/1111
 Content-type: application/json

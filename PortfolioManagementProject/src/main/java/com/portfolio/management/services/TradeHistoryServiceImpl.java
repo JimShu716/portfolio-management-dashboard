@@ -6,6 +6,7 @@ import com.portfolio.management.repos.TradeHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import java.util.*;
@@ -37,5 +38,12 @@ public class TradeHistoryServiceImpl implements TradeHistoryService {
         }
         return totalQuantity;
     }
+
+    HashMap<String, BigDecimal> cache = new HashMap<>();
+//    public BigDecimal getCurrentWealth() {
+//
+//    }
+
+
 
 }

@@ -18,18 +18,6 @@ import java.util.Optional;
 @CrossOrigin // allows requests from all domains
 public class MarketDataController {
 
-//    @GetMapping(value = "/getStockInfo.rest/{stockSymbol}")
-//    public JSONObject getTradeHistoryWithID(@PathVariable String stockSymbol) {
-//        MarketData marketData = new MarketData(stockSymbol);
-//        JSONObject stockInfo;
-//        try {
-//            stockInfo = marketData.getStockInfo.rest();
-//        } catch (UnirestException e) {
-//            throw new RuntimeException(e);
-//        }
-//        return stockInfo;
-//    }
-
     @GetMapping(value = "/getStockInfo/{stockSymbol}")
     public ResponseEntity getStockInfo(@PathVariable String stockSymbol) {
         MarketData marketData = new MarketData(stockSymbol);
@@ -79,6 +67,5 @@ public class MarketDataController {
             throw new RuntimeException(e);
         }
     }
-
 
 }

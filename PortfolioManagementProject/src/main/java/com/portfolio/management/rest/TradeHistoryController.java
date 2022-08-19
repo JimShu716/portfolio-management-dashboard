@@ -70,4 +70,16 @@ public class TradeHistoryController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+
+    @GetMapping(value = "/currentTotalWealth/{userID}")
+    public ResponseEntity<User> getInvestmentWealthByUserID(@PathVariable int userID) {
+        Optional<User> user  = portfolioManagementService.fetchUserById(userID);
+        if (user.isPresent()) {
+            return new ResponseEntity<User>(user.get(), HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
