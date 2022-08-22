@@ -15,7 +15,7 @@ public class MarketData {
     String endDate;
     String stockSymbol;
 
-//    private String host = "fbabe9e0ddmshc8dca04b8952fe4p139721jsn018cb444ea59";
+    private String host = "yahoo-finance97.p.rapidapi.com";
     private String apiKey = "fbabe9e0ddmshc8dca04b8952fe4p139721jsn018cb444ea59";
     public MarketData() { }
 
@@ -34,7 +34,7 @@ public class MarketData {
         HttpResponse<String> response = Unirest.post("https://yahoo-finance97.p.rapidapi.com/stock-info")
                 .header("content-type", "application/x-www-form-urlencoded")
                 .header("X-RapidAPI-Key", apiKey)
-                .header("X-RapidAPI-Host", "yahoo-finance97.p.rapidapi.com")
+                .header("X-RapidAPI-Host", host)
                 .body(bodySymbol)
                 .asString();
         String data = response.getBody();
@@ -46,7 +46,7 @@ public class MarketData {
         HttpResponse<String> response = Unirest.post("https://yahoo-finance97.p.rapidapi.com/stock-info")
                 .header("content-type", "application/x-www-form-urlencoded")
                 .header("X-RapidAPI-Key", apiKey)
-                .header("X-RapidAPI-Host", "yahoo-finance97.p.rapidapi.com")
+                .header("X-RapidAPI-Host", host)
                 .body(bodySymbol)
                 .asString();
         String data = response.getBody();
@@ -60,7 +60,7 @@ public class MarketData {
         HttpResponse<String> response = Unirest.post("https://yahoo-finance97.p.rapidapi.com/price-customdate")
                 .header("content-type", "application/x-www-form-urlencoded")
                 .header("X-RapidAPI-Key", apiKey)
-                .header("X-RapidAPI-Host", "yahoo-finance97.p.rapidapi.com")
+                .header("X-RapidAPI-Host", host)
                 .body(bodySymbolDate)
                 .asString();
         String data = response.getBody();
@@ -76,7 +76,7 @@ public class MarketData {
         HttpResponse<String> response = Unirest.post("https://yahoo-finance97.p.rapidapi.com/price-customdate")
                 .header("content-type", "application/x-www-form-urlencoded")
                 .header("X-RapidAPI-Key", apiKey)
-                .header("X-RapidAPI-Host", "yahoo-finance97.p.rapidapi.com")
+                .header("X-RapidAPI-Host", host)
                 .body(bodySymbolDate)
                 .asString();
         String data = response.getBody();
