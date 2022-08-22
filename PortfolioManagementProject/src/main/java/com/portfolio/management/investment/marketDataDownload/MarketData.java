@@ -15,6 +15,8 @@ public class MarketData {
     String endDate;
     String stockSymbol;
 
+//    private String host = "fbabe9e0ddmshc8dca04b8952fe4p139721jsn018cb444ea59";
+    private String apiKey = "fbabe9e0ddmshc8dca04b8952fe4p139721jsn018cb444ea59";
     public MarketData() { }
 
     public MarketData(String stockSymbol) {
@@ -31,7 +33,7 @@ public class MarketData {
         String bodySymbol = "symbol=" + stockSymbol;
         HttpResponse<String> response = Unirest.post("https://yahoo-finance97.p.rapidapi.com/stock-info")
                 .header("content-type", "application/x-www-form-urlencoded")
-                .header("X-RapidAPI-Key", "b477fb1a60msha44862d1aced86bp16b30bjsn5e66f649598c")
+                .header("X-RapidAPI-Key", apiKey)
                 .header("X-RapidAPI-Host", "yahoo-finance97.p.rapidapi.com")
                 .body(bodySymbol)
                 .asString();
@@ -43,7 +45,7 @@ public class MarketData {
         String bodySymbol = "symbol=" + stockSymbol;
         HttpResponse<String> response = Unirest.post("https://yahoo-finance97.p.rapidapi.com/stock-info")
                 .header("content-type", "application/x-www-form-urlencoded")
-                .header("X-RapidAPI-Key", "b477fb1a60msha44862d1aced86bp16b30bjsn5e66f649598c")
+                .header("X-RapidAPI-Key", apiKey)
                 .header("X-RapidAPI-Host", "yahoo-finance97.p.rapidapi.com")
                 .body(bodySymbol)
                 .asString();
@@ -57,7 +59,7 @@ public class MarketData {
         String bodySymbolDate = "end=" + endDate+"&symbol="+stockSymbol+"&start="+startDate;
         HttpResponse<String> response = Unirest.post("https://yahoo-finance97.p.rapidapi.com/price-customdate")
                 .header("content-type", "application/x-www-form-urlencoded")
-                .header("X-RapidAPI-Key", "b477fb1a60msha44862d1aced86bp16b30bjsn5e66f649598c")
+                .header("X-RapidAPI-Key", apiKey)
                 .header("X-RapidAPI-Host", "yahoo-finance97.p.rapidapi.com")
                 .body(bodySymbolDate)
                 .asString();
@@ -73,7 +75,7 @@ public class MarketData {
         List<BigDecimal> prices = new ArrayList<>();
         HttpResponse<String> response = Unirest.post("https://yahoo-finance97.p.rapidapi.com/price-customdate")
                 .header("content-type", "application/x-www-form-urlencoded")
-                .header("X-RapidAPI-Key", "b477fb1a60msha44862d1aced86bp16b30bjsn5e66f649598c")
+                .header("X-RapidAPI-Key", apiKey)
                 .header("X-RapidAPI-Host", "yahoo-finance97.p.rapidapi.com")
                 .body(bodySymbolDate)
                 .asString();
