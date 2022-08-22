@@ -19,3 +19,5 @@ userID int,
 stockSymbol varchar (50),
 FOREIGN KEY (userID) REFERENCES userAccount(userID)
 );
+
+select * from userAccount;
