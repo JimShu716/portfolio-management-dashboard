@@ -29,21 +29,23 @@ public class TradeHistoryController {
         int userID = tradeHistory.getUserID();
         String stockSymbol = tradeHistory.getStockSymbol();
         int purchasedQuantities = tradeHistory.getPurchasedQuantities();
-        Double curBalance = portfolioManagementService.getBalance(userID);
-        Double transactionMoney = tradeHistory.getPurchasedQuantities()* tradeHistory.getPurchasedPrice();
+        BigDecimal curBalance = portfolioManagementService.getBalance(userID);
+        BigDecimal quantity = (BigDecimal.valueOf(tradeHistory.getPurchasedQuantities()));
+        BigDecimal transactionMoney = tradeHistory.getPurchasedPrice().multiply(quantity);
         if (propperty.equals("buy")) {
-            if (curBalance > transactionMoney ) {
+            if (curBalance.compareTo(transactionMoney) > 0) { //curBalance>transactionMoney
                 // add this record to TradeHistory table
                 tradeHistoryService.addTradeHistory(tradeHistory);
 
                 // update the curBalance in the User table
-                curBalance = curBalance - transactionMoney;
+                curBalance = curBalance.subtract(transactionMoney);
                 User user = portfolioManagementService.updateUserBalance(userID, curBalance);
                 return new ResponseEntity<>(user, HttpStatus.OK);
             } else {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
                         .body("Insufficient Balance, transaction is forbidden");
             }
+
         } if (propperty.equals("sale")) {
             int holdingStockQuantities = tradeHistoryService.getHoldingStockQuantities(userID, stockSymbol);
             if (purchasedQuantities <= holdingStockQuantities) {
@@ -51,7 +53,7 @@ public class TradeHistoryController {
                 tradeHistoryService.addTradeHistory(tradeHistory);
 
                 // update the curBalance in the User table
-                curBalance = curBalance + transactionMoney;
+                curBalance = curBalance.add(transactionMoney);
                 User user = portfolioManagementService.updateUserBalance(userID, curBalance);
                 return new ResponseEntity<>(user, HttpStatus.OK);
             } else {

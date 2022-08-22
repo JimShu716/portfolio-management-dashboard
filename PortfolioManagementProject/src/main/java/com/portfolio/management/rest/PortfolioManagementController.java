@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.util.Optional;
 
@@ -47,11 +48,24 @@ public class PortfolioManagementController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/updateBalance/{userID}/{balance}")
-    public ResponseEntity changeBalance(@PathVariable int userID, @PathVariable double balance){
-        User user = portfolioManagementService.updateUserBalance(userID, balance);
+    @PutMapping(value = "/addBalance/{userID}/{balance}")
+    public ResponseEntity addBalance(@PathVariable int userID, @PathVariable BigDecimal addAmount){
+        User user = portfolioManagementService.addUserBalance(userID, addAmount);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+    @PutMapping(value = "/withDrawBalance/{userID}/{balance}")
+    public ResponseEntity withDrawBalance(@PathVariable int userID, @PathVariable BigDecimal withdrawAmount){
+        User user = null;
+        try {
+            user = portfolioManagementService.withdrawUserBalance(userID, withdrawAmount);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body("Insufficient balance. Withdraw is forbidden." );
+        }
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
 
 
 
