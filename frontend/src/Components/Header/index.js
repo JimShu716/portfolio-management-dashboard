@@ -46,12 +46,12 @@ const Header = (props) =>{
                 >
                     <MdOutlineSearch style={{paddingTop: "1px"}} />
                 </IconButton>
-                <Input placeholder="Search" sx={{
+                <Input placeholder="Search for symbols" sx={{
                     fontSize: "14px",
                     color: "rgba(58, 53, 65, 0.87)",
                     "& .MuiInput-input": {padding: 0,
                         color: "rgba(58, 53, 65, 0.87)"},
-                    }} inputProps={"description"} disableUnderline={true}
+                    }} inputProps={{ 'aria-label': 'description' }} disableUnderline={true}
                        onChange={event => updateSearchBar(event)}
                        onKeyPress={event => {
                             if (event.key === 'Enter') {

@@ -9,18 +9,19 @@ const Stock = (props) =>{
     const [stockSymbol, setStockSymbol] = useContext(StockContext);
     const [stockInfo, setStockInfo] = useState([]);
     const [stockData, setStockData] = useState([]);
-
-    useEffect(()=>{
-        axios.get(process.env.REACT_APP_HOST + 'getStockInfo/' + stockSymbol, ).then(r => {
-            // setStockInfo(r.data)
-            console.log(r.data)
-        });
-        // axios.get(process.env.REACT_APP_HOST + 'getStockPriceForADates/' + stockSymbol + "/2022-01-04/" + "/2022-01-25", ).then(r => {
-        //     setStockData(r.data)
-        // });
-    }, [])
-
-    
+    //
+    // useEffect(()=>{
+    //     axios.get(process.env.REACT_APP_HOST + 'getStockInf/' + stockSymbol, ).then(r => {
+    //         setStockInfo(r.data)
+    //         console.log(r.data)
+    //     })
+    //     .catch(function (error) {setStockInfo(error)});
+    //     axios.get(process.env.REACT_APP_HOST + 'getStockPriceForADate/' + stockSymbol + "/2022-01-04/" + "/2022-01-25", ).then(r => {
+    //         setStockData(r.data)
+    //         console.log(r.data)
+    //     }).catch(function (error) {setStockInfo(error)});
+    //     ;
+    // }, [])
 
     return (
         <div style={{display: "flex"}}>
