@@ -253,8 +253,6 @@ const Stock = (props) =>{
         stockDataArray.push([new Date(), 167.74])
 
 
-        console.log(stockDataArray)
-
         setStockData(stockDataArray)
 
     }, [])
