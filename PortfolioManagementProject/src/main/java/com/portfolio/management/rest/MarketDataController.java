@@ -26,9 +26,8 @@ public class MarketDataController {
             stockInfo = marketData.getStockInfo();
             return new ResponseEntity<>(stockInfo, HttpStatus.OK);
         } catch (UnirestException e) {
-            throw new RuntimeException(e);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
     }
 
 
@@ -40,7 +39,7 @@ public class MarketDataController {
             stockInfo = marketData.getCurrentPrice();
             return new ResponseEntity<>(stockInfo, HttpStatus.OK);
         } catch (UnirestException e) {
-            throw new RuntimeException(e);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -52,7 +51,7 @@ public class MarketDataController {
             stockInfo = marketData.getPriceByDate();
             return new ResponseEntity<>(stockInfo, HttpStatus.OK);
         } catch (UnirestException e) {
-            throw new RuntimeException(e);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -64,7 +63,7 @@ public class MarketDataController {
             stockInfo = marketData.getPricesByDates();
             return new ResponseEntity<>(stockInfo, HttpStatus.OK);
         } catch (UnirestException e) {
-            throw new RuntimeException(e);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
