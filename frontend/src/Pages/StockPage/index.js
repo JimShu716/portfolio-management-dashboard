@@ -195,6 +195,10 @@ const Stock = (props) =>{
     const [stockSymbol, setStockSymbol] = useContext(StockContext);
     const [stockInfo, setStockInfo] = useState([]);
     const [stockData, setStockData] = useState([]);
+    const [stockCurPrice, setStockCurPrice] = useState("167.74")
+    const [stockTrend, setStockTrend] = useState()
+    const [stockTrendPercent, setStockTrendPercent] = useState()
+    const [color, setColor] = useState("#de5246")
 
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate()+1)
@@ -232,9 +236,22 @@ const Stock = (props) =>{
         let stockDataArray = [["date", "Trade prices"]];
         for(let i = 0; i<dateList.length; i++){
             stockDataArray.push([dateList[i],chartData[i]])
+            if(i === dateList.length-1){
+                let x = (stockCurPrice - chartData[i]).toFixed(2)
+                let y = ((x/stockCurPrice) * 100).toFixed(2)
+
+                if(x >= 0){
+                    setColor("#1aa260")
+                }else{
+                    setColor("#de5246")
+                }
+                setStockTrendPercent(y)
+                setStockTrend(x)
+            }
         }
 
         stockDataArray.push([new Date(), 167.74])
+
 
         console.log(stockDataArray)
 
@@ -261,7 +278,28 @@ const Stock = (props) =>{
                 <Header />
                 <div className="containers-container" style={{height: "calc(100vh - 100px)"}}>
                     <div className="dashboard-container" style={{height: "100%"}}>
-                        <div className="dashboard-container-title">{stockSymbol}</div>
+                        <div style={{display: "flex", justifyContent:"space-between"}}>
+                            <div>
+                                <div className="dashboard-container-title">
+                                    {stockInfo[0] && stockInfo[0].company?(
+                                        <span>{stockInfo[0].company} (</span>
+                                    ):null}{stockSymbol}
+                                    {stockInfo[0] && stockInfo[0].company?(
+                                        <span>)</span>
+                                    ):null}
+                                </div>
+                                {stockCurPrice?(
+                                    <div className="dashboard-container-title" style={{paddingTop: "8px", paddingBottom: "8px"}}>
+                                        $ {stockCurPrice}
+                                    </div>
+                                ):null}
+                            </div>
+                            {stockTrend && stockTrendPercent?(
+                                <div className="dashboard-container-title" style={{color: color}}>
+                                    {stockTrend} ({stockTrendPercent}%)
+                                </div>):null
+                            }
+                        </div>
                         <div className="chart-container">
                             <Chart
                                 style={{
@@ -269,22 +307,23 @@ const Stock = (props) =>{
                                     marginTop: "auto"
                                 }}
                                 className="analysis-chart"
-                                width="100%"
-                                height="calc(100vh - 150px)"
+                                height="calc(100vh - 190px)"
                                 chartType="AreaChart"
                                 data={stockData}
                                 options={{
+                                    colors: [color],
                                     legend: {position: 'none'},
                                     chartArea: {
                                         height: '100%',
                                         width: '100%',
                                         top: 16,
                                         left: 0,
+                                        right: 8,
                                         bottom: 48,
                                     },
                                     hAxis: {
                                         gridlines: {
-                                            count: 7,
+                                            count: 5,
                                             color: 'transparent'
                                         },
                                         format: 'MMM d',
@@ -293,6 +332,7 @@ const Stock = (props) =>{
                                         textPosition: 'in',
                                         gridlines: {
                                             count: 5,
+                                            color: 'rgb(242, 244, 243)'
                                         }},
                                         explorer: {
                                             axis: 'horizontal',
@@ -304,11 +344,10 @@ const Stock = (props) =>{
                             />
                         </div>
                     </div>
-                    <div style={{height: "calc(100vh - 100px)"}}>
+                    <div style={{height: "calc(100vh - 100px)", flexGrow: 1}}>
                         <div className="dashboard-fancy-container" style={{height: "43%"}}>
                             <div className="dashboard-container-title">Holdings</div>
                             <div className="dashboard-container-title" style={{fontSize: "32px", marginTop: "8px"}}>$0.00</div>
-                            <div style={{fontSize: "14px", marginTop: "8px"}}>(0 Shares)</div>
                             <div style={{marginTop: "auto", marginBottom: "10px"}}>
                                 <div className="dashboard-fancy-container-button">Trade</div>
                             </div>

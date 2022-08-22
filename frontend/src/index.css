@@ -75,6 +75,13 @@ code {
   /*border: 1px solid black;*/
 }
 
+@media (min-width:920px) {
+  .analysis-chart{
+    max-width: 60vw !important;
+  }
+}
+
+
 /* fonts */
 /* latin-ext */
 @font-face {
