@@ -1,0 +1,11 @@
+.stock-info{
+    margin-top: 10px;
+    display: flex;
+    font-size: 14px;
+    font-weight: 600;
+    justify-content: space-between;
+}
+
+.stock-info-title{
+    color: grey;
+}
