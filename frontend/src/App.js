@@ -14,26 +14,16 @@ function App() {
 
     return (
         <SideBarOpenContext.Provider value={[openSidebar, setOpenSidebar]}>
-<<<<<<< HEAD
             <StockContext.Provider value={[stockSymbol, setStockSymbol]}>
                 <BrowserRouter>
                     <Routes>
                         <Route exact strict path={'/user'} element={<User />} />
                         <Route exact strict path={'/trade'} element={<Stock />} />
                         <Route exact strict path={'/'} element={<Login />} />
+                        <Route exact strict path={'/signup'} element={<Signup />} />
                     </Routes>
                 </BrowserRouter>
             </StockContext.Provider>
-=======
-            <BrowserRouter>
-                <Routes>
-                    <Route exact strict path={'/user'} element={<User />} />
-                    <Route exact strict path={'/trade'} element={<Stock />} />
-                    <Route exact strict path={'/'} element={<Login />} />
-                    <Route exact strict path={'/signup'} element={<Signup />} />
-                </Routes>
-            </BrowserRouter>
->>>>>>> 047de58cc74529d0033477a89e620efe363de666
         </SideBarOpenContext.Provider>
   );
 }
