@@ -304,7 +304,6 @@ const Stock = (props) =>{
                                     marginBottom: 0,
                                     marginTop: "auto"
                                 }}
-                                className="analysis-chart"
                                 height="calc(100vh - 190px)"
                                 chartType="AreaChart"
                                 data={stockData}
@@ -332,12 +331,6 @@ const Stock = (props) =>{
                                             count: 5,
                                             color: 'rgb(242, 244, 243)'
                                         }},
-                                        explorer: {
-                                            axis: 'horizontal',
-                                            maxZoomOut: 1,
-                                            keepInBounds: true,
-                                            actions: ['dragToZoom', 'rightClickToReset']
-                                        },
                                     }}
                             />
                         </div>
@@ -350,7 +343,7 @@ const Stock = (props) =>{
                                 <div className="dashboard-fancy-container-button">Trade</div>
                             </div>
                         </div>
-                        <div className="dashboard-container" style={{height: "47%"}}>
+                        <div className="dashboard-container" style={{height: "48%"}}>
                             <div className="dashboard-container-title" style={{marginBottom: "2px"}}>Summary</div>
                             {stockInfo[0] && stockInfo[0].sector?
                                 <div className="stock-info">
