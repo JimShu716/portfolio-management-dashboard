@@ -5,167 +5,12 @@ import Sidebar from "../../Components/Sidebar";
 import Header from "../../Components/Header";
 import StockContext from "../../Components/Header/StockContext";
 import Chart from 'react-google-charts';
+import {Dialog} from "@mui/material";
+import {GrFormClose} from "react-icons/gr";
+import {SiVisa} from "react-icons/si";
+import Input from "@mui/material/Input";
 
-// dummy data
-// const r = {
-//     "data": {
-//         "52WeekChange": null,
-//         "SandP52WeekChange": null,
-//         "address1": "One Apple Park Way",
-//         "algorithm": null,
-//         "annualHoldingsTurnover": null,
-//         "annualReportExpenseRatio": null,
-//         "ask": 169.05,
-//         "askSize": 900,
-//         "averageDailyVolume10Day": 64119090,
-//         "averageVolume": 76763275,
-//         "averageVolume10days": 64119090,
-//         "beta": 1.19455,
-//         "beta3Year": null,
-//         "bid": 169.02,
-//         "bidSize": 800,
-//         "bookValue": 4.146,
-//         "category": null,
-//         "circulatingSupply": null,
-//         "city": "Cupertino",
-//         "companyOfficers": [],
-//         "country": "United States",
-//         "currency": "USD",
-//         "currentPrice": 168.965,
-//         "currentRatio": 0.865,
-//         "dateShortInterest": 1657843200,
-//         "dayHigh": 169.86,
-//         "dayLow": 168.61,
-//         "debtToEquity": 205.984,
-//         "dividendRate": 0.92,
-//         "dividendYield": 0.0057,
-//         "earningsGrowth": -0.077,
-//         "earningsQuarterlyGrowth": -0.106,
-//         "ebitda": 129556996096,
-//         "ebitdaMargins": 0.3343,
-//         "enterpriseToEbitda": 20.71,
-//         "enterpriseToRevenue": 6.923,
-//         "enterpriseValue": 2683118026752,
-//         "exDividendDate": 1659657600,
-//         "exchange": "NMS",
-//         "exchangeTimezoneName": "America/New_York",
-//         "exchangeTimezoneShortName": "EDT",
-//         "expireDate": null,
-//         "fiftyDayAverage": 151.3188,
-//         "fiftyTwoWeekHigh": 182.94,
-//         "fiftyTwoWeekLow": 129.04,
-//         "financialCurrency": "USD",
-//         "fiveYearAverageReturn": null,
-//         "fiveYearAvgDividendYield": 1.05,
-//         "floatShares": 16054038418,
-//         "forwardEps": 5.31,
-//         "forwardPE": 31.82015,
-//         "freeCashflow": 83344621568,
-//         "fromCurrency": null,
-//         "fullTimeEmployees": 154000,
-//         "fundFamily": null,
-//         "fundInceptionDate": null,
-//         "gmtOffSetMilliseconds": "-14400000",
-//         "grossMargins": 0.43313998,
-//         "grossProfits": 152836000000,
-//         "headSymbol": null,
-//         "heldPercentInsiders": 0.00071999995,
-//         "heldPercentInstitutions": 0.60082,
-//         "industry": "Consumer Electronics",
-//         "isEsgPopulated": true,
-//         "lastCapGain": null,
-//         "lastDividendValue": null,
-//         "lastFiscalYearEnd": 1632528000,
-//         "lastMarket": null,
-//         "lastSplitDate": 1598832000,
-//         "lastSplitFactor": "4:1",
-//         "legalType": null,
-//         "logo_url": "https://logo.clearbit.com/apple.com",
-//         "longBusinessSummary": "Apple Inc. designs, manufactures, and markets smartphones, personal computers, tablets, wearables, and accessories worldwide. It also sells various related services. In addition, the company offers iPhone, a line of smartphones; Mac, a line of personal computers; iPad, a line of multi-purpose tablets; AirPods Max, an over-ear wireless headphone; and wearables, home, and accessories comprising AirPods, Apple TV, Apple Watch, Beats products, HomePod, and iPod touch. Further, it provides AppleCare support services; cloud services store services; and operates various platforms, including the App Store that allow customers to discover and download applications and digital content, such as books, music, video, games, and podcasts. Additionally, the company offers various services, such as Apple Arcade, a game subscription service; Apple Music, which offers users a curated listening experience with on-demand radio stations; Apple News+, a subscription news and magazine service; Apple TV+, which offers exclusive original content; Apple Card, a co-branded credit card; and Apple Pay, a cashless payment service, as well as licenses its intellectual property. The company serves consumers, and small and mid-sized businesses; and the education, enterprise, and government markets. It distributes third-party applications for its products through the App Store. The company also sells its products through its retail and online stores, and direct sales force; and third-party cellular network carriers, wholesalers, retailers, and resellers. Apple Inc. was incorporated in 1977 and is headquartered in Cupertino, California.",
-//         "longName": "Apple Inc.",
-//         "market": "us_market",
-//         "marketCap": 2772107264000,
-//         "maxAge": 1,
-//         "maxSupply": null,
-//         "messageBoardId": "finmb_24937",
-//         "morningStarOverallRating": null,
-//         "morningStarRiskRating": null,
-//         "mostRecentQuarter": 1656115200,
-//         "navPrice": null,
-//         "netIncomeToCommon": 99632996352,
-//         "nextFiscalYearEnd": 1695600000,
-//         "numberOfAnalystOpinions": 44,
-//         "open": 169.69,
-//         "openInterest": null,
-//         "operatingCashflow": 118224003072,
-//         "operatingMargins": 0.30533,
-//         "payoutRatio": 0.1471,
-//         "pegRatio": 2.59,
-//         "phone": "408 996 1010",
-//         "preMarketPrice": 169.59,
-//         "previousClose": 171.52,
-//         "priceHint": 2,
-//         "priceToBook": 40.75374,
-//         "priceToSalesTrailing12Months": 7.15305,
-//         "profitMargins": 0.25709,
-//         "quickRatio": 0.697,
-//         "quoteType": "EQUITY",
-//         "recommendationKey": "buy",
-//         "recommendationMean": 1.9,
-//         "regularMarketDayHigh": 169.86,
-//         "regularMarketDayLow": 168.61,
-//         "regularMarketOpen": 169.69,
-//         "regularMarketPreviousClose": 171.52,
-//         "regularMarketPrice": 168.965,
-//         "regularMarketVolume": 9465832,
-//         "returnOnAssets": 0.22204,
-//         "returnOnEquity": 1.62816,
-//         "revenueGrowth": 0.019,
-//         "revenuePerShare": 23.732,
-//         "revenueQuarterlyGrowth": null,
-//         "sector": "Technology",
-//         "sharesOutstanding": 16406400000,
-//         "sharesPercentSharesOut": 0.0064999997,
-//         "sharesShort": 104993162,
-//         "sharesShortPreviousMonthDate": 1655251200,
-//         "sharesShortPriorMonth": 120066688,
-//         "shortName": "Apple Inc.",
-//         "shortPercentOfFloat": 0.0064999997,
-//         "shortRatio": 1.32,
-//         "startDate": null,
-//         "state": "CA",
-//         "strikePrice": null,
-//         "symbol": "AAPL",
-//         "targetHighPrice": 214,
-//         "targetLowPrice": 130,
-//         "targetMeanPrice": 181.87,
-//         "targetMedianPrice": 185,
-//         "threeYearAverageReturn": null,
-//         "totalAssets": null,
-//         "totalCash": 48230998016,
-//         "totalCashPerShare": 3.001,
-//         "totalDebt": 119691001856,
-//         "totalRevenue": 387541991424,
-//         "tradeable": false,
-//         "trailingAnnualDividendRate": 0.82,
-//         "trailingAnnualDividendYield": 0.0047807833,
-//         "trailingEps": 4.449,
-//         "trailingPE": 37.9782,
-//         "twoHundredDayAverage": 160.461,
-//         "underlyingExchangeSymbol": null,
-//         "underlyingSymbol": null,
-//         "uuid": "8b10e4ae-9eeb-3684-921a-9ab27e4d87aa",
-//         "volume": 9465832,
-//         "volume24Hr": null,
-//         "volumeAllCurrencies": null,
-//         "website": "https://www.apple.com",
-//         "yield": null,
-//         "ytdReturn": null,
-//         "zip": "95014"
-//     },
-//     "message": "Success",
-//     "status": 200
-// }
+
 
 var stockInfoResult
 const Stock = (props) =>{
@@ -178,6 +23,28 @@ const Stock = (props) =>{
     const [stockTrend, setStockTrend] = useState()
     const [stockTrendPercent, setStockTrendPercent] = useState()
     const [color, setColor] = useState("#de5246")
+    const [open, setOpen] = useState(false);
+    const [shares, setShares] = useState(0);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const updatePopupInput = (event) => {
+        setShares(event.target.value);
+    }
+
+    async function sellStock(){
+        console.log(12)
+    }
+
+    async function buyStock(){
+        console.log(12)
+    }
 
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate()+1)
@@ -195,13 +62,12 @@ const Stock = (props) =>{
         curDate.setDate(curDate.getDate() + 1);
     }
 
-
     useEffect(()=>{
         console.log(stockSymbol)
         axios.get(process.env.REACT_APP_HOST + 'getStockInfo/' + stockSymbol, ).then(r => {
             //setStockInfo([r.data])
             const stockInfoResult =r.data
-    
+
             const s = [{
                 company: r.data.data["shortName"],
                 currency:r.data.data["currency"],
@@ -217,172 +83,214 @@ const Stock = (props) =>{
             }]
             console.log(s)
             setStockInfo(s)
-           
+
         })
-        .catch(function (error) {setStockInfo(error)});
-  
+        .catch(function (error) {console.log(error)});
+
 
         axios.get(process.env.REACT_APP_HOST + 'getStockPriceForADates/' + stockSymbol + "/" + date1 + "/" + date2 + "/", ).then(r => {
         //     setStockData(r.data)
-            
+
             const chartData = r.data
-            setStockCurPrice(chartData.slice(-1))
-           
+            setStockCurPrice(chartData.slice(-1)[0].toFixed(2));
+            console.log(chartData.slice(-1))
             let stockDataArray = [["date", "Trade prices"]];
             for(let i = 0; i<dateList.length; i++){
-                stockDataArray.push([dateList[i],chartData[i]])
-                if(i === dateList.length){
-                    let x = (stockCurPrice - chartData[i]).toFixed(2)
-                    let y = ((x/stockCurPrice) * 100).toFixed(2)
-    
-                    if(x >= 0){
-                        setColor("#1aa260")
-                    }else{
-                        setColor("#de5246")
-                    }
-                   
-                    setStockTrendPercent(y)
-                    setStockTrend(x)
-                }
+                stockDataArray.push([dateList[i],chartData[i]]);
             }
-    
+
+            console.log(chartData.slice(-2)[0])
+            console.log(chartData.slice(-1)[0])
+            let x = (chartData.slice(-1)[0] - chartData.slice(-2)[0]).toFixed(2);
+            let y = ((x/chartData.slice(-1)[0]) * 100).toFixed(2);
+            if(x >= 0){
+                setColor("#1aa260");
+            }else{
+                setColor("#de5246");
+            }
+
+            setStockTrendPercent(y);
+            setStockTrend(x);
+            console.log(x)
+
             // stockDataArray.push([new Date(), 167.74])
-    
+
             setStockData(stockDataArray)
-            
-        }).catch(function (error) {setStockInfo(error)});
-       
+
+        }).catch(function (error) {console.log(error)});
+
 
 
 
      }, [stockSymbol])
 
 
-   
-   
+
+
     return (
-        <div style={{display: "flex"}}>
-            <Sidebar title="Trade" />
-            <div style={{flexGrow: 1}}>
-                <Header />
-                <div className="containers-container" style={{height: "calc(100vh - 100px)"}}>
-                    <div className="dashboard-container" style={{height: "100%"}}>
-                        <div style={{display: "flex", justifyContent:"space-between"}}>
-                            <div>
-                                <div className="dashboard-container-title">
-                                    {stockInfo[0] && stockInfo[0].company?(
-                                        <span>{stockInfo[0].company} (</span>
-                                    ):null}{stockSymbol}
-                                    {stockInfo[0] && stockInfo[0].company?(
-                                        <span>)</span>
+        <div>
+            <div style={{display: "flex"}}>
+                <Sidebar title="Trade" />
+                <div style={{flexGrow: 1}}>
+                    <Header />
+                    <div className="containers-container" style={{height: "calc(100vh - 100px)"}}>
+                        <div className="dashboard-container" style={{height: "100%"}}>
+                            <div style={{display: "flex", justifyContent:"space-between"}}>
+                                <div>
+                                    <div className="dashboard-container-title">
+                                        {stockInfo[0] && stockInfo[0].company?(
+                                            <span>{stockInfo[0].company} (</span>
+                                        ):null}{stockSymbol}
+                                        {stockInfo[0] && stockInfo[0].company?(
+                                            <span>)</span>
+                                        ):null}
+                                    </div>
+                                    {stockCurPrice?(
+                                        <div className="dashboard-container-title" style={{paddingTop: "8px", paddingBottom: "8px"}}>
+                                            $ {stockCurPrice}
+                                        </div>
                                     ):null}
                                 </div>
-                                {stockCurPrice?(
-                                    <div className="dashboard-container-title" style={{paddingTop: "8px", paddingBottom: "8px"}}>
-                                        $ {stockCurPrice}
-                                    </div>
-                                ):null}
+                                {stockTrend && stockTrendPercent?(
+                                    <div className="dashboard-container-title" style={{color: color}}>
+                                        {stockTrend} ({stockTrendPercent}%)
+                                    </div>):null
+                                }
                             </div>
-                            {stockTrend && stockTrendPercent?(
-                                <div className="dashboard-container-title" style={{color: color}}>
-                                    {stockTrend} ({stockTrendPercent}%)
-                                </div>):null
-                            }
-                        </div>
-                        <div className="chart-container">
-                            <Chart
-                                style={{
-                                    marginBottom: 0,
-                                    marginTop: "auto"
-                                }}
-                                className="analysis-chart"
-                                height="calc(100vh - 190px)"
-                                chartType="AreaChart"
-                                data={stockData}
-                                options={{
-                                    colors: [color],
-                                    legend: {position: 'none'},
-                                    chartArea: {
-                                        height: '100%',
-                                        width: '100%',
-                                        top: 16,
-                                        left: 0,
-                                        right: 8,
-                                        bottom: 48,
-                                    },
-                                    hAxis: {
-                                        gridlines: {
-                                            count: 5,
-                                            color: 'transparent'
-                                        },
-                                        format: 'MMM d',
-                                    },
-                                    vAxis: {
-                                        textPosition: 'in',
-                                        gridlines: {
-                                            count: 5,
-                                            color: 'rgb(242, 244, 243)'
-                                        }},
-                                        explorer: {
-                                            axis: 'horizontal',
-                                            maxZoomOut: 1,
-                                            keepInBounds: true,
-                                            actions: ['dragToZoom', 'rightClickToReset']
-                                        },
+                            <div className="chart-container">
+                                <Chart
+                                    style={{
+                                        marginBottom: 0,
+                                        marginTop: "auto"
                                     }}
-                            />
-                        </div>
-                    </div>
-                    <div style={{height: "calc(100vh - 100px)", flexGrow: 1}}>
-                        <div className="dashboard-fancy-container" style={{height: "43%"}}>
-                            <div className="dashboard-container-title">Holdings</div>
-                            <div className="dashboard-container-title" style={{fontSize: "32px", marginTop: "8px"}}>$0.00</div>
-                            <div style={{marginTop: "auto", marginBottom: "10px"}}>
-                                <div className="dashboard-fancy-container-button">Trade</div>
+                                    height="calc(100vh - 190px)"
+                                    chartType="AreaChart"
+                                    data={stockData}
+                                    options={{
+                                        colors: [color],
+                                        legend: {position: 'none'},
+                                        chartArea: {
+                                            height: '100%',
+                                            width: '100%',
+                                            top: 16,
+                                            left: 0,
+                                            right: 8,
+                                            bottom: 48,
+                                        },
+                                        hAxis: {
+                                            gridlines: {
+                                                count: 5,
+                                                color: 'transparent'
+                                            },
+                                            format: 'MMM d',
+                                        },
+                                        vAxis: {
+                                            textPosition: 'in',
+                                            gridlines: {
+                                                count: 5,
+                                                color: 'rgb(242, 244, 243)'
+                                            }},
+                                        }}
+                                />
                             </div>
                         </div>
-                        <div className="dashboard-container" style={{height: "47%"}}>
-                            <div className="dashboard-container-title" style={{marginBottom: "2px"}}>Summary</div>
-                            {stockInfo[0] && stockInfo[0].sector?
-                                <div className="stock-info">
-                                    <div className="stock-info-title">Sector</div><div>{stockInfo[0].sector}</div>
-                                </div>:null
-                            }
-                            {stockInfo[0] && stockInfo[0].previousClose?
-                                <div className="stock-info">
-                                   <div className="stock-info-title">Previous Close</div><div> {stockInfo[0].previousClose}</div>
-                                </div>:null
-                            }
-                            {stockInfo[0] && stockInfo[0].open?
-                                <div className="stock-info">
-                                    <div className="stock-info-title">Open</div><div>{stockInfo[0].open}</div>
-                                </div>:null
-                            }
-                            {stockInfo[0] && stockInfo[0].volume?
-                                <div className="stock-info">
-                                    <div className="stock-info-title">Volume</div><div>{stockInfo[0].volume}</div>
-                                </div>:null
-                            }
-                            {stockInfo[0] && stockInfo[0].averageVolume?
-                                <div className="stock-info">
-                                    <div className="stock-info-title">Avg. Volume</div><div>{stockInfo[0].averageVolume}</div>
-                                </div>:null
-                            }
-                            {stockInfo[0] && stockInfo[0].dayHigh && stockInfo[0].dayLow?
-                                <div className="stock-info">
-                                    <div className="stock-info-title">Day's Range</div><div>{stockInfo[0].dayLow} - {stockInfo[0].dayHigh}</div>
-                                </div>:null
-                            }
-                            {stockInfo[0] && stockInfo[0].exchangeInfo?
-                                <div className="stock-info">
-                                    <div className="stock-info-title">Exchange</div><div>{stockInfo[0].exchangeInfo}</div>
-                                </div>:null
-                            }
-                        </div>
+                        <div style={{height: "calc(100vh - 100px)", flexGrow: 1}}>
+                            <div className="dashboard-fancy-container" style={{height: "43%"}}>
+                                <div className="dashboard-container-title">Holdings</div>
+                                <div className="dashboard-container-title" style={{fontSize: "32px", marginTop: "8px"}}>$0.00</div>
+                                <div style={{marginTop: "auto", marginBottom: "10px"}}>
+                                    <a onClick={handleClickOpen} className="dashboard-fancy-container-button">Trade</a>
+                                </div>
+                            </div>
+                            <div className="dashboard-container" style={{height: "48%"}}>
+                                <div className="dashboard-container-title" style={{marginBottom: "2px"}}>Summary</div>
+                                {stockInfo[0] && stockInfo[0].sector?
+                                    <div className="stock-info">
+                                        <div className="stock-info-title">Sector</div><div>{stockInfo[0].sector}</div>
+                                    </div>:null
+                                }
+                                {stockInfo[0] && stockInfo[0].previousClose?
+                                    <div className="stock-info">
+                                       <div className="stock-info-title">Previous Close</div><div> {stockInfo[0].previousClose}</div>
+                                    </div>:null
+                                }
+                                {stockInfo[0] && stockInfo[0].open?
+                                    <div className="stock-info">
+                                        <div className="stock-info-title">Open</div><div>{stockInfo[0].open}</div>
+                                    </div>:null
+                                }
+                                {stockInfo[0] && stockInfo[0].volume?
+                                    <div className="stock-info">
+                                        <div className="stock-info-title">Volume</div><div>{stockInfo[0].volume}</div>
+                                    </div>:null
+                                }
+                                {stockInfo[0] && stockInfo[0].averageVolume?
+                                    <div className="stock-info">
+                                        <div className="stock-info-title">Avg. Volume</div><div>{stockInfo[0].averageVolume}</div>
+                                    </div>:null
+                                }
+                                {stockInfo[0] && stockInfo[0].dayHigh && stockInfo[0].dayLow?
+                                    <div className="stock-info">
+                                        <div className="stock-info-title">Day's Range</div><div>{stockInfo[0].dayLow} - {stockInfo[0].dayHigh}</div>
+                                    </div>:null
+                                }
+                                {stockInfo[0] && stockInfo[0].exchangeInfo?
+                                    <div className="stock-info">
+                                        <div className="stock-info-title">Exchange</div><div>{stockInfo[0].exchangeInfo}</div>
+                                    </div>:null
+                                }
+                            </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                width="400px"
+                aria-describedby="alert-dialog-description"
+            >
+                <a onClick={handleClose} style={{display: "flex", justifyContent:"space-between"}}><div /><GrFormClose style={{paddingRight: "25px", paddingTop: "25px", fontSize: "20px", cursor:"pointer"}} /></a>
+                <div className="dashboard-container" style={{marginRight: "20px", paddingTop: "5px"}}>
+                    <div className="dashboard-container-title">
+                        Market Order
+                    </div>
+                    <div className="dashboard-container-title" style={{marginTop:"20px", marginBottom:"20px", display:"flex", justifyContent:"space-between"}}>
+                        <Input placeholder="How many shares do you want to trade?" sx={{
+                            width: 400,
+                            fontSize: "22px",
+                            color: "rgba(58, 53, 65, 0.87)",
+                            "& .MuiInput-input": {padding: 0,
+                                color: "#1f1c2e"},
+                        }} inputProps={{ 'aria-label': 'description' }} disableUnderline={true}
+                               onChange={event => updatePopupInput(event)}/>
+                    </div>
+                    <div>
+                        <div style={{display:"flex", justifyContent:"space-between", marginBottom: "10px", fontWeight: 600}}>
+                            <div style={{color: "gray"}}>
+                                {stockSymbol} Price
+                            </div>
+                            <div>
+                                $ 1.34
+                            </div>
+                        </div>
+                        <div style={{display:"flex", justifyContent:"space-between", marginBottom: "30px", fontWeight: 600}}>
+                            <div style={{color: "gray"}}>
+                                Estimated Amount
+                            </div>
+                            <div>
+                                $ {(1.34 * shares).toFixed(2)}
+                            </div>
+                        </div>
+                    </div>
+                    <div style={{display: "flex", paddingBottom: "10px", flexDirection:"row-reverse"}}>
+                        <a id="sell-button" onClick={sellStock}>Sell</a>
+                        <a id="buy-button" onClick={buyStock}>Buy</a>
+                    </div>
+                </div>
+            </Dialog>
         </div>
     )
 }
