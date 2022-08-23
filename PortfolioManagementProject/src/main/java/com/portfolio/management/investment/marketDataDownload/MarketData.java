@@ -23,6 +23,11 @@ public class MarketData {
         this.stockSymbol = stockSymbol;
     }
 
+    public static int getApiCallCnt() {
+        return apiCallCnt;
+    }
+
+    private static int apiCallCnt;
     public MarketData(String stockSymbol, String startDate, String endDate) {
         this.startDate = startDate;
         this.endDate = endDate;
@@ -37,6 +42,8 @@ public class MarketData {
                 .header("X-RapidAPI-Host", host)
                 .body(bodySymbol)
                 .asString();
+        this.apiCallCnt ++;
+
         String data = response.getBody();
         return data;
     }
@@ -49,6 +56,7 @@ public class MarketData {
                 .header("X-RapidAPI-Host", host)
                 .body(bodySymbol)
                 .asString();
+        this.apiCallCnt ++;
         String data = response.getBody();
         JSONObject jsonObject = new JSONObject(data);
         BigDecimal currentPrice = jsonObject.getJSONObject("data").getBigDecimal("currentPrice");
@@ -63,6 +71,7 @@ public class MarketData {
                 .header("X-RapidAPI-Host", host)
                 .body(bodySymbolDate)
                 .asString();
+        this.apiCallCnt ++;
         String data = response.getBody();
         JSONObject obj = new JSONObject(data);
         JSONArray arr = obj.getJSONArray("data");
@@ -79,6 +88,7 @@ public class MarketData {
                 .header("X-RapidAPI-Host", host)
                 .body(bodySymbolDate)
                 .asString();
+        this.apiCallCnt ++;
         String data = response.getBody();
         JSONObject obj = new JSONObject(data);
         JSONArray arr = obj.getJSONArray("data"); // notice that `"posts": [...]`
