@@ -85,38 +85,39 @@ const Stock = (props) =>{
             setStockInfo(s)
 
         })
-        .catch(function (error) {setStockInfo(error)});
+        .catch(function (error) {console.log(error)});
 
 
         axios.get(process.env.REACT_APP_HOST + 'getStockPriceForADates/' + stockSymbol + "/" + date1 + "/" + date2 + "/", ).then(r => {
         //     setStockData(r.data)
 
             const chartData = r.data
-            setStockCurPrice(chartData.slice(-1))
-
+            setStockCurPrice(chartData.slice(-1)[0].toFixed(2));
+            console.log(chartData.slice(-1))
             let stockDataArray = [["date", "Trade prices"]];
             for(let i = 0; i<dateList.length; i++){
-                stockDataArray.push([dateList[i],chartData[i]])
-                if(i === dateList.length){
-                    let x = (stockCurPrice - chartData[i]).toFixed(2)
-                    let y = ((x/stockCurPrice) * 100).toFixed(2)
-
-                    if(x >= 0){
-                        setColor("#1aa260")
-                    }else{
-                        setColor("#de5246")
-                    }
-
-                    setStockTrendPercent(y)
-                    setStockTrend(x)
-                }
+                stockDataArray.push([dateList[i],chartData[i]]);
             }
+
+            console.log(chartData.slice(-2)[0])
+            console.log(chartData.slice(-1)[0])
+            let x = (chartData.slice(-1)[0] - chartData.slice(-2)[0]).toFixed(2);
+            let y = ((x/chartData.slice(-1)[0]) * 100).toFixed(2);
+            if(x >= 0){
+                setColor("#1aa260");
+            }else{
+                setColor("#de5246");
+            }
+
+            setStockTrendPercent(y);
+            setStockTrend(x);
+            console.log(x)
 
             // stockDataArray.push([new Date(), 167.74])
 
             setStockData(stockDataArray)
 
-        }).catch(function (error) {setStockInfo(error)});
+        }).catch(function (error) {console.log(error)});
 
 
 
