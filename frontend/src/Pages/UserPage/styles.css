@@ -2,3 +2,15 @@
     color: #1aa260;
     background-color: rgba(26, 162, 96, 0.08);
 }
+
+.creditCard{
+    color: white;
+    font-weight: 600;
+    width: 295px;
+    height: 170px;
+    background: rgb(35, 98, 241);
+    background: linear-gradient(205deg, rgba(35,98,241,1) 25%, rgba(13,51,148,1) 79%);
+    margin-top: 18px;
+    border-radius: 20px;
+    padding: 10px 20px 20px;
+}

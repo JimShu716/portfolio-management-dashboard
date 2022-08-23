@@ -4,6 +4,7 @@ import './styles.css';
 import Sidebar from "../../Components/Sidebar";
 import Header from "../../Components/Header";
 import {
+    Dialog,
     Table,
     TableBody,
     TableCell,
@@ -13,12 +14,25 @@ import {
     TableRow
 } from "@mui/material";
 import { HiCheckCircle } from "react-icons/hi";
+import Input from "@mui/material/Input";
+import {SiVisa} from "react-icons/si";
+import {GrFormClose} from "react-icons/gr";
 
 const User = (props) =>{
     const [response, setResponse] = useState("");
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(3);
     const [rows, setRows] = useState([])
+    const [open, setOpen] = useState(false);
+    const [addWithdrawBalance, setAddWithdrawBalance] = useState(0);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -29,6 +43,20 @@ const User = (props) =>{
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
+
+    const updatePopupInput = (event) => {
+        setAddWithdrawBalance(event.target.value);
+    }
+
+    async function addBalance(){
+        // input: addWithdrawBalance
+        console.log(addWithdrawBalance)
+    }
+
+    async function withdrawBalance(){
+        // input: addWithdrawBalance
+        console.log(addWithdrawBalance)
+    }
 
     useEffect(()=>{
         // get data from backend
@@ -85,7 +113,8 @@ const User = (props) =>{
     },[])
 
     return (
-        <div style={{display: "flex"}}>
+        <div>
+            <div style={{display: "flex"}}>
             <Sidebar title="User Profile" />
             <div style={{flexGrow: 1}}>
                 <Header />
@@ -98,7 +127,7 @@ const User = (props) =>{
                         <div className="dashboard-fancy-container">
                             <div className="dashboard-container-title">Balance</div>
                             <div className="dashboard-container-title" style={{fontSize: "32px", marginTop: "8px"}}>$200,000</div>
-                            <div className="dashboard-fancy-container-button" style={{marginBottom: "25px", marginTop: "auto"}}>Transfer Money</div>
+                            <a onClick={handleClickOpen} className="dashboard-fancy-container-button" style={{marginBottom: "25px", marginTop: "auto"}}>Transfer Money</a>
                         </div>
                     </div>
                     <div className="containers-container" style={{height: "50%"}}>
@@ -165,6 +194,48 @@ const User = (props) =>{
                 </div>
             </div>
         </div>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <a onClick={handleClose} style={{display: "flex", justifyContent:"space-between"}}><div /><GrFormClose style={{paddingRight: "25px", paddingTop: "25px", fontSize: "20px", cursor:"pointer"}} /></a>
+                <div className="dashboard-container" style={{marginRight: "20px", paddingTop: "5px"}}>
+                    <div className="dashboard-container-title">
+                        Transfer Money
+                    </div>
+                    <div className="creditCard">
+                        <div style={{display:"flex", flexDirection:"column", height:"100%", justifyContent:"space-between"}}>
+                            <div style={{display: "flex", justifyContent:"space-between"}}>
+                                <div />
+                                <div><SiVisa style={{fontSize: "40px"}} /></div>
+                            </div>
+                            <div>1234 **** **** 5678</div>
+                            <div style={{display: "flex", justifyContent:"space-between", paddingTop: "10px"}}>
+                                <div>Name</div>
+                                <div>08/23</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="dashboard-container-title" style={{marginTop:"20px", marginBottom:"20px"}}>
+                        $&nbsp;
+                        <Input placeholder="0.00" sx={{
+                            fontSize: "22px",
+                            color: "rgba(58, 53, 65, 0.87)",
+                            "& .MuiInput-input": {padding: 0,
+                                color: "#1f1c2e"},
+                        }} inputProps={{ 'aria-label': 'description' }} disableUnderline={true}
+                               onChange={event => updatePopupInput(event)}/>
+                    </div>
+                    <div style={{display: "flex", paddingBottom: "15px"}}>
+                        <a onClick={addBalance} className="dashboard-fancy-container-button" style={{width: "48%", marginRight: "2%"}}>Add</a>
+                        <a onClick={withdrawBalance} className="dashboard-fancy-container-button" style={{width: "48%", marginLeft: "2%"}}>Withdraw</a>
+                    </div>
+                </div>
+            </Dialog>
+        </div>
+
     )
 }
 
