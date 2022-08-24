@@ -67,13 +67,13 @@ public class PortfolioManagementController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/addBalance/{userID}/{balance}")
+    @PutMapping(value = "/addBalance/{userID}/{addAmount}")
     public ResponseEntity addBalance(@PathVariable int userID, @PathVariable BigDecimal addAmount){
         User user = portfolioManagementService.addUserBalance(userID, addAmount);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/withDrawBalance/{userID}/{balance}")
+    @PutMapping(value = "/withDrawBalance/{userID}/{withdrawAmount}")
     public ResponseEntity withDrawBalance(@PathVariable int userID, @PathVariable BigDecimal withdrawAmount){
         User user = null;
         try {
