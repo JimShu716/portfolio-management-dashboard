@@ -33,6 +33,25 @@ public class PortfolioManagementController {
         }
     }
 
+    @GetMapping(value = "getUserIDUsingEmail/{email}/{passWord}")
+    public ResponseEntity getUserIDUsingEmail(@PathVariable String email, @PathVariable String passWord) {
+        Optional<User> user  = portfolioManagementService.fetchUserByEmail(email);
+        if (user.isPresent()) {
+            User curUser = user.get();
+            String curPassWord = curUser.getUserPassword();
+            if (!curPassWord.equals(passWord)) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Email and password does not match");
+            }
+            int userID = curUser.getUserID();
+            return new ResponseEntity(userID, HttpStatus.OK);
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("User does not exist");
+        }
+    }
+
     //http://localhost:8080/adduser/K1@gmail.com/Kate/1111
     //http://localhost:8080/?email=K1@gmail.com&name=Kate&passWord=1111
     @PostMapping(value = "/addUser/{email}/{userName}/{passWord}")
