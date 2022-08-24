@@ -51,14 +51,14 @@ const Stock = () =>{
         const dateTime = date + ' ' + time;
 
         axios.post(process.env.REACT_APP_HOST + 'addTradeHistory/', {
-            "property": "sell",
+            "property": "sale",
             "purchasedPrice": stockCurPrice,
             "purchasedTime": dateTime,
             "purchasedQuantities": shares,
             "userID": userId,
             "stockSymbol": stockSymbol
         }).then(r => {
-
+     
             console.log("sell log", r)
             axios.get(process.env.REACT_APP_HOST + userId,).then(r => {
                 //     setStockData(r.data)
@@ -105,6 +105,7 @@ const Stock = () =>{
                 }).catch(function (error) {console.log(error)});
 
             console.log("buy log",r)
+            
             setOpen(false); //close the dialog
 
          }).catch(function (error) {console.log(error)});
