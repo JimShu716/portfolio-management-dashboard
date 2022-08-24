@@ -19,12 +19,16 @@ const Stock = (props) =>{
     const [stockData, setStockData] = useState([]);
     const [stockInfoResult, setStockInfoResult] = useState([]);
     const [chartData, setChartData] = useState([]);
+    const [balance, setBalance] = useState([]);
     const [stockCurPrice, setStockCurPrice] = useState("167.74")
     const [stockTrend, setStockTrend] = useState()
     const [stockTrendPercent, setStockTrendPercent] = useState()
     const [color, setColor] = useState("#de5246")
     const [open, setOpen] = useState(false);
     const [shares, setShares] = useState(0);
+    const search = window.location.search;
+    const params = new URLSearchParams(search);
+    const userId = params.get('userId');
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -37,13 +41,64 @@ const Stock = (props) =>{
     const updatePopupInput = (event) => {
         setShares(event.target.value);
     }
+  
 
-    async function sellStock(){
-        console.log(12)
+     async function sellStock(){
+
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date+' '+time;
+        
+         axios.post(process.env.REACT_APP_HOST + 'addTradeHistory/',{
+            "property" : "sell",
+            "purchasedPrice" :stockCurPrice,
+            "purchasedTime" : dateTime,
+            "purchasedQuantities" : shares,
+            "userID" : userId,
+            "stockSymbol" : stockSymbol
+        } ).then(r => {
+    
+            console.log("sell log",r)
+            axios.get(process.env.REACT_APP_HOST + userId, ).then(r => {
+                //     setStockData(r.data)
+        
+                   const balance = r.data["balance"]
+                   setBalance(balance)
+                  
+                }).catch(function (error) {console.log(error)});
+    
+            setOpen(false); //close the dialog
+         }).catch(function (error) {console.log(error)});
     }
 
     async function buyStock(){
-        console.log(12)
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date+' '+time;
+        
+         axios.post(process.env.REACT_APP_HOST + 'addTradeHistory/',{
+            "property" : "buy",
+            "purchasedPrice" :stockCurPrice,
+            "purchasedTime" : dateTime,
+            "purchasedQuantities" : shares,
+            "userID" : userId,
+            "stockSymbol" : stockSymbol
+        } ).then(r => {
+    
+            axios.get(process.env.REACT_APP_HOST + userId, ).then(r => {
+                //     setStockData(r.data)
+        
+                   const balance = r.data["balance"]
+                   setBalance(balance)
+                  
+                }).catch(function (error) {console.log(error)});
+    
+            console.log("buy log",r)
+            setOpen(false); //close the dialog
+            
+         }).catch(function (error) {console.log(error)});
     }
 
     const tomorrow = new Date();
@@ -120,7 +175,13 @@ const Stock = (props) =>{
         }).catch(function (error) {console.log(error)});
 
 
-
+        axios.get(process.env.REACT_APP_HOST + userId, ).then(r => {
+            //     setStockData(r.data)
+    
+               const balance = r.data["balance"]
+               setBalance(balance)
+              
+            }).catch(function (error) {console.log(error)});
 
      }, [stockSymbol])
 
@@ -197,7 +258,7 @@ const Stock = (props) =>{
                         <div style={{height: "calc(100vh - 100px)", flexGrow: 1}}>
                             <div className="dashboard-fancy-container" style={{height: "43%"}}>
                                 <div className="dashboard-container-title">Holdings</div>
-                                <div className="dashboard-container-title" style={{fontSize: "32px", marginTop: "8px"}}>$0.00</div>
+                                <div className="dashboard-container-title" style={{fontSize: "32px", marginTop: "8px"}}>{balance}</div>
                                 <div style={{marginTop: "auto", marginBottom: "10px"}}>
                                     <a onClick={handleClickOpen} className="dashboard-fancy-container-button">Trade</a>
                                 </div>
@@ -273,7 +334,7 @@ const Stock = (props) =>{
                                 {stockSymbol} Price
                             </div>
                             <div>
-                                $ 1.34
+                            $ {stockCurPrice}
                             </div>
                         </div>
                         <div style={{display:"flex", justifyContent:"space-between", marginBottom: "30px", fontWeight: 600}}>
@@ -281,7 +342,7 @@ const Stock = (props) =>{
                                 Estimated Amount
                             </div>
                             <div>
-                                $ {(1.34 * shares).toFixed(2)}
+                                $ {(stockCurPrice * shares).toFixed(2)}
                             </div>
                         </div>
                     </div>

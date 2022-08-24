@@ -28,11 +28,12 @@ function Copyright(props) {
   );
 }
 
+const userId =1;
 const theme = createTheme();
 
 export default function Login() {
   const handleSubmit = (event) => {
-    window.open("/user");
+    window.open("/user?userId="+userId);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({

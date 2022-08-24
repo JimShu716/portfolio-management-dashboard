@@ -26,6 +26,7 @@ const User = (props) =>{
     const [open, setOpen] = useState(false);
     const [addWithdrawBalance, setAddWithdrawBalance] = useState(0);
 
+
     const handleClickOpen = () => {
         setOpen(true);
     };
