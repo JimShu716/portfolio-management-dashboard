@@ -33,6 +33,7 @@ const User = () =>{
     const [errorMessage, setErrorMessage] = useState("");
     const [addWithdrawBalance, setAddWithdrawBalance] = useState(0);
     const [userBalance, setUserBalance] = useState(0);
+    const [totalWealth, setTotalWealth] = useState(0);
     const search = window.location.search;
     const params = new URLSearchParams(search);
     const userId = params.get('userId');
@@ -115,15 +116,6 @@ const User = () =>{
     }
 
     useEffect(()=>{
-        // get data from backend
-        axios.get(process.env.REACT_APP_HOST + '1', ).then(r => {
-            console.log(r)
-        }).catch(function (error) {
-            setApiStatus("fetching user information from the database")
-            setErrorMessage(error.message)
-            setErrorOpen(true)
-        })
-
         axios.get(process.env.REACT_APP_HOST + userId, ).then(r => {
             setName(r.data["userName"])
             console.log("user balance is",r.data)
@@ -152,7 +144,14 @@ const User = () =>{
             setErrorOpen(true)
         });
 
-    }, [])
+        axios.get(process.env.REACT_APP_HOST + "currentTotalWealth/" + userId, ).then(r => {
+            setTotalWealth(r.data)
+        }).catch(function (error) {
+            setApiStatus("fetching users' information")
+            setErrorMessage(error.message)
+            setErrorOpen(true)
+        })
+        }, [])
 
     const columns = [  { id: 'id', label: 'ID'},
         { id: 'symbol', label: 'Symbol'},
@@ -294,9 +293,11 @@ const User = () =>{
                             </TableContainer>
                         </div>
                         <div className="dashboard-fancy-container">
-                            <div className="dashboard-container-title">Balance</div>
-                            <div className="dashboard-container-title" style={{fontSize: "32px", marginTop: "8px"}}>$ {userBalance}</div>
-                            <a href="#" onClick={handleClickOpen} className="dashboard-fancy-container-button" style={{textDecoration:"none", marginBottom: "25px", marginTop: "auto"}}>Transfer Money</a>
+                            <div className="dashboard-container-title">Cash</div>
+                            <div className="dashboard-container-title" style={{marginTop: "2px"}}>$ {userBalance}</div>
+                            <div className="dashboard-container-title" style={{marginTop: "8px"}}>Total Holdings</div>
+                            <div className="dashboard-container-title" style={{marginTop: "2px"}}>$ {totalWealth}</div>
+                            <a href="#" onClick={handleClickOpen} className="dashboard-fancy-container-button" style={{textDecoration:"none", marginBottom: "25px", marginTop: "auto"}}>Transfer Cash</a>
                         </div>
                     </div>
                     <div className="containers-container" style={{height: "50%"}}>
