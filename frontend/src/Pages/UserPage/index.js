@@ -147,7 +147,7 @@ const User = () =>{
             setRows(t)
 
             }).catch(function (error) {
-            setApiStatus("fetching users' balance")
+            setApiStatus("fetching users' information")
             setErrorMessage(error.message)
             setErrorOpen(true)
         });
@@ -295,7 +295,7 @@ const User = () =>{
                         </div>
                         <div className="dashboard-fancy-container">
                             <div className="dashboard-container-title">Balance</div>
-                            <div className="dashboard-container-title" style={{fontSize: "32px", marginTop: "8px"}}>${userBalance}</div>
+                            <div className="dashboard-container-title" style={{fontSize: "32px", marginTop: "8px"}}>$ {userBalance}</div>
                             <a href="#" onClick={handleClickOpen} className="dashboard-fancy-container-button" style={{textDecoration:"none", marginBottom: "25px", marginTop: "auto"}}>Transfer Money</a>
                         </div>
                     </div>
