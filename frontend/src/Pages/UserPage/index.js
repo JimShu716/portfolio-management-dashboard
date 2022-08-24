@@ -31,7 +31,12 @@ const User = () =>{
     const [apiStatus, setApiStatus] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [addWithdrawBalance, setAddWithdrawBalance] = useState(0);
+    const [userBalance, setUserBalance] = useState(0);
+    const search = window.location.search;
+    const params = new URLSearchParams(search);
+    const userId = params.get('userId');
 
+    const [tradeHistoryData, setTradeHistoryData] = useState(0);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -65,11 +70,43 @@ const User = () =>{
 
     async function addBalance(){
         // input: addWithdrawBalance
-        console.log(addWithdrawBalance)
+     
+        axios.put(process.env.REACT_APP_HOST + 'addBalance/'+ userId+'/'+ addWithdrawBalance,).then(r => {
+            console.log("add log",r)
+            
+            axios.get(process.env.REACT_APP_HOST + userId, ).then(r => {
+                //     setStockData(r.data)
+    
+                   const balance = r.data["balance"]
+                   setUserBalance(balance)
+    
+                }).catch(function (error) {
+                setApiStatus("fetching users' balance")
+                setErrorMessage(error.message)
+                setErrorOpen(true)
+            });
+            setOpen(false); //close the dialog
+
+         }).catch(function (error) {console.log(error)});
     }
 
     async function withdrawBalance(){
-        // input: addWithdrawBalance
+        axios.put(process.env.REACT_APP_HOST + 'withDrawBalance/'+ userId+'/'+ addWithdrawBalance,).then(r => {
+            console.log("add log",r)
+            axios.get(process.env.REACT_APP_HOST + userId, ).then(r => {
+                //     setStockData(r.data)
+    
+                   const balance = r.data["balance"]
+                   setUserBalance(balance)
+    
+                }).catch(function (error) {
+                setApiStatus("fetching users' balance")
+                setErrorMessage(error.message)
+                setErrorOpen(true)
+            });
+            setOpen(false); //close the dialog
+
+         }).catch(function (error) {console.log(error)});
         console.log(addWithdrawBalance)
     }
 
@@ -86,6 +123,21 @@ const User = () =>{
             setErrorMessage(error.message)
             setErrorOpen(true)
         })
+
+        axios.get(process.env.REACT_APP_HOST + userId, ).then(r => {
+            //     setStockData(r.data)
+            console.log("user balance is",r.data)
+               const balance = r.data["balance"]
+               setUserBalance(balance)
+               const tradeHistoryData = r.data["tradeHistories"]
+               setTradeHistoryData(tradeHistoryData)
+
+            }).catch(function (error) {
+            setApiStatus("fetching users' balance")
+            setErrorMessage(error.message)
+            setErrorOpen(true)
+        });
+
     }, [])
 
     const columns = [  { id: 'id', label: 'ID'},
@@ -234,7 +286,7 @@ const User = () =>{
                         </div>
                         <div className="dashboard-fancy-container">
                             <div className="dashboard-container-title">Balance</div>
-                            <div className="dashboard-container-title" style={{fontSize: "32px", marginTop: "8px"}}>$200,000</div>
+                            <div className="dashboard-container-title" style={{fontSize: "32px", marginTop: "8px"}}>${userBalance}</div>
                             <a href="#" onClick={handleClickOpen} className="dashboard-fancy-container-button" style={{textDecoration:"none", marginBottom: "25px", marginTop: "auto"}}>Transfer Money</a>
                         </div>
                     </div>
