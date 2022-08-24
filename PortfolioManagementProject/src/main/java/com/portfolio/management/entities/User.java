@@ -32,6 +32,7 @@ public class User implements Serializable {
         this.email = email;
         this.userName = userName;
         this.userPassword = userPassword;
+        this.balance = new BigDecimal(0);
     }
 
     public User(int userID, String userPassword) {

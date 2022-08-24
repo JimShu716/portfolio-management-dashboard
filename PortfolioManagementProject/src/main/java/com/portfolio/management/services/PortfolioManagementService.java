@@ -13,6 +13,8 @@ public interface PortfolioManagementService {
 
     public void addUser(User user);
 
+    public Optional<User> fetchUserByEmail(String email);
+
     public User updateUserPassWord(int userID, String passWord);
 
     public void addUserTradeHistory(User user);
