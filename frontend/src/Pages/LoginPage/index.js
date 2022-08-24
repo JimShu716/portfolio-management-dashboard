@@ -38,7 +38,7 @@ export default function Login() {
       const password = data.get('password');
 
       axios.get(process.env.REACT_APP_HOST+"getUserIDUsingEmail/"+email+"/"+password).then(r => {
-          window.open("/trade","_self");
+          window.open("/trade?userId=" + r.data,"_self");
       }).catch(function () {setLoginError("block")});
     }
 

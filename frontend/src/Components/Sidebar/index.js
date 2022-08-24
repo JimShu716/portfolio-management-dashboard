@@ -15,7 +15,9 @@ const Sidebar = () =>{
     const [open, setOpen] = useContext(SideBarOpenContext);
     const [time, setTime] = useState("");
     const [isMarketsOpen, setIsMarketsOpen] = useState(true);
-
+    const search = window.location.search;
+    const params = new URLSearchParams(search);
+    const userId = params.get('userId');
     const handleDrawer = () => {
         setOpen(!open);
     };
@@ -66,7 +68,7 @@ const Sidebar = () =>{
                               marginTop: "10px",
                           }}>
                         <ListItem key={'Trade'} sx={{paddingLeft: 0, paddingTop: 0, paddingRight: 0, paddingBottom: "2px"}}>
-                            <NavLink className={(navData) => (navData.isActive ? 'navBarLinkActive' : 'navBarLink')} to={'/trade'} end>
+                            <NavLink className={(navData) => (navData.isActive ? 'navBarLinkActive' : 'navBarLink')} to={'/trade?userId='+userId} end>
                                 <div className="listItemButton">
                                     <FaChartArea className="listItemButtonIcon" />
                                     <span className="navBarLinkText">Trade</span>
@@ -74,7 +76,7 @@ const Sidebar = () =>{
                             </NavLink>
                         </ListItem>
                         <ListItem key={'User Profile'} sx={{paddingLeft: 0, paddingRight: 0}}>
-                            <NavLink className={(navData) => (navData.isActive ? 'navBarLinkActive' : 'navBarLink')} to={'/user'} end>
+                            <NavLink className={(navData) => (navData.isActive ? 'navBarLinkActive' : 'navBarLink')} to={'/user?userId='+userId} end>
                                 <div className="listItemButton">
                                     <FaUser className="listItemButtonIcon" />
                                     <span className="navBarLinkText">User Profile</span>
