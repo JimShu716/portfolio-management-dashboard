@@ -281,7 +281,9 @@ const Stock = () =>{
                         <div style={{height: "calc(100vh - 100px)", flexGrow: 1}}>
                             <div className="dashboard-fancy-container" style={{height: "43%"}}>
                                 <div className="dashboard-container-title">Holdings</div>
-                                <div className="dashboard-container-title" style={{fontSize: "32px", marginTop: "8px"}}>$ {balance}</div>
+                                <div className="dashboard-container-title" style={{marginTop: "2px"}}>$ 0.00</div>
+                                <div className="dashboard-container-title" style={{marginTop: "6px"}}>Cash</div>
+                                <div className="dashboard-container-title" style={{marginTop: "2px"}}>$ {balance}</div>
                                 <div style={{marginTop: "auto", marginBottom: "10px"}}>
                                     <a onClick={handleClickOpen} className="dashboard-fancy-container-button">Trade</a>
                                 </div>
@@ -361,12 +363,20 @@ const Stock = () =>{
                             $ {stockCurPrice}
                             </div>
                         </div>
-                        <div style={{display:"flex", justifyContent:"space-between", marginBottom: "30px", fontWeight: 600}}>
+                        <div style={{display:"flex", justifyContent:"space-between", marginBottom: "10px", fontWeight: 600}}>
                             <div style={{color: "gray"}}>
                                 Estimated Amount
                             </div>
                             <div>
                                 $ {(stockCurPrice * shares).toFixed(2)}
+                            </div>
+                        </div>
+                        <div style={{display:"flex", justifyContent:"space-between", marginBottom: "30px", fontWeight: 600}}>
+                            <div style={{color: "gray"}}>
+                                Current Cash
+                            </div>
+                            <div>
+                                $ {balance}
                             </div>
                         </div>
                     </div>
