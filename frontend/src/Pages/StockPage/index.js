@@ -7,24 +7,22 @@ import StockContext from "../../Components/Header/StockContext";
 import Chart from 'react-google-charts';
 import {Dialog} from "@mui/material";
 import {GrFormClose} from "react-icons/gr";
-import {SiVisa} from "react-icons/si";
 import Input from "@mui/material/Input";
+import {AiFillWarning} from "react-icons/ai";
 
-
-
-var stockInfoResult
-const Stock = (props) =>{
-    const [stockSymbol, setStockSymbol] = useContext(StockContext);
+const Stock = () =>{
+    const [stockSymbol, ] = useContext(StockContext);
     const [stockInfo, setStockInfo] = useState([]);
     const [stockData, setStockData] = useState([]);
-    const [stockInfoResult, setStockInfoResult] = useState([]);
-    const [chartData, setChartData] = useState([]);
     const [stockCurPrice, setStockCurPrice] = useState("167.74")
     const [stockTrend, setStockTrend] = useState()
     const [stockTrendPercent, setStockTrendPercent] = useState()
     const [color, setColor] = useState("#de5246")
     const [open, setOpen] = useState(false);
     const [shares, setShares] = useState(0);
+    const [errorOpen, setErrorOpen] = useState(false);
+    const [apiStatus, setApiStatus] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -36,6 +34,10 @@ const Stock = (props) =>{
 
     const updatePopupInput = (event) => {
         setShares(event.target.value);
+    }
+
+    function handleErrorClose() {
+        setErrorOpen(false);
     }
 
     async function sellStock(){
@@ -65,9 +67,6 @@ const Stock = (props) =>{
     useEffect(()=>{
         console.log(stockSymbol)
         axios.get(process.env.REACT_APP_HOST + 'getStockInfo/' + stockSymbol, ).then(r => {
-            //setStockInfo([r.data])
-            const stockInfoResult =r.data
-
             const s = [{
                 company: r.data.data["shortName"],
                 currency:r.data.data["currency"],
@@ -83,24 +82,22 @@ const Stock = (props) =>{
             }]
             console.log(s)
             setStockInfo(s)
-
         })
-        .catch(function (error) {console.log(error)});
+        .catch(function (error) {
+            setApiStatus("fetching stock information from the database")
+            setErrorMessage(error.message)
+            setErrorOpen(true)
+        });
 
 
         axios.get(process.env.REACT_APP_HOST + 'getStockPriceForADates/' + stockSymbol + "/" + date1 + "/" + date2 + "/", ).then(r => {
-        //     setStockData(r.data)
-
             const chartData = r.data
             setStockCurPrice(chartData.slice(-1)[0].toFixed(2));
-            console.log(chartData.slice(-1))
             let stockDataArray = [["date", "Trade prices"]];
             for(let i = 0; i<dateList.length; i++){
                 stockDataArray.push([dateList[i],chartData[i]]);
             }
 
-            console.log(chartData.slice(-2)[0])
-            console.log(chartData.slice(-1)[0])
             let x = (chartData.slice(-1)[0] - chartData.slice(-2)[0]).toFixed(2);
             let y = ((x/chartData.slice(-1)[0]) * 100).toFixed(2);
             if(x >= 0){
@@ -111,19 +108,17 @@ const Stock = (props) =>{
 
             setStockTrendPercent(y);
             setStockTrend(x);
-            console.log(x)
-
-            // stockDataArray.push([new Date(), 167.74])
 
             setStockData(stockDataArray)
 
-        }).catch(function (error) {console.log(error)});
-
-
+        }).catch(function (error) {
+            setApiStatus("fetching stock chart data from yFinance API")
+            setErrorMessage(error.message)
+            setErrorOpen(true)
+        });
 
 
      }, [stockSymbol])
-
 
 
 
@@ -251,8 +246,9 @@ const Stock = (props) =>{
                 aria-labelledby="alert-dialog-title"
                 width="400px"
                 aria-describedby="alert-dialog-description"
+                sx={{"& .MuiBackdrop-root":{backgroundColor:"rgba(0, 0, 0, 0.2)"}}}
             >
-                <a onClick={handleClose} style={{display: "flex", justifyContent:"space-between"}}><div /><GrFormClose style={{paddingRight: "25px", paddingTop: "25px", fontSize: "20px", cursor:"pointer"}} /></a>
+                <a href="#" onClick={handleClose} style={{textDecoration:"none", display: "flex", justifyContent:"space-between"}}><div /><GrFormClose style={{paddingRight: "25px", paddingTop: "25px", fontSize: "20px", cursor:"pointer"}} /></a>
                 <div className="dashboard-container" style={{marginRight: "20px", paddingTop: "5px"}}>
                     <div className="dashboard-container-title">
                         Market Order
@@ -286,8 +282,18 @@ const Stock = (props) =>{
                         </div>
                     </div>
                     <div style={{display: "flex", paddingBottom: "10px", flexDirection:"row-reverse"}}>
-                        <a id="sell-button" onClick={sellStock}>Sell</a>
-                        <a id="buy-button" onClick={buyStock}>Buy</a>
+                        <a href="#" id="sell-button" onClick={sellStock}>Sell</a>
+                        <a href="#" id="buy-button" onClick={buyStock}>Buy</a>
+                    </div>
+                </div>
+            </Dialog>
+            <Dialog open={errorOpen} sx={{backgroundColor: "transparent", "& .MuiDialog-container .MuiPaper-root":{boxShadow:"none"}, "& .MuiBackdrop-root":{backgroundColor:"rgba(0, 0, 0, 0.2)"}}}>
+                <div style={{width:"300px", marginRight:"15px"}}>
+                    <a href="#" onClick={handleErrorClose} style={{textDecoration:"none", display: "flex", justifyContent:"space-between"}}><div /><GrFormClose style={{paddingRight: "25px", paddingTop: "25px", fontSize: "20px", cursor:"pointer"}} /></a>
+                    <div className="dashboard-container" style={{textAlign:"center", paddingTop:"12px", paddingBottom:"20px"}}>
+                        <AiFillWarning style={{marginLeft: "auto", marginRight:"auto", marginBottom:"12px", fontSize:"45px", color:"rgb(211, 92, 69)"}} />
+                        <div style={{fontWeight:"600", fontSize:"20px", marginBottom:"12px", color:"rgb(211, 92, 69)"}}>ERROR</div>
+                        <div>A problem has been occurred while {apiStatus}: {errorMessage}.</div>
                     </div>
                 </div>
             </Dialog>

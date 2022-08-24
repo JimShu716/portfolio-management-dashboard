@@ -17,13 +17,16 @@ import { HiCheckCircle } from "react-icons/hi";
 import Input from "@mui/material/Input";
 import {SiVisa} from "react-icons/si";
 import {GrFormClose} from "react-icons/gr";
+import {AiFillWarning} from "react-icons/ai";
 
-const User = (props) =>{
-    const [response, setResponse] = useState("");
+const User = () =>{
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(3);
     const [rows, setRows] = useState([])
     const [open, setOpen] = useState(false);
+    const [errorOpen, setErrorOpen] = useState(false);
+    const [apiStatus, setApiStatus] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
     const [addWithdrawBalance, setAddWithdrawBalance] = useState(0);
 
     const handleClickOpen = () => {
@@ -58,11 +61,19 @@ const User = (props) =>{
         console.log(addWithdrawBalance)
     }
 
+    function handleErrorClose() {
+        setErrorOpen(false);
+    }
+
     useEffect(()=>{
         // get data from backend
-        axios.get(process.env.REACT_APP_HOST + '/1', ).then(r => {
+        axios.get(process.env.REACT_APP_HOST + '1', ).then(r => {
             console.log(r)
-        });
+        }).catch(function (error) {
+            setApiStatus("fetching user information from the database")
+            setErrorMessage(error.message)
+            setErrorOpen(true)
+        })
     }, [])
 
     const columns = [  { id: 'id', label: 'ID'},
@@ -127,7 +138,7 @@ const User = (props) =>{
                         <div className="dashboard-fancy-container">
                             <div className="dashboard-container-title">Balance</div>
                             <div className="dashboard-container-title" style={{fontSize: "32px", marginTop: "8px"}}>$200,000</div>
-                            <a onClick={handleClickOpen} className="dashboard-fancy-container-button" style={{marginBottom: "25px", marginTop: "auto"}}>Transfer Money</a>
+                            <a href="#" onClick={handleClickOpen} className="dashboard-fancy-container-button" style={{textDecoration:"none", marginBottom: "25px", marginTop: "auto"}}>Transfer Money</a>
                         </div>
                     </div>
                     <div className="containers-container" style={{height: "50%"}}>
@@ -199,8 +210,9 @@ const User = (props) =>{
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
+                sx={{"& .MuiBackdrop-root":{backgroundColor:"rgba(0, 0, 0, 0.2)"}}}
             >
-                <a onClick={handleClose} style={{display: "flex", justifyContent:"space-between"}}><div /><GrFormClose style={{paddingRight: "25px", paddingTop: "25px", fontSize: "20px", cursor:"pointer"}} /></a>
+                <a href="#" onClick={handleClose} style={{textDecoration:"none", display: "flex", justifyContent:"space-between"}}><div /><GrFormClose style={{paddingRight: "25px", paddingTop: "25px", fontSize: "20px", cursor:"pointer"}} /></a>
                 <div className="dashboard-container" style={{marginRight: "20px", paddingTop: "5px"}}>
                     <div className="dashboard-container-title">
                         Transfer Money
@@ -229,8 +241,18 @@ const User = (props) =>{
                                onChange={event => updatePopupInput(event)}/>
                     </div>
                     <div style={{display: "flex", paddingBottom: "15px"}}>
-                        <a onClick={addBalance} className="dashboard-fancy-container-button" style={{width: "48%", marginRight: "2%"}}>Add</a>
-                        <a onClick={withdrawBalance} className="dashboard-fancy-container-button" style={{width: "48%", marginLeft: "2%"}}>Withdraw</a>
+                        <a href="#" onClick={addBalance} className="dashboard-fancy-container-button" style={{textDecoration:"none",width: "48%", marginRight: "2%"}}>Add</a>
+                        <a href="#" onClick={withdrawBalance} className="dashboard-fancy-container-button" style={{textDecoration:"none",width: "48%", marginLeft: "2%"}}>Withdraw</a>
+                    </div>
+                </div>
+            </Dialog>
+            <Dialog open={errorOpen} sx={{backgroundColor: "transparent", "& .MuiDialog-container .MuiPaper-root":{boxShadow:"none"}, "& .MuiBackdrop-root":{backgroundColor:"rgba(0, 0, 0, 0.2)"}}}>
+                <div style={{width:"300px", marginRight:"15px"}}>
+                    <a href="#" onClick={handleErrorClose} style={{textDecoration:"none", display: "flex", justifyContent:"space-between"}}><div /><GrFormClose style={{paddingRight: "25px", paddingTop: "25px", fontSize: "20px", cursor:"pointer"}} /></a>
+                    <div className="dashboard-container" style={{textAlign:"center", paddingTop:"12px", paddingBottom:"20px"}}>
+                        <AiFillWarning style={{marginLeft: "auto", marginRight:"auto", marginBottom:"12px", fontSize:"45px", color:"rgb(211, 92, 69)"}} />
+                        <div style={{fontWeight:"600", fontSize:"20px", marginBottom:"12px", color:"rgb(211, 92, 69)"}}>ERROR</div>
+                        <div>A problem has been occurred while {apiStatus}: {errorMessage}.</div>
                     </div>
                 </div>
             </Dialog>
