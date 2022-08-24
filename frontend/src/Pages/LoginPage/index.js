@@ -19,7 +19,7 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="#">
         Stock Master
       </Link>{' '}
       {new Date().getFullYear()}
@@ -69,9 +69,7 @@ export default function Login() {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              {/*<LockOutlinedIcon />*/}
-            </Avatar>
+            <Avatar sx={{ m: 1, bgcolor: 'rgb(35, 98, 241)' }} />
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
