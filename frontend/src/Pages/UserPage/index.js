@@ -23,6 +23,9 @@ const User = () =>{
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(3);
     const [rows, setRows] = useState([])
+    const [holdingsSummaryPage, setHoldingsSummaryPage] = useState(0);
+    const [holdingsSummaryRowsPerPage, setHoldingsSummaryRowsPerPage] = useState(3);
+    const [holdingsSummaryRows, setHoldingsSummaryRows] = useState([])
     const [open, setOpen] = useState(false);
     const [errorOpen, setErrorOpen] = useState(false);
     const [apiStatus, setApiStatus] = useState("");
@@ -37,12 +40,20 @@ const User = () =>{
         setOpen(false);
     };
 
+    const handleHoldingsSummaryChangePage = (event, newPage) => {
+        setHoldingsSummaryPage(newPage);
+    };
+
+    const handleHoldingsSummaryChangeRowsPerPage = (event) => {
+        setHoldingsSummaryRowsPerPage(+event.target.value);
+        setHoldingsSummaryPage(0);
+    };
+
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
 
     const handleChangeRowsPerPage = (event) => {
-        console.log(event.target.value)
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
@@ -85,6 +96,15 @@ const User = () =>{
         { id: 'action', label: 'Action' },
     ]
 
+    const holdingsSummaryColumns = [
+        { id: 'symbol', label: 'Symbol'},
+        { id: 'quantity', label: 'Quantity'},
+        { id: 'totalCost', label: 'Total Cost'},
+        { id: 'price', label: 'Current Price' },
+        { id: 'marketValue', label: 'Market Value' },
+        { id: 'earnings', label: 'Earnings' },
+    ]
+
     const rowsData = [{
         id: 1,
         symbol: "AAPL",
@@ -119,8 +139,43 @@ const User = () =>{
         action: "Sell"
     }]
 
+    const holdingsSummaryRowsData = [{
+        symbol: "AAPL",
+        quantity: 400,
+        totalCost: 1200,
+        price: 3.4,
+        marketValue: 1360,
+        earnings: 160
+    },
+        {
+            symbol: "AMZN",
+            quantity: 400,
+            totalCost: 1200,
+            price: 3.4,
+            marketValue: 1360,
+            earnings: 160
+        },
+        {
+            symbol: "GOOG",
+            quantity: 400,
+            totalCost: 1200,
+            price: 3.4,
+            marketValue: 1360,
+            earnings: 160
+        },
+        {
+            symbol: "MSFT",
+            quantity: 400,
+            totalCost: 1200,
+            price: 3.4,
+            marketValue: 1360,
+            earnings: 160
+        }]
+
+
     useEffect(()=>{
         setRows(rowsData)
+        setHoldingsSummaryRows(holdingsSummaryRowsData)
     },[])
 
     return (
@@ -131,9 +186,50 @@ const User = () =>{
                 <Header />
                 <div style={{height:"calc(100vh - 56px)"}}>
                     <div className="containers-container" style={{height: "50%"}}>
-                        <div className="dashboard-container">
-                            <div className="dashboard-container-title">Analysis Chart</div>
-                            <div>A chart to show balance changes ???</div>
+                        <div className="dashboard-container" style={{paddingTop: "15px"}}>
+                            <div style={{display:"flex", justifyContent:"space-between", alignItems:"center"}}>
+                                <div className="dashboard-container-title">Holdings Summary</div>
+                                <TablePagination
+                                    sx={{fontFamily: "'DM Sans'"}}
+                                    rowsPerPageOptions={[]}
+                                    component="div"
+                                    count={rows.length}
+                                    rowsPerPage={holdingsSummaryRowsPerPage}
+                                    page={holdingsSummaryPage}
+                                    onPageChange={handleHoldingsSummaryChangePage}
+                                    onRowsPerPageChange={handleHoldingsSummaryChangeRowsPerPage}
+                                />
+                            </div>
+                            <TableContainer>
+                                <Table aria-label="simple table">
+                                    <TableHead>
+                                        <TableRow>
+                                            {holdingsSummaryColumns.map((column) => (
+                                                <TableCell
+                                                    sx={{paddingLeft: "2px", paddingTop: "5px", paddingBottom: "10px", borderBottom:"none", paddingRight: "25px", fontFamily:"'DM Sans'", color:"gray", fontWeight: "600"}}
+                                                    key={column.id}
+                                                >
+                                                    {column.label}
+                                                </TableCell>
+                                            ))}
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {holdingsSummaryRows.slice(holdingsSummaryPage * holdingsSummaryRowsPerPage, holdingsSummaryPage * holdingsSummaryRowsPerPage + holdingsSummaryRowsPerPage).map((row) => {
+                                            return (
+                                                <TableRow hover role="checkbox" tabIndex={-1} key={row.symbol}>{holdingsSummaryColumns.map((column) => {
+                                                    const value = row[column.id];
+                                                    return (
+                                                        <TableCell sx={{paddingLeft: "2px", paddingTop: "12px", paddingBottom: "12px", paddingRight: "25px", fontWeight:"600", borderBottom: "none", borderTop:"1px solid rgb(226, 231, 236)", fontFamily:"'DM Sans'"}}
+                                                                   key={column.id} >{value}</TableCell>
+                                                    );
+                                                })}
+                                                </TableRow>
+                                            );
+                                        })}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
                         </div>
                         <div className="dashboard-fancy-container">
                             <div className="dashboard-container-title">Balance</div>
@@ -158,7 +254,7 @@ const User = () =>{
                             </div>
                             <div>
                                 <TableContainer>
-                                    <Table aria-label="simple table">
+                                    <Table aria-label="trade history table">
                                         <TableHead>
                                             <TableRow>
                                                 {columns.map((column) => (
