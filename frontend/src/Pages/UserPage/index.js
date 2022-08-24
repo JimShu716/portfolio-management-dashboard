@@ -20,6 +20,7 @@ import {GrFormClose} from "react-icons/gr";
 import {AiFillWarning} from "react-icons/ai";
 
 const User = () =>{
+    const [name, setName] = useState("");
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(3);
     const [rows, setRows] = useState([])
@@ -124,12 +125,10 @@ const User = () =>{
         })
 
         axios.get(process.env.REACT_APP_HOST + userId, ).then(r => {
-            //     setStockData(r.data)
+            setName(r.data["userName"])
             console.log("user balance is",r.data)
             const balance = r.data["balance"]
             setUserBalance(balance)
-            const tradeHistoryData = r.data["tradeHistories"]
-            setTradeHistoryData(tradeHistoryData)
 
             let t = []
             r.data["tradeHistories"].map(
@@ -384,7 +383,7 @@ const User = () =>{
                             </div>
                             <div>1234 **** **** 5678</div>
                             <div style={{display: "flex", justifyContent:"space-between", paddingTop: "10px"}}>
-                                <div>Name</div>
+                                <div>{name}</div>
                                 <div>08/23</div>
                             </div>
                         </div>
