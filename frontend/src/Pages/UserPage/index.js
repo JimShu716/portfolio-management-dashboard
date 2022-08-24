@@ -32,6 +32,9 @@ const User = () =>{
     const [errorMessage, setErrorMessage] = useState("");
     const [addWithdrawBalance, setAddWithdrawBalance] = useState(0);
 
+    const search = window.location.search;
+    const params = new URLSearchParams(search);
+    const userId = params.get('userId');
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -77,16 +80,6 @@ const User = () =>{
         setErrorOpen(false);
     }
 
-    useEffect(()=>{
-        // get data from backend
-        axios.get(process.env.REACT_APP_HOST + '1', ).then(r => {
-            console.log(r)
-        }).catch(function (error) {
-            setApiStatus("fetching user information from the database")
-            setErrorMessage(error.message)
-            setErrorOpen(true)
-        })
-    }, [])
 
     const columns = [  { id: 'id', label: 'ID'},
         { id: 'symbol', label: 'Symbol'},
@@ -175,8 +168,30 @@ const User = () =>{
 
 
     useEffect(()=>{
-        setRows(rowsData)
-        setHoldingsSummaryRows(holdingsSummaryRowsData)
+        console.log(userId)
+        axios.get(process.env.REACT_APP_HOST + userId).then(r => {
+            let t = []
+            r.data["tradeHistories"].map(
+                function(d) {
+                    const time = new Date(d["purchasedTime"])
+                    t.push({
+                        id: d["tradeHistoryID"],
+                        symbol: d["stockSymbol"],
+                        shares: d["purchasedQuantities"],
+                        price: d["purchasedPrice"],
+                        orderAmount: d["purchasedQuantities"]*d["purchasedPrice"],
+                        time: time.toLocaleString(),
+                        action: d["property"]
+                    })
+                })
+            setRows(t)
+        }).catch(function (error) {
+            setApiStatus("fetching user information from the database")
+            setErrorMessage(error.message)
+            setErrorOpen(true)})
+        //
+        // setRows(rowsData)
+        // setHoldingsSummaryRows(holdingsSummaryRowsData)
     },[])
 
     return (

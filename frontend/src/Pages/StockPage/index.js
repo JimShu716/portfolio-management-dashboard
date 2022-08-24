@@ -22,7 +22,7 @@ const Stock = () =>{
     const [stockTrendPercent, setStockTrendPercent] = useState()
     const [color, setColor] = useState("#de5246")
     const [open, setOpen] = useState(false);
-    const [shares, setShares] = useState(0);
+    const [shares, setShares] = useState(0.00);
     const search = window.location.search;
     const params = new URLSearchParams(search);
     const userId = params.get('userId');
@@ -45,10 +45,10 @@ const Stock = () =>{
 
     async function sellStock() {
 
-        var today = new Date();
-        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        var dateTime = date + ' ' + time;
+        const today = new Date();
+        const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        const dateTime = date + ' ' + time;
 
         axios.post(process.env.REACT_APP_HOST + 'addTradeHistory/', {
             "property": "sell",
@@ -280,7 +280,7 @@ const Stock = () =>{
                         <div style={{height: "calc(100vh - 100px)", flexGrow: 1}}>
                             <div className="dashboard-fancy-container" style={{height: "43%"}}>
                                 <div className="dashboard-container-title">Holdings</div>
-                                <div className="dashboard-container-title" style={{fontSize: "32px", marginTop: "8px"}}>{balance}</div>
+                                <div className="dashboard-container-title" style={{fontSize: "32px", marginTop: "8px"}}>$ {balance}</div>
                                 <div style={{marginTop: "auto", marginBottom: "10px"}}>
                                     <a onClick={handleClickOpen} className="dashboard-fancy-container-button">Trade</a>
                                 </div>
