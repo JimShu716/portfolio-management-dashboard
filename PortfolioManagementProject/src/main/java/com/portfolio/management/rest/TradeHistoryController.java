@@ -1,6 +1,7 @@
 package com.portfolio.management.rest;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.portfolio.management.entities.HoldingSummary;
 import com.portfolio.management.entities.TradeHistory;
 import com.portfolio.management.entities.User;
 import com.portfolio.management.services.PortfolioManagementService;
@@ -80,5 +81,12 @@ public class TradeHistoryController {
     public ResponseEntity<User> getInvestmentWealthByUserID(@PathVariable int userID) throws UnirestException {
         BigDecimal wealth = tradeHistoryService.getCurrentWealth(userID);
         return new ResponseEntity(wealth, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/holdingSummaryPerStockUser/{userID}/{stockSymbol}")
+    public ResponseEntity<HoldingSummary> getHoldingSummaryPerStockUser(@PathVariable int userID, @PathVariable String stockSymbol) throws UnirestException {
+        HoldingSummary holdingSummary = tradeHistoryService.getHoldingSummaryPerStockUser(userID, stockSymbol);
+        System.err.println(holdingSummary.getAverageCost());
+        return new ResponseEntity(holdingSummary, HttpStatus.OK);
     }
 }

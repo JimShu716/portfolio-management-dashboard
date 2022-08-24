@@ -15,4 +15,6 @@ public interface TradeHistoryService {
     public int getHoldingStockQuantities(int userID, String stockSymbol);
 
     public BigDecimal getCurrentWealth(int userID) throws UnirestException;
+
+    public HoldingSummary getHoldingSummaryPerStockUser(int userID, String stockSymbol) throws UnirestException;
 }
