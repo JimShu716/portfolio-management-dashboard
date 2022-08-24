@@ -7,14 +7,11 @@ import StockContext from "../../Components/Header/StockContext";
 import Chart from 'react-google-charts';
 import {Dialog} from "@mui/material";
 import {GrFormClose} from "react-icons/gr";
-import {SiVisa} from "react-icons/si";
 import Input from "@mui/material/Input";
+import {AiFillWarning} from "react-icons/ai";
 
-
-
-var stockInfoResult
-const Stock = (props) =>{
-    const [stockSymbol, setStockSymbol] = useContext(StockContext);
+const Stock = () =>{
+    const [stockSymbol, ] = useContext(StockContext);
     const [stockInfo, setStockInfo] = useState([]);
     const [stockData, setStockData] = useState([]);
     const [stockInfoResult, setStockInfoResult] = useState([]);
@@ -29,6 +26,9 @@ const Stock = (props) =>{
     const search = window.location.search;
     const params = new URLSearchParams(search);
     const userId = params.get('userId');
+    const [errorOpen, setErrorOpen] = useState(false);
+    const [apiStatus, setApiStatus] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -41,43 +41,52 @@ const Stock = (props) =>{
     const updatePopupInput = (event) => {
         setShares(event.target.value);
     }
-  
 
-     async function sellStock(){
+
+    async function sellStock() {
 
         var today = new Date();
-        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        var dateTime = date+' '+time;
-        
-         axios.post(process.env.REACT_APP_HOST + 'addTradeHistory/',{
-            "property" : "sell",
-            "purchasedPrice" :stockCurPrice,
-            "purchasedTime" : dateTime,
-            "purchasedQuantities" : shares,
-            "userID" : userId,
-            "stockSymbol" : stockSymbol
-        } ).then(r => {
-    
-            console.log("sell log",r)
-            axios.get(process.env.REACT_APP_HOST + userId, ).then(r => {
+        var dateTime = date + ' ' + time;
+
+        axios.post(process.env.REACT_APP_HOST + 'addTradeHistory/', {
+            "property": "sell",
+            "purchasedPrice": stockCurPrice,
+            "purchasedTime": dateTime,
+            "purchasedQuantities": shares,
+            "userID": userId,
+            "stockSymbol": stockSymbol
+        }).then(r => {
+
+            console.log("sell log", r)
+            axios.get(process.env.REACT_APP_HOST + userId,).then(r => {
                 //     setStockData(r.data)
-        
-                   const balance = r.data["balance"]
-                   setBalance(balance)
-                  
-                }).catch(function (error) {console.log(error)});
-    
+
+                const balance = r.data["balance"]
+                setBalance(balance)
+
+            }).catch(function (error) {
+                console.log(error)
+            });
+
             setOpen(false); //close the dialog
-         }).catch(function (error) {console.log(error)});
+        }).catch(function (error) {
+            console.log(error)
+        });
     }
+
+    function handleErrorClose() {
+        setErrorOpen(false);
+    }
+
 
     async function buyStock(){
         var today = new Date();
         var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
         var dateTime = date+' '+time;
-        
+
          axios.post(process.env.REACT_APP_HOST + 'addTradeHistory/',{
             "property" : "buy",
             "purchasedPrice" :stockCurPrice,
@@ -86,18 +95,18 @@ const Stock = (props) =>{
             "userID" : userId,
             "stockSymbol" : stockSymbol
         } ).then(r => {
-    
+
             axios.get(process.env.REACT_APP_HOST + userId, ).then(r => {
                 //     setStockData(r.data)
-        
+
                    const balance = r.data["balance"]
                    setBalance(balance)
-                  
+
                 }).catch(function (error) {console.log(error)});
-    
+
             console.log("buy log",r)
             setOpen(false); //close the dialog
-            
+
          }).catch(function (error) {console.log(error)});
     }
 
@@ -140,7 +149,11 @@ const Stock = (props) =>{
             setStockInfo(s)
 
         })
-        .catch(function (error) {console.log(error)});
+        .catch(function (error) {
+            setApiStatus("fetching stock information from the database")
+            setErrorMessage(error.message)
+            setErrorOpen(true)
+        });
 
 
         axios.get(process.env.REACT_APP_HOST + 'getStockPriceForADates/' + stockSymbol + "/" + date1 + "/" + date2 + "/", ).then(r => {
@@ -172,16 +185,25 @@ const Stock = (props) =>{
 
             setStockData(stockDataArray)
 
-        }).catch(function (error) {console.log(error)});
+        }).catch(function (error) {
+            setApiStatus("fetching stock chart data from yFinance API")
+            setErrorMessage(error.message)
+            setErrorOpen(true)
+        });
 
 
         axios.get(process.env.REACT_APP_HOST + userId, ).then(r => {
             //     setStockData(r.data)
-    
+
                const balance = r.data["balance"]
                setBalance(balance)
-              
-            }).catch(function (error) {console.log(error)});
+
+            }).catch(function (error) {
+            setApiStatus("fetching users' balance")
+            setErrorMessage(error.message)
+            setErrorOpen(true)
+        });
+
 
      }, [stockSymbol])
 
@@ -312,8 +334,9 @@ const Stock = (props) =>{
                 aria-labelledby="alert-dialog-title"
                 width="400px"
                 aria-describedby="alert-dialog-description"
+                sx={{"& .MuiBackdrop-root":{backgroundColor:"rgba(0, 0, 0, 0.2)"}}}
             >
-                <a onClick={handleClose} style={{display: "flex", justifyContent:"space-between"}}><div /><GrFormClose style={{paddingRight: "25px", paddingTop: "25px", fontSize: "20px", cursor:"pointer"}} /></a>
+                <a href="#" onClick={handleClose} style={{textDecoration:"none", display: "flex", justifyContent:"space-between"}}><div /><GrFormClose style={{paddingRight: "25px", paddingTop: "25px", fontSize: "20px", cursor:"pointer"}} /></a>
                 <div className="dashboard-container" style={{marginRight: "20px", paddingTop: "5px"}}>
                     <div className="dashboard-container-title">
                         Market Order
@@ -347,8 +370,18 @@ const Stock = (props) =>{
                         </div>
                     </div>
                     <div style={{display: "flex", paddingBottom: "10px", flexDirection:"row-reverse"}}>
-                        <a id="sell-button" onClick={sellStock}>Sell</a>
-                        <a id="buy-button" onClick={buyStock}>Buy</a>
+                        <a href="#" id="sell-button" onClick={sellStock}>Sell</a>
+                        <a href="#" id="buy-button" onClick={buyStock}>Buy</a>
+                    </div>
+                </div>
+            </Dialog>
+            <Dialog open={errorOpen} sx={{backgroundColor: "transparent", "& .MuiDialog-container .MuiPaper-root":{boxShadow:"none"}, "& .MuiBackdrop-root":{backgroundColor:"rgba(0, 0, 0, 0.2)"}}}>
+                <div style={{width:"300px", marginRight:"15px"}}>
+                    <a href="#" onClick={handleErrorClose} style={{textDecoration:"none", display: "flex", justifyContent:"space-between"}}><div /><GrFormClose style={{paddingRight: "25px", paddingTop: "25px", fontSize: "20px", cursor:"pointer"}} /></a>
+                    <div className="dashboard-container" style={{textAlign:"center", paddingTop:"12px", paddingBottom:"20px"}}>
+                        <AiFillWarning style={{marginLeft: "auto", marginRight:"auto", marginBottom:"12px", fontSize:"45px", color:"rgb(211, 92, 69)"}} />
+                        <div style={{fontWeight:"600", fontSize:"20px", marginBottom:"12px", color:"rgb(211, 92, 69)"}}>ERROR</div>
+                        <div>A problem has been occurred while {apiStatus}: {errorMessage}.</div>
                     </div>
                 </div>
             </Dialog>

@@ -11,6 +11,7 @@
 }
 
 #sell-button{
+    text-decoration: none;
     padding: 12px 12px 12px 12px;
     border-radius: 10px;
     background-color: white;
@@ -39,6 +40,7 @@
 }
 
 #buy-button{
+    text-decoration: none;
     width: 48%;
     margin-right: 2%;
     padding: 12px 12px 12px 12px;

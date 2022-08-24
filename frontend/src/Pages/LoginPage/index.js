@@ -4,22 +4,21 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-// import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Image from './../../Assets/stock_background.jpg';
+import axios from "axios";
+import {useState} from "react";
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="#">
         Stock Master
       </Link>{' '}
       {new Date().getFullYear()}
@@ -28,19 +27,20 @@ function Copyright(props) {
   );
 }
 
-const userId =1;
 const theme = createTheme();
 
 export default function Login() {
-  const handleSubmit = (event) => {
-    window.open("/user?userId="+userId);
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+    const [loginError, setLoginError] = useState("none");
+    async function handleSubmit(event) {
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+      const email = data.get('email');
+      const password = data.get('password');
+
+      axios.get(process.env.REACT_APP_HOST+"getUserIDUsingEmail/"+email+"/"+password).then(r => {
+          window.open("/trade?userId=" + r.data,"_self");
+      }).catch(function () {setLoginError("block")});
+    }
 
   return (
     <ThemeProvider theme={theme}>
@@ -70,13 +70,13 @@ export default function Login() {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              {/*<LockOutlinedIcon />*/}
-            </Avatar>
+            <Avatar sx={{ m: 1, bgcolor: 'rgb(35, 98, 241)' }} />
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+              <div style={{textAlign:"center", display: loginError, marginTop:"15px", color:"rgb(152,30,19)"}}>The login credentials you entered are invalid.</div>
+
+              <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -97,10 +97,6 @@ export default function Login() {
                 id="password"
                 autoComplete="current-password"
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
               <Button
                 type="submit"
                 fullWidth
@@ -109,12 +105,7 @@ export default function Login() {
               >
                 Sign In
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
+              <Grid container justifyContent="flex-end">
                 <Grid item>
                   <Link href="/signup" variant="body2">
                     {"Don't have an account? Sign Up"}
