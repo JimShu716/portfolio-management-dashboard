@@ -29,6 +29,8 @@ const Stock = () =>{
     const [errorOpen, setErrorOpen] = useState(false);
     const [apiStatus, setApiStatus] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    
+    const [userHoldings, setUserHoldings] = useState("");
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -58,8 +60,6 @@ const Stock = () =>{
             "userID": userId,
             "stockSymbol": stockSymbol
         }).then(r => {
-     
-            console.log("sell log", r)
             axios.get(process.env.REACT_APP_HOST + userId,).then(r => {
                 //     setStockData(r.data)
 
@@ -69,10 +69,23 @@ const Stock = () =>{
             }).catch(function (error) {
                 console.log(error)
             });
+            axios.get(process.env.REACT_APP_HOST + 'holdingSummaryPerStockUser/'+ userId +"/"+stockSymbol, ).then(r => {
+                //     setStockData(r.data)
+    
+                   const userHoldings = (r.data["curPrice"])*(r.data["quantity"])
+                   setUserHoldings(userHoldings)
+    
+                }).catch(function (error) {
+                setApiStatus("fetching users' holdings")
+                setErrorMessage(error.message)
+                setErrorOpen(true)
+            });
 
             setOpen(false); //close the dialog
         }).catch(function (error) {
-            console.log(error)
+            setApiStatus("selling stocks")
+            setErrorMessage(error.message)
+            setErrorOpen(true)
         });
     }
 
@@ -105,10 +118,25 @@ const Stock = () =>{
                 }).catch(function (error) {console.log(error)});
 
             console.log("buy log",r)
+            axios.get(process.env.REACT_APP_HOST + 'holdingSummaryPerStockUser/'+ userId +"/"+stockSymbol, ).then(r => {
+                //     setStockData(r.data)
+    
+                   const userHoldings = (r.data["curPrice"])*(r.data["quantity"])
+                   setUserHoldings(userHoldings)
+    
+                }).catch(function (error) {
+                setApiStatus("fetching users' holdings")
+                setErrorMessage(error.message)
+                setErrorOpen(true)
+            });
             
             setOpen(false); //close the dialog
 
-         }).catch(function (error) {console.log(error)});
+         }).catch(function (error) {
+             setApiStatus("buying stocks")
+             setErrorMessage(error.message)
+             setErrorOpen(true)
+         });
     }
 
     const tomorrow = new Date();
@@ -128,7 +156,6 @@ const Stock = () =>{
     }
 
     useEffect(()=>{
-        console.log(stockSymbol)
         axios.get(process.env.REACT_APP_HOST + 'getStockInfo/' + stockSymbol, ).then(r => {
             //setStockInfo([r.data])
             const stockInfoResult =r.data
@@ -146,7 +173,6 @@ const Stock = () =>{
                 averageVolume: r.data.data["averageVolume"],
                 sector: r.data.data["sector"],
             }]
-            console.log(s)
             setStockInfo(s)
 
         })
@@ -162,14 +188,11 @@ const Stock = () =>{
 
             const chartData = r.data
             setStockCurPrice(chartData.slice(-1)[0].toFixed(2));
-            console.log(chartData.slice(-1))
             let stockDataArray = [["date", "Trade prices"]];
             for(let i = 0; i<dateList.length; i++){
                 stockDataArray.push([dateList[i],chartData[i]]);
             }
 
-            console.log(chartData.slice(-2)[0])
-            console.log(chartData.slice(-1)[0])
             let x = (chartData.slice(-1)[0] - chartData.slice(-2)[0]).toFixed(2);
             let y = ((x/chartData.slice(-1)[0]) * 100).toFixed(2);
             if(x >= 0){
@@ -180,10 +203,6 @@ const Stock = () =>{
 
             setStockTrendPercent(y);
             setStockTrend(x);
-            console.log(x)
-
-            // stockDataArray.push([new Date(), 167.74])
-
             setStockData(stockDataArray)
 
         }).catch(function (error) {
@@ -203,6 +222,16 @@ const Stock = () =>{
             setApiStatus("fetching users' balance")
             setErrorMessage(error.message)
             setErrorOpen(true)
+        });
+        axios.get(process.env.REACT_APP_HOST + 'holdingSummaryPerStockUser/'+ userId +"/"+stockSymbol, ).then(r => {
+            //     setStockData(r.data)
+
+               const userHoldings = (r.data["curPrice"])*(r.data["quantity"])
+               setUserHoldings(userHoldings)
+
+            }).catch(function (error) {
+
+                setUserHoldings(0.00)
         });
 
 
@@ -281,7 +310,7 @@ const Stock = () =>{
                         <div style={{height: "calc(100vh - 100px)", flexGrow: 1}}>
                             <div className="dashboard-fancy-container" style={{height: "43%"}}>
                                 <div className="dashboard-container-title">Holdings</div>
-                                <div className="dashboard-container-title" style={{marginTop: "2px"}}>$ 0.00</div>
+                                <div className="dashboard-container-title" style={{marginTop: "2px"}}>$ {userHoldings}</div>
                                 <div className="dashboard-container-title" style={{marginTop: "6px"}}>Cash</div>
                                 <div className="dashboard-container-title" style={{marginTop: "2px"}}>$ {balance}</div>
                                 <div style={{marginTop: "auto", marginBottom: "10px"}}>
@@ -373,7 +402,7 @@ const Stock = () =>{
                         </div>
                         <div style={{display:"flex", justifyContent:"space-between", marginBottom: "30px", fontWeight: 600}}>
                             <div style={{color: "gray"}}>
-                                Current Cash
+                                Available to Trade
                             </div>
                             <div>
                                 $ {balance}
