@@ -29,6 +29,8 @@ const Stock = () =>{
     const [errorOpen, setErrorOpen] = useState(false);
     const [apiStatus, setApiStatus] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    
+    const [userHoldings, setUserHoldings] = useState("");
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -69,6 +71,17 @@ const Stock = () =>{
             }).catch(function (error) {
                 console.log(error)
             });
+            axios.get(process.env.REACT_APP_HOST + 'holdingSummaryPerStockUser/'+ userId +"/"+stockSymbol, ).then(r => {
+                //     setStockData(r.data)
+    
+                   const userHoldings = (r.data["curPrice"])*(r.data["quantity"])
+                   setUserHoldings(userHoldings)
+    
+                }).catch(function (error) {
+                setApiStatus("fetching users' holdings")
+                setErrorMessage(error.message)
+                setErrorOpen(true)
+            });
 
             setOpen(false); //close the dialog
         }).catch(function (error) {
@@ -105,6 +118,17 @@ const Stock = () =>{
                 }).catch(function (error) {console.log(error)});
 
             console.log("buy log",r)
+            axios.get(process.env.REACT_APP_HOST + 'holdingSummaryPerStockUser/'+ userId +"/"+stockSymbol, ).then(r => {
+                //     setStockData(r.data)
+    
+                   const userHoldings = (r.data["curPrice"])*(r.data["quantity"])
+                   setUserHoldings(userHoldings)
+    
+                }).catch(function (error) {
+                setApiStatus("fetching users' holdings")
+                setErrorMessage(error.message)
+                setErrorOpen(true)
+            });
             
             setOpen(false); //close the dialog
 
@@ -204,6 +228,16 @@ const Stock = () =>{
             setErrorMessage(error.message)
             setErrorOpen(true)
         });
+        axios.get(process.env.REACT_APP_HOST + 'holdingSummaryPerStockUser/'+ userId +"/"+stockSymbol, ).then(r => {
+            //     setStockData(r.data)
+
+               const userHoldings = (r.data["curPrice"])*(r.data["quantity"])
+               setUserHoldings(userHoldings)
+
+            }).catch(function (error) {
+
+                setUserHoldings(0.00)
+        });
 
 
      }, [stockSymbol])
@@ -281,7 +315,7 @@ const Stock = () =>{
                         <div style={{height: "calc(100vh - 100px)", flexGrow: 1}}>
                             <div className="dashboard-fancy-container" style={{height: "43%"}}>
                                 <div className="dashboard-container-title">Holdings</div>
-                                <div className="dashboard-container-title" style={{marginTop: "2px"}}>$ 0.00</div>
+                                <div className="dashboard-container-title" style={{marginTop: "2px"}}>$ {userHoldings}</div>
                                 <div className="dashboard-container-title" style={{marginTop: "6px"}}>Cash</div>
                                 <div className="dashboard-container-title" style={{marginTop: "2px"}}>$ {balance}</div>
                                 <div style={{marginTop: "auto", marginBottom: "10px"}}>
