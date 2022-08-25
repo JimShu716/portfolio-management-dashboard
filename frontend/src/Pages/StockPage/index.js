@@ -72,7 +72,8 @@ const Stock = () =>{
             axios.get(process.env.REACT_APP_HOST + 'holdingSummaryPerStockUser/'+ userId +"/"+stockSymbol, ).then(r => {
                 //     setStockData(r.data)
     
-                   const userHoldings = (r.data["curPrice"])*(r.data["quantity"])
+                   const userHoldings = ((r.data["curPrice"])*(r.data["quantity"])).toFixed(2)
+                    console.log(userHoldings)
                    setUserHoldings(userHoldings)
     
                 }).catch(function (error) {
@@ -117,12 +118,12 @@ const Stock = () =>{
 
                 }).catch(function (error) {console.log(error)});
 
-            console.log("buy log",r)
             axios.get(process.env.REACT_APP_HOST + 'holdingSummaryPerStockUser/'+ userId +"/"+stockSymbol, ).then(r => {
                 //     setStockData(r.data)
-    
-                   const userHoldings = (r.data["curPrice"])*(r.data["quantity"])
-                   setUserHoldings(userHoldings)
+
+                const userHoldings = ((r.data["curPrice"])*(r.data["quantity"])).toFixed(2)
+
+                setUserHoldings(userHoldings)
     
                 }).catch(function (error) {
                 setApiStatus("fetching users' holdings")
@@ -284,7 +285,7 @@ const Stock = () =>{
                                         legend: {position: 'none'},
                                         chartArea: {
                                             height: '100%',
-                                            width: '100%',
+                                            width: '90%',
                                             top: 16,
                                             left: 0,
                                             right: 8,

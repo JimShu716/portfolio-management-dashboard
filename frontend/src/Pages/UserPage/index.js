@@ -180,40 +180,41 @@ const User = () =>{
 
             setRows(t)
 
-            let rows = [];
-            if(stockSymbols !== []){
-                stockSymbols.map(
-                    function(s){
-                        axios.get(process.env.REACT_APP_HOST + "holdingSummaryPerStockUser/" + userId + "/" + s,).then(r => {
-                            let color = "#1f1c2e"
-
-                            if(r.data["totalReturn"] > 0){
-                                color = "rgb(74,116,87)"
-                            }else if(r.data["totalReturn"] < 0){
-                                color = "rgb(196,41,28)"
-                            }
-
-                            rows.push({
-                                symbol: s,
-                                quantity: r.data["quantity"],
-                                averageCost: r.data["averageCost"],
-                                price: r.data["curPrice"],
-                                marketValue: (r.data["curPrice"]*r.data["quantity"]).toFixed(2), // quantity * price
-                                totalReturn: r.data["totalReturn"], // (price - averageCost) * quantity
-                                color:color,
-                            },)
-                        })
-                    }
-                )
-
-                setHoldingsSummaryRows(rows)
-            }
 
             }).catch(function (error) {
             setApiStatus("fetching users' information")
             setErrorMessage(error.message)
             setErrorOpen(true)
         });
+
+        axios.get(process.env.REACT_APP_HOST + "holdingSummaryPerStockUser/" + userId,).then(r => {
+            let ary = [];
+            r.data.map(function(d){
+                let color = "#1f1c2e"
+                if(d["totalReturn"] > 0){
+                    color = "rgb(74,116,87)"
+                }else if(d["totalReturn"] < 0){
+                    color = "rgb(196,41,28)"
+                }
+
+                ary.push({
+                        symbol: d["stockSymbol"],
+                        quantity: d["quantity"],
+                        averageCost: "$ " + d["averageCost"],
+                        price: "$ " + d["curPrice"],
+                        marketValue: "$ " + (d["curPrice"]*d["quantity"]).toFixed(2), // quantity * price
+                        totalReturn: "$ " + d["totalReturn"], // (price - averageCost) * quantity
+                        color:color,
+                    })
+            })
+
+            setHoldingsSummaryRows(ary)
+
+        }).catch(function (error) {
+            setApiStatus("fetching users' information")
+            setErrorMessage(error.message)
+            setErrorOpen(true)
+        })
 
         axios.get(process.env.REACT_APP_HOST + "currentTotalWealth/" + userId, ).then(r => {
             setTotalWealth(r.data)
