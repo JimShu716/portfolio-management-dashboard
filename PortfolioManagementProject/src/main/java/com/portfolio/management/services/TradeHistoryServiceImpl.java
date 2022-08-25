@@ -94,4 +94,47 @@ public class TradeHistoryServiceImpl implements TradeHistoryService {
         HoldingSummary holdingSummary = new HoldingSummary(stockSymbol, totalQuantity, averageCost, curPrice, totalReturn);
         return holdingSummary;
     }
+
+    private ArrayList<String> findStocksHoldingByUser(int userID){
+        ArrayList<TradeHistory> tradeHistories = tradeHistoryRepository.findByUserID(userID);
+        HashMap<String, Integer> holdings = new HashMap<>();
+        for(TradeHistory tradeHistory : tradeHistories) {
+            String symbol = tradeHistory.getStockSymbol();
+            String property = tradeHistory.getProperty();
+            if(holdings.containsKey(symbol)) {
+                if(property.equals("sale")) {
+                    int newQuantity = holdings.get(symbol) - tradeHistory.getPurchasedQuantities();
+                    holdings.put(symbol, newQuantity);
+                } else {
+                    int newQuantity = holdings.get(symbol) + tradeHistory.getPurchasedQuantities();
+                    holdings.put(symbol, newQuantity);
+                }
+            } else {
+                if(property.equals("sale")) {
+                    int newQuantity = tradeHistory.getPurchasedQuantities() * (-1);
+                    holdings.put(symbol, newQuantity);
+                } else {
+                    holdings.put(symbol, tradeHistory.getPurchasedQuantities());
+                }
+            }
+
+        }
+        ArrayList<String> result = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : holdings.entrySet()) {
+            String key = entry.getKey();
+            Integer value = entry.getValue();
+            if(value > 0)
+                result.add(key);
+        }
+
+        return result;
+    }
+    public ArrayList<HoldingSummary> getHoldingSummaryPerUser(int userID) throws UnirestException {
+        ArrayList<String> stocks = findStocksHoldingByUser(userID);
+        ArrayList<HoldingSummary> result = new ArrayList<>();
+        for(String stock: stocks) {
+            result.add(getHoldingSummaryPerStockUser(userID, stock));
+        }
+        return result;
+    }
 }

@@ -5,6 +5,7 @@ import com.portfolio.management.entities.TradeHistory;
 import com.portfolio.management.entities.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public interface TradeHistoryService {
@@ -17,4 +18,6 @@ public interface TradeHistoryService {
     public BigDecimal getCurrentWealth(int userID) throws UnirestException;
 
     public HoldingSummary getHoldingSummaryPerStockUser(int userID, String stockSymbol) throws UnirestException;
+
+    public ArrayList<HoldingSummary> getHoldingSummaryPerUser(int userID) throws UnirestException;
 }

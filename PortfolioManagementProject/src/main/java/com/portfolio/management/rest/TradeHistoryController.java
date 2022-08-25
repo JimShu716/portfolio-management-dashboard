@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @RestController
@@ -86,7 +87,12 @@ public class TradeHistoryController {
     @GetMapping(value = "/holdingSummaryPerStockUser/{userID}/{stockSymbol}")
     public ResponseEntity<HoldingSummary> getHoldingSummaryPerStockUser(@PathVariable int userID, @PathVariable String stockSymbol) throws UnirestException {
         HoldingSummary holdingSummary = tradeHistoryService.getHoldingSummaryPerStockUser(userID, stockSymbol);
-        System.err.println(holdingSummary.getAverageCost());
+        return new ResponseEntity(holdingSummary, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/holdingSummaryPerStockUser/{userID}")
+    public ResponseEntity<HoldingSummary> getHoldingSummaryPerUser(@PathVariable int userID) throws UnirestException {
+        ArrayList<HoldingSummary> holdingSummary = tradeHistoryService.getHoldingSummaryPerUser(userID);
         return new ResponseEntity(holdingSummary, HttpStatus.OK);
     }
 }

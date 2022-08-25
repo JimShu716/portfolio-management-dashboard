@@ -5,7 +5,7 @@ Content-type: application/json
     "property" : "sale",
     "purchasedPrice" : 2.3,
     "purchasedTime" : "13:99",
-    "purchasedQuantities" : 8,
+    "purchasedQuantities" : 1,
     "userID" : 1,
     "stockSymbol" : "AAPL"
 }
