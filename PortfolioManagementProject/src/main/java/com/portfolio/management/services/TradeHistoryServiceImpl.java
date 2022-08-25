@@ -94,6 +94,4 @@ public class TradeHistoryServiceImpl implements TradeHistoryService {
         HoldingSummary holdingSummary = new HoldingSummary(stockSymbol, totalQuantity, averageCost, curPrice, totalReturn);
         return holdingSummary;
     }
-
-
 }
