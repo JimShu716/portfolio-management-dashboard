@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Optional;
 
 import java.util.*;
@@ -86,7 +87,7 @@ public class TradeHistoryServiceImpl implements TradeHistoryService {
                 totalQuantity -= tradeHistory.getPurchasedQuantities();
             }
         }
-        BigDecimal averageCost = buyPrices.divide(BigDecimal.valueOf(buyQuantity));
+        BigDecimal averageCost = buyPrices.divide(BigDecimal.valueOf(buyQuantity), 2, RoundingMode.HALF_UP);
         MarketData marketData = new MarketData(stockSymbol);
         BigDecimal curPrice = marketData.getCurrentPrice();
         BigDecimal totalReturn = (curPrice.subtract(averageCost)).multiply(BigDecimal.valueOf(totalQuantity));

@@ -19,6 +19,41 @@ import {SiVisa} from "react-icons/si";
 import {GrFormClose} from "react-icons/gr";
 import {AiFillWarning} from "react-icons/ai";
 
+
+const holdingsSummaryRowsData = [{
+    symbol: "AAPL",
+    quantity: 400,
+    averageCost: 2.3,
+    price: 3.4,
+    marketValue: 1360,
+    totalReturn: 160
+},
+    {
+        symbol: "AMZN",
+        quantity: 400,
+        averageCost: 3.2,
+        price: 3.4,
+        marketValue: 1360,
+        totalReturn: 160
+    },
+    {
+        symbol: "GOOG",
+        quantity: 400,
+        averageCost: 3.4,
+        price: 3.4,
+        marketValue: 1360,
+        totalReturn: 160
+    },
+    {
+        symbol: "MSFT",
+        quantity: 400,
+        averageCost: 3.4,
+        price: 3.4,
+        marketValue: 1360,
+        totalReturn: 160
+    }]
+
+
 const User = () =>{
     const [name, setName] = useState("");
     const [page, setPage] = useState(0);
@@ -73,8 +108,6 @@ const User = () =>{
         // input: addWithdrawBalance
 
         axios.put(process.env.REACT_APP_HOST + 'addBalance/'+ userId+'/'+ addWithdrawBalance,).then(r => {
-            console.log("add log",r)
-
             axios.get(process.env.REACT_APP_HOST + userId, ).then(r => {
                 //     setStockData(r.data)
 
@@ -88,12 +121,14 @@ const User = () =>{
             });
             setOpen(false); //close the dialog
 
-         }).catch(function (error) {console.log(error)});
+         }).catch(function (error) {
+            setApiStatus("adding balance")
+            setErrorMessage(error.message)
+            setErrorOpen(true)});
     }
 
     async function withdrawBalance(){
         axios.put(process.env.REACT_APP_HOST + 'withDrawBalance/'+ userId+'/'+ addWithdrawBalance,).then(r => {
-            console.log("add log",r)
             axios.get(process.env.REACT_APP_HOST + userId, ).then(r => {
                 //     setStockData(r.data)
 
@@ -107,8 +142,10 @@ const User = () =>{
             });
             setOpen(false); //close the dialog
 
-         }).catch(function (error) {console.log(error)});
-        console.log(addWithdrawBalance)
+         }).catch(function (error) {
+            setApiStatus("withdrawing balance")
+            setErrorMessage(error.message)
+            setErrorOpen(true)});
     }
 
     function handleErrorClose() {
@@ -122,21 +159,55 @@ const User = () =>{
             const balance = r.data["balance"]
             setUserBalance(balance)
 
-            let t = []
+            let t = [];
+            let stockSymbols = [];
             r.data["tradeHistories"].map(
                 function(d) {
+                    if(!(stockSymbols.includes((d["stockSymbol"])))){
+                        stockSymbols.push(d["stockSymbol"])
+                    }
                     const time = new Date(d["purchasedTime"])
                     t.push({
                         id: d["tradeHistoryID"],
                         symbol: d["stockSymbol"],
                         shares: d["purchasedQuantities"],
                         price: d["purchasedPrice"],
-                        orderAmount: d["purchasedQuantities"]*d["purchasedPrice"],
+                        orderAmount: (d["purchasedQuantities"]*d["purchasedPrice"]).toFixed(2),
                         time: time.toLocaleString(),
                         action: d["property"]
                     })
                 })
+
             setRows(t)
+
+            let rows = [];
+            if(stockSymbols !== []){
+                stockSymbols.map(
+                    function(s){
+                        axios.get(process.env.REACT_APP_HOST + "holdingSummaryPerStockUser/" + userId + "/" + s,).then(r => {
+                            let color = "#1f1c2e"
+
+                            if(r.data["totalReturn"] > 0){
+                                color = "rgb(74,116,87)"
+                            }else if(r.data["totalReturn"] < 0){
+                                color = "rgb(196,41,28)"
+                            }
+
+                            rows.push({
+                                symbol: s,
+                                quantity: r.data["quantity"],
+                                averageCost: r.data["averageCost"],
+                                price: r.data["curPrice"],
+                                marketValue: (r.data["curPrice"]*r.data["quantity"]).toFixed(2), // quantity * price
+                                totalReturn: r.data["totalReturn"], // (price - averageCost) * quantity
+                                color:color,
+                            },)
+                        })
+                    }
+                )
+
+                setHoldingsSummaryRows(rows)
+            }
 
             }).catch(function (error) {
             setApiStatus("fetching users' information")
@@ -151,6 +222,8 @@ const User = () =>{
             setErrorMessage(error.message)
             setErrorOpen(true)
         })
+
+        setHoldingsSummaryRows(holdingsSummaryRowsData)
         }, [])
 
     const columns = [  { id: 'id', label: 'ID'},
@@ -164,80 +237,12 @@ const User = () =>{
 
     const holdingsSummaryColumns = [
         { id: 'symbol', label: 'Symbol'},
-        { id: 'quantity', label: 'Quantity'},
-        { id: 'totalCost', label: 'Total Cost'},
+        { id: 'quantity', label: 'Total Shares'},
+        { id: 'averageCost', label: 'Average Cost'},
         { id: 'price', label: 'Current Price' },
         { id: 'marketValue', label: 'Market Value' },
-        { id: 'earnings', label: 'Earnings' },
+        { id: 'totalReturn', label: 'Total Return' },
     ]
-
-    const rowsData = [{
-        id: 1,
-        symbol: "AAPL",
-        shares: 12,
-        price: 3.4,
-        orderAmount: 40.8,
-        time: "Aug 23, 2022 09:43 AM",
-        action: "Sell"
-    },{
-        id: 2,
-        symbol: "AAPL",
-        shares: 12,
-        price: 3.4,
-        orderAmount: 40.8,
-        time: "Aug 23, 2022 09:43 AM",
-        action: "Sell"
-    },{
-        id: 3,
-        symbol: "AAPL",
-        shares: 12,
-        price: 3.4,
-        orderAmount: 40.8,
-        time: "Aug 23, 2022 09:43 AM",
-        action: "Sell"
-    },{
-        id: 4,
-        symbol: "AAPL",
-        shares: 12,
-        price: 3.4,
-        orderAmount: 40.8,
-        time: "Aug 23, 2022 09:43 AM",
-        action: "Sell"
-    }]
-
-    const holdingsSummaryRowsData = [{
-        symbol: "AAPL",
-        quantity: 400,
-        totalCost: 1200,
-        price: 3.4,
-        marketValue: 1360,
-        earnings: 160
-    },
-        {
-            symbol: "AMZN",
-            quantity: 400,
-            totalCost: 1200,
-            price: 3.4,
-            marketValue: 1360,
-            earnings: 160
-        },
-        {
-            symbol: "GOOG",
-            quantity: 400,
-            totalCost: 1200,
-            price: 3.4,
-            marketValue: 1360,
-            earnings: 160
-        },
-        {
-            symbol: "MSFT",
-            quantity: 400,
-            totalCost: 1200,
-            price: 3.4,
-            marketValue: 1360,
-            earnings: 160
-        }]
-
 
     return (
         <div>
@@ -254,7 +259,7 @@ const User = () =>{
                                     sx={{fontFamily: "'DM Sans'"}}
                                     rowsPerPageOptions={[]}
                                     component="div"
-                                    count={rows.length}
+                                    count={holdingsSummaryRows.length}
                                     rowsPerPage={holdingsSummaryRowsPerPage}
                                     page={holdingsSummaryPage}
                                     onPageChange={handleHoldingsSummaryChangePage}
@@ -280,10 +285,17 @@ const User = () =>{
                                             return (
                                                 <TableRow hover role="checkbox" tabIndex={-1} key={row.symbol}>{holdingsSummaryColumns.map((column) => {
                                                     const value = row[column.id];
-                                                    return (
-                                                        <TableCell sx={{paddingLeft: "2px", paddingTop: "12px", paddingBottom: "12px", paddingRight: "25px", fontWeight:"600", borderBottom: "none", borderTop:"1px solid rgb(226, 231, 236)", fontFamily:"'DM Sans'"}}
-                                                                   key={column.id} >{value}</TableCell>
-                                                    );
+                                                    if(column.id === "totalReturn"){
+                                                        return (
+                                                            <TableCell sx={{paddingLeft: "2px", paddingTop: "12px", paddingBottom: "12px", paddingRight: "25px", fontWeight:"600", borderBottom: "none", borderTop:"1px solid rgb(226, 231, 236)", fontFamily:"'DM Sans'", color: row["color"]}}
+                                                                       key={column.id} >{value}</TableCell>
+                                                        );
+                                                    }else{
+                                                        return (
+                                                            <TableCell sx={{paddingLeft: "2px", paddingTop: "12px", paddingBottom: "12px", paddingRight: "25px", fontWeight:"600", borderBottom: "none", borderTop:"1px solid rgb(226, 231, 236)", fontFamily:"'DM Sans'"}}
+                                                                       key={column.id} >{value}</TableCell>
+                                                        );
+                                                    }
                                                 })}
                                                 </TableRow>
                                             );
