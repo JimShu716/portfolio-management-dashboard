@@ -16,7 +16,7 @@ public class MarketData {
     String stockSymbol;
 
     private String host = "yahoo-finance97.p.rapidapi.com";
-    private String apiKey = "f5bbf05db1msh11e00b44ff37b98p1bd126jsn70992204f184";
+    private String apiKey = "f07d69bca7msh54b378b0e6d76b3p10b80fjsnd29809dea735";
     public MarketData() { }
 
     public MarketData(String stockSymbol) {
