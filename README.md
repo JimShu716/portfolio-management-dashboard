@@ -100,7 +100,9 @@ The following steps show how to test it on the Chrome browser. You don't need to
    https://github.com/Kristen6765/portfolio-management-dashboard
    ```
 2. Establish MySQL 
+   Install MySQL and run this [script](https://github.com/Kristen6765/portfolio-management-dashboard/blob/main/PortfolioManagementProject/src/main/database/databaseCreation.sql) to create the database.
 3. Start Server (Back-End)
+   Run the [AppConfig class](https://github.com/Kristen6765/portfolio-management-dashboard/blob/main/PortfolioManagementProject/src/main/java/com/portfolio/management/AppConfig.java).
 4. Start Front-End
    ```sh
    npm install
