@@ -51,7 +51,7 @@ https://github.com/othneildrew/Best-README-Template/blob/master/README.md
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-It is portfolio management system that are able to facilitate the buy and sell of stocks 
+It is portfolio management system that are able to facilitate the buy and sell of stocks.
 
 ### Tech Stacks:
 * Backend: Java, Spring Boot
@@ -59,6 +59,9 @@ It is portfolio management system that are able to facilitate the buy and sell o
 * Frontend: React, JavaScript, CSS
 * Middleware: Axios
 * Deployment: Docker, Jenkins, Openshift
+
+### Architecture 
+![Zoom](/img/architecture.png)
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- Login Page -->
