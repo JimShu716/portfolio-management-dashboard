@@ -4,4 +4,4 @@
 * DataBase coonection: JPA
 * Front-End & Back-End connection: REST API
 ## Architecture
-![Zoom](/img/springboot.jpg)
+<img src="./img/springboot.jpg"  width = "400x">
