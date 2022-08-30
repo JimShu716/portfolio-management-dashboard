@@ -4,3 +4,4 @@
 * DataBase coonection: JPA
 * Front-End & Back-End connection: REST API
 ## Architecture
+![Zoom](/img/springboot.jpg)
