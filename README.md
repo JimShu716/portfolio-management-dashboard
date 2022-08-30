@@ -102,6 +102,12 @@ The following steps show how to test it on the Chrome browser. You don't need to
 2. Establish MySQL 
 3. Start Server (Back-End)
 4. Start Front-End
+   ```sh
+   npm install
+   ```
+   ```sh
+   npm start
+   ```
 
 
 
