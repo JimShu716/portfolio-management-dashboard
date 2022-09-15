@@ -61,7 +61,7 @@ It is portfolio management system that are able to facilitate the buy and sell o
 * Deployment: Docker, Jenkins, Openshift
 
 ### Architecture 
-![Zoom](/img/app-architecture.png)
+<img src="/img/app-architecture.png"  width = "600x">
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- Login Page -->
